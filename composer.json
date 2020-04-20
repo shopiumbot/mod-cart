@@ -1,6 +1,6 @@
 {
     "name": "shopium/mod-cart",
-    "description": "Коризина",
+    "description": "Shopping cart",
     "homepage": "https://github.com/shopium/mod-cart",
     "type": "yii2-extension",
     "license": "MIT",
