@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+    <id>liqpay</id>
+    <name>LiqPay</name>
+    <class>LiqPayPaymentSystem</class>
+    <version>1.0</version>
+</system>

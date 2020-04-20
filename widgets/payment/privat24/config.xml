@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+    <id>privat24</id>
+    <name>Privat24</name>
+    <class>Privat24PaymentSystem</class>
+    <version>1.0</version>
+</system>

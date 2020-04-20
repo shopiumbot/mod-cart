@@ -1,0 +1,24 @@
+{
+    "name": "panix/mod-cart",
+    "description": "Коризина",
+    "homepage": "https://github.com/andrtechno/mod-cart",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PIXELION CMS",
+            "email": "dev@pixelion.com.ua",
+            "homepage": "https://pixelion.com.ua"
+        }
+    ],
+    "require": {
+        "panix/engine": "dev-master",
+        "panix/wgt-colorpicker": "dev-master",
+        "panix/wgt-highcharts": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "panix\\mod\\cart\\": ""
+        }
+    }
+}
