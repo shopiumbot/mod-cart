@@ -4,9 +4,6 @@ namespace shopium\mod\cart\models;
 
 
 use shopium\mod\cart\components\delivery\DeliverySystemManager;
-use yii\helpers\ArrayHelper;
-use panix\engine\behaviors\TranslateBehavior;
-use shopium\mod\cart\models\translate\DeliveryTranslate;
 use panix\engine\db\ActiveRecord;
 
 /**
@@ -24,7 +21,6 @@ class Delivery extends ActiveRecord
 {
 
     const MODULE_ID = 'cart';
-    public $translationClass = DeliveryTranslate::class;
     public $_payment_methods;
 
     /**

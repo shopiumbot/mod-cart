@@ -10,8 +10,7 @@ class DeliveryQuery extends ActiveQuery {
     use DefaultQueryTrait;
 
     public function orderByName($sort = SORT_ASC) {
-        return $this->joinWith('translations')
-                        ->addOrderBy(['{{%order__delivery_translate}}.name' => $sort]);
+        return $this->addOrderBy(['name' => $sort]);
     }
 
 }

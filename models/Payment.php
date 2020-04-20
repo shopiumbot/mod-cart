@@ -2,9 +2,6 @@
 
 namespace shopium\mod\cart\models;
 
-use panix\engine\behaviors\TranslateBehavior;
-use yii\helpers\ArrayHelper;
-use shopium\mod\cart\models\translate\PaymentTranslate;
 use shopium\mod\cart\components\payment\PaymentSystemManager;
 use panix\engine\db\ActiveRecord;
 
@@ -16,7 +13,6 @@ class Payment extends ActiveRecord
 {
 
     const MODULE_ID = 'cart';
-    public $translationClass = PaymentTranslate::class;
 
     public static function tableName()
     {

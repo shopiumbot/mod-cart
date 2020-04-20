@@ -17,8 +17,6 @@ use shopium\mod\cart\models\OrderHistory;
 use shopium\mod\cart\models\OrderProductHistroy;
 use shopium\mod\cart\models\Delivery;
 use shopium\mod\cart\models\Payment;
-use shopium\mod\cart\models\translate\DeliveryTranslate;
-use shopium\mod\cart\models\translate\PaymentTranslate;
 use shopium\mod\cart\models\DeliveryPayment;
 
 /**
@@ -49,14 +47,12 @@ class m170908_134034_cart extends Migration
             'user_comment' => $this->text(),
             'admin_comment' => $this->text()->comment('Admin Comment'),
             'invoice' => $this->string(100),
-            'user_agent' => $this->string(255),
             'ip_create' => $this->string(50),
             'discount' => $this->string(10),
             'created_at' => $this->integer(11)->null(),
             'updated_at' => $this->integer(11)->null(),
             'paid' => $this->boolean()->defaultValue(0),
             'ttn' => $this->string(100)->null(),
-            'buyOneClick' => $this->boolean()->defaultValue(0),
         ], $this->tableOptions);
 
         // create table order status
@@ -114,17 +110,11 @@ class m170908_134034_cart extends Migration
         $this->createTable(Payment::tableName(), [
             'id' => $this->primaryKey()->unsigned(),
             'currency_id' => $this->integer()->unsigned(),
+            'name' => $this->string(255),
+            'description' => $this->text(),
             'switch' => $this->boolean()->defaultValue(1),
             'payment_system' => $this->string(100),
             'ordern' => $this->integer()->unsigned(),
-        ], $this->tableOptions);
-
-        $this->createTable(PaymentTranslate::tableName(), [
-            'id' => $this->primaryKey()->unsigned(),
-            'object_id' => $this->integer()->unsigned(),
-            'language_id' => $this->tinyInteger()->unsigned(),
-            'name' => $this->string(255),
-            'description' => $this->text(),
         ], $this->tableOptions);
 
 
@@ -133,16 +123,10 @@ class m170908_134034_cart extends Migration
             'price' => $this->money(10, 2)->null(),
             'free_from' => $this->money(10, 2)->null(),
             'system' => $this->string(100),
-            'switch' => $this->boolean()->defaultValue(1),
-            'ordern' => $this->integer()->unsigned(),
-        ], $this->tableOptions);
-
-        $this->createTable(DeliveryTranslate::tableName(), [
-            'id' => $this->primaryKey()->unsigned(),
-            'object_id' => $this->integer()->unsigned(),
-            'language_id' => $this->tinyInteger()->unsigned(),
             'name' => $this->string(255),
             'description' => $this->text(),
+            'switch' => $this->boolean()->defaultValue(1),
+            'ordern' => $this->integer()->unsigned(),
         ], $this->tableOptions);
 
         $this->createTable(DeliveryPayment::tableName(), [
@@ -161,30 +145,20 @@ class m170908_134034_cart extends Migration
         ]);
 
 
-        $this->batchInsert(Payment::tableName(), ['currency_id', 'ordern'], [
-            [1, 1],
-            [1, 2],
+        $this->batchInsert(Payment::tableName(), ['currency_id', 'ordern', 'name', 'description'], [
+            [1, 1, 'Наличными', ''],
+            [1, 2, 'Наличными', ''],
         ]);
 
 
         $this->batchInsert(Delivery::tableName(), ['ordern'], [
-            [1],
-            [2],
+            [1, 'Самовывоз', ''],
+            [2, 'Новая почта', ''],
         ]);
 
 
         $columns = ['object_id', 'language_id', 'name', 'description'];
 
-        foreach (Yii::$app->languageManager->getLanguages(false) as $lang) {
-            $this->batchInsert(PaymentTranslate::tableName(), $columns, [
-                [1, $lang['id'], 'Наличными', ''],
-                [2, $lang['id'], 'Приват24', ''],
-            ]);
-            $this->batchInsert(DeliveryTranslate::tableName(), $columns, [
-                [1, $lang['id'], 'Самовывоз', ''],
-                [2, $lang['id'], 'Новая почта', ''],
-            ]);
-        }
 
         if ($this->db->driverName != "sqlite") {
             $this->addForeignKey('{{%fk_order_status}}', Order::tableName(), 'status_id', OrderStatus::tableName(), 'id', "NO ACTION", "NO ACTION");
@@ -210,9 +184,7 @@ class m170908_134034_cart extends Migration
         $this->dropTable(OrderHistory::tableName());
         $this->dropTable(OrderProductHistroy::tableName());
         $this->dropTable(Payment::tableName());
-        $this->dropTable(PaymentTranslate::tableName());
         $this->dropTable(Delivery::tableName());
-        $this->dropTable(DeliveryTranslate::tableName());
         $this->dropTable(DeliveryPayment::tableName());
 
     }
@@ -252,11 +224,6 @@ class m170908_134034_cart extends Migration
         $this->createIndex('ordern', Payment::tableName(), 'ordern');
         $this->createIndex('switch', Payment::tableName(), 'switch');
 
-        $this->createIndex('object_id', PaymentTranslate::tableName(), 'object_id');
-        $this->createIndex('language_id', PaymentTranslate::tableName(), 'language_id');
-
-        $this->createIndex('object_id', DeliveryTranslate::tableName(), 'object_id');
-        $this->createIndex('language_id', DeliveryTranslate::tableName(), 'language_id');
 
         $this->createIndex('delivery_id', DeliveryPayment::tableName(), 'delivery_id');
         $this->createIndex('payment_id', DeliveryPayment::tableName(), 'payment_id');
