@@ -1,9 +1,9 @@
 <?php
 
-namespace panix\mod\cart\models\search;
+namespace shopium\mod\cart\models\search;
 
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\cart\models\PromoCode;
+use shopium\mod\cart\models\PromoCode;
 
 class PromoCodeSearch extends PromoCode
 {

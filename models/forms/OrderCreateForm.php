@@ -1,18 +1,18 @@
 <?php
 
-namespace panix\mod\cart\models\forms;
+namespace shopium\mod\cart\models\forms;
 
 use Yii;
-use panix\mod\cart\models\Delivery;
-use panix\mod\cart\models\Payment;
+use shopium\mod\cart\models\Delivery;
+use shopium\mod\cart\models\Payment;
 use panix\engine\base\Model;
 use panix\engine\CMS;
-use panix\mod\cart\models\PromoCode;
-use panix\mod\user\models\User;
+use shopium\mod\cart\models\PromoCode;
+use shopium\mod\user\models\User;
 
 /**
  * Class OrderCreateForm
- * @package panix\mod\cart\models\forms
+ * @package shopium\mod\cart\models\forms
  */
 class OrderCreateForm extends Model
 {

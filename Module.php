@@ -1,11 +1,11 @@
 <?php
 
-namespace panix\mod\cart;
+namespace shopium\mod\cart;
 
-use panix\mod\admin\widgets\sidebar\BackendNav;
+use shopium\mod\admin\widgets\sidebar\BackendNav;
 use Yii;
 use panix\engine\WebModule;
-use panix\mod\cart\models\Order;
+use shopium\mod\cart\models\Order;
 use yii\base\BootstrapInterface;
 
 class Module extends WebModule implements BootstrapInterface
@@ -59,7 +59,7 @@ class Module extends WebModule implements BootstrapInterface
             $app->counters[$this->id] = (int)$this->count['num'];
         }
         $app->setComponents([
-            'cart' => ['class' => 'panix\mod\cart\components\Cart'],
+            'cart' => ['class' => 'shopium\mod\cart\components\Cart'],
         ]);
     }
 

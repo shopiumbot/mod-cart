@@ -1,11 +1,11 @@
 <?php
 
-namespace panix\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers\admin;
 
 use Yii;
-use panix\mod\cart\models\search\PaymentSearch;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\components\payment\PaymentSystemManager;
+use shopium\mod\cart\models\search\PaymentSearch;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\components\payment\PaymentSystemManager;
 use panix\engine\Html;
 use panix\engine\controllers\AdminController;
 
@@ -86,7 +86,7 @@ class PaymentController extends AdminController
             'url' => ['index']
         ];
         $this->breadcrumbs[] = Yii::t('app/default', ($isNew) ? 'CREATE' : 'UPDATE');
-        \panix\mod\cart\CartPaymentAsset::register($this->view);
+        \shopium\mod\cart\CartPaymentAsset::register($this->view);
 
         $post = Yii::$app->request->post();
 

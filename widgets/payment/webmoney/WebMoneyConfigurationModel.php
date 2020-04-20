@@ -1,5 +1,5 @@
 <?php
-namespace panix\mod\cart\widgets\payment\webmoney;
+namespace shopium\mod\cart\widgets\payment\webmoney;
 
 use Yii;
 use yii\base\Model;

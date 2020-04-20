@@ -1,14 +1,14 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 use Yii;
 use yii\base\ModelEvent;
 use yii\helpers\ArrayHelper;
 use panix\engine\Html;
 use panix\engine\db\ActiveRecord;
-use panix\mod\cart\components\events\EventProduct;
-use panix\mod\cart\components\HistoricalBehavior;
+use shopium\mod\cart\components\events\EventProduct;
+use shopium\mod\cart\components\HistoricalBehavior;
 
 /**
  * Class Order
@@ -38,7 +38,7 @@ use panix\mod\cart\components\HistoricalBehavior;
  * @property Payment $paymentMethod
  * @property PromoCode $promoCode
  *
- * @package panix\mod\cart\models
+ * @package shopium\mod\cart\models
  */
 class Order extends ActiveRecord
 {

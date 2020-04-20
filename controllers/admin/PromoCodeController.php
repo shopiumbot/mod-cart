@@ -1,11 +1,11 @@
 <?php
 
-namespace panix\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers\admin;
 
 use Yii;
 use panix\engine\controllers\AdminController;
-use panix\mod\cart\models\PromoCode;
-use panix\mod\cart\models\search\PromoCodeSearch;
+use shopium\mod\cart\models\PromoCode;
+use shopium\mod\cart\models\search\PromoCodeSearch;
 
 class PromoCodeController extends AdminController
 {

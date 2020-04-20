@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models\query;
+namespace shopium\mod\cart\models\query;
 
 use yii\db\ActiveQuery;
 

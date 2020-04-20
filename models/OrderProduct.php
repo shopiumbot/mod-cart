@@ -1,8 +1,8 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
-use panix\mod\shop\models\Product;
+use shopium\mod\shop\models\Product;
 use panix\engine\db\ActiveRecord;
 
 /**
@@ -24,7 +24,7 @@ use panix\engine\db\ActiveRecord;
  * @property Product $originalProduct
  * @property Order $order
  *
- * @package panix\mod\cart\models
+ * @package shopium\mod\cart\models
  */
 class OrderProduct extends ActiveRecord
 {

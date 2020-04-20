@@ -1,10 +1,10 @@
 <?php
 
-namespace panix\mod\cart\widgets\cart;
+namespace shopium\mod\cart\widgets\cart;
 
 use Yii;
 use yii\helpers\Html;
-use panix\mod\shop\models\Product;
+use shopium\mod\shop\models\Product;
 use panix\engine\data\Widget;
 use yii\web\View;
 

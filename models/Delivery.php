@@ -1,12 +1,12 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 
-use panix\mod\cart\components\delivery\DeliverySystemManager;
+use shopium\mod\cart\components\delivery\DeliverySystemManager;
 use yii\helpers\ArrayHelper;
 use panix\engine\behaviors\TranslateBehavior;
-use panix\mod\cart\models\translate\DeliveryTranslate;
+use shopium\mod\cart\models\translate\DeliveryTranslate;
 use panix\engine\db\ActiveRecord;
 
 /**
@@ -18,7 +18,7 @@ use panix\engine\db\ActiveRecord;
  * @property string $name
  * @property string $description
  *
- * @package panix\mod\cart\models
+ * @package shopium\mod\cart\models
  */
 class Delivery extends ActiveRecord
 {

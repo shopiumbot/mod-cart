@@ -1,7 +1,7 @@
 <?php
 
 
-namespace panix\mod\cart;
+namespace shopium\mod\cart;
 
 use panix\engine\web\AssetBundle;
 

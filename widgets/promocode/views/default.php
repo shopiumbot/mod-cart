@@ -1,5 +1,5 @@
 <?php
-use panix\mod\cart\widgets\promocode\PromoCodeInput;
+use shopium\mod\cart\widgets\promocode\PromoCodeInput;
 
 ?>
 
@@ -16,7 +16,7 @@ use panix\mod\cart\widgets\promocode\PromoCodeInput;
     ?>
 
     <div class="input-group-append">
-        <?php if($this->context->model instanceof \panix\mod\cart\models\forms\OrderCreateForm){ ?>
+        <?php if($this->context->model instanceof \shopium\mod\cart\models\forms\OrderCreateForm){ ?>
         <?= \panix\engine\Html::button('Применить!', ['id' => 'submit-promocode', 'class' => 'btn btn-outline-success']); ?>
         <?php }else{ ?>
             <?= \panix\engine\Html::submitButton('Применить!', ['id' => 'submit-promocode', 'class' => 'btn btn-outline-success']); ?>

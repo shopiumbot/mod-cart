@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use panix\engine\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use panix\mod\cart\models\Payment;
+use shopium\mod\cart\models\Payment;
 use panix\ext\tinymce\TinyMce;
 
 ?>

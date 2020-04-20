@@ -1,20 +1,20 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\liqpay;
+namespace shopium\mod\cart\widgets\payment\liqpay;
 
 use panix\engine\Html;
 use Yii;
 use panix\engine\CMS;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\components\payment\BasePaymentSystem;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\components\payment\BasePaymentSystem;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 /**
  * Class LiqPayPaymentSystem
- * @package panix\mod\cart\widgets\payment\liqpay
+ * @package shopium\mod\cart\widgets\payment\liqpay
  */
 class LiqPayPaymentSystem extends BasePaymentSystem
 {

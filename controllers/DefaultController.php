@@ -1,12 +1,12 @@
 <?php
 
-namespace panix\mod\cart\controllers;
+namespace shopium\mod\cart\controllers;
 
 
 use panix\engine\bootstrap\ActiveForm;
 use panix\engine\CMS;
-use panix\mod\cart\CartAsset;
-use panix\mod\shop\models\Attribute;
+use shopium\mod\cart\CartAsset;
+use shopium\mod\shop\models\Attribute;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\Json;
@@ -15,14 +15,14 @@ use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use panix\engine\controllers\WebController;
-use panix\mod\cart\models\forms\OrderCreateForm;
-use panix\mod\cart\models\Delivery;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\OrderProduct;
-use panix\mod\shop\models\Product;
-use panix\mod\cart\models\search\OrderSearch;
-use panix\mod\shop\models\ProductVariant;
+use shopium\mod\cart\models\forms\OrderCreateForm;
+use shopium\mod\cart\models\Delivery;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\OrderProduct;
+use shopium\mod\shop\models\Product;
+use shopium\mod\cart\models\search\OrderSearch;
+use shopium\mod\shop\models\ProductVariant;
 use yii\web\Response;
 
 class DefaultController extends WebController
@@ -43,7 +43,7 @@ class DefaultController extends WebController
     {
         return [
             'promoCode' => [
-                'class' => 'panix\mod\cart\widgets\promocode\PromoCodeAction',
+                'class' => 'shopium\mod\cart\widgets\promocode\PromoCodeAction',
             ],
         ];
     }
@@ -258,7 +258,7 @@ class DefaultController extends WebController
         if (!Yii::$app->request->isAjax) {
             throw new BadRequestHttpException(Yii::t('app/default', 'ACCESS_DENIED'));
         }
-        return \panix\mod\cart\widgets\cart\CartWidget::widget(['skin' => Yii::$app->request->post('skin')]);
+        return \shopium\mod\cart\widgets\cart\CartWidget::widget(['skin' => Yii::$app->request->post('skin')]);
     }
 
     /**

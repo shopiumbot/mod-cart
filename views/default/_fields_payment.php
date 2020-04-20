@@ -4,8 +4,8 @@ use panix\engine\Html;
 
 /**
  * @var $form \yii\widgets\ActiveForm
- * @var $model \panix\mod\cart\models\forms\OrderCreateForm
- * @var array $paymentMethods \panix\mod\cart\models\Payment
+ * @var $model \shopium\mod\cart\models\forms\OrderCreateForm
+ * @var array $paymentMethods \shopium\mod\cart\models\Payment
  */
 ?>
 <div class="form-group">

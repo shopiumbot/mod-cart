@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\qiwi;
+namespace shopium\mod\cart\widgets\payment\qiwi;
 
 class Qiwi
 {

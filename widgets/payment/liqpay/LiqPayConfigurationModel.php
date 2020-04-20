@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\liqpay;
+namespace shopium\mod\cart\widgets\payment\liqpay;
 
 use panix\engine\base\Model;
 use Yii;

@@ -3,8 +3,8 @@
 use panix\engine\Html;
 use panix\engine\widgets\Pjax;
 use panix\engine\grid\GridView;
-use panix\mod\shop\models\search\ProductSearch;
-use panix\mod\cart\models\search\OrderProductSearch;
+use shopium\mod\shop\models\search\ProductSearch;
+use shopium\mod\cart\models\search\OrderProductSearch;
 
 $searchModel = new ProductSearch();
 $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
@@ -30,7 +30,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center image'],
             'value' => function ($model) {
-                /** @var \panix\mod\shop\models\Product $model */
+                /** @var \shopium\mod\shop\models\Product $model */
                 return $model->renderGridImage();
             },
         ],
@@ -39,7 +39,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) {
-                /** @var \panix\mod\shop\models\Product $model */
+                /** @var \shopium\mod\shop\models\Product $model */
                 return $model->name;
             },
         ],
@@ -48,7 +48,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) {
-                /** @var \panix\mod\shop\models\Product $model */
+                /** @var \shopium\mod\shop\models\Product $model */
                 return $model->sku;
             },
         ],
@@ -57,7 +57,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center'],
             'value' => function ($model) {
-                /** @var \panix\mod\shop\models\Product $model */
+                /** @var \shopium\mod\shop\models\Product $model */
                 return Html::textInput("price_{$model->id}", $model->price, ['id' => "price_{$model->id}", 'class' => 'form-control']);
             }
         ],
@@ -66,7 +66,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center'],
             'value' => function ($model) {
-                /** @var \panix\mod\shop\models\Product $model */
+                /** @var \shopium\mod\shop\models\Product $model */
                 return \yii\jui\Spinner::widget([
                     'id' => "count_{$model->id}",
                     'name' => "count_{$model->id}",

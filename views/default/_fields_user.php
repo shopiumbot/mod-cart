@@ -4,7 +4,7 @@ use panix\engine\Html;
 
 /**
  * @var $form \panix\engine\bootstrap\ActiveForm
- * @var $model \panix\mod\cart\models\forms\OrderCreateForm
+ * @var $model \shopium\mod\cart\models\forms\OrderCreateForm
  */
 ?>
 <div class="form-group">

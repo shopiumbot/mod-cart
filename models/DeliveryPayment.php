@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 use yii\db\ActiveRecord;
 
@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  * @property integer $delivery_id
  * @property integer $payment_id
  *
- * @package panix\mod\cart\models
+ * @package shopium\mod\cart\models
  */
 class DeliveryPayment extends ActiveRecord
 {

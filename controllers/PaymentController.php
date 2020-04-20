@@ -1,11 +1,11 @@
 <?php
 
-namespace panix\mod\cart\controllers;
+namespace shopium\mod\cart\controllers;
 
 use Yii;
-use panix\mod\cart\components\payment\BasePaymentSystem;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\Payment;
+use shopium\mod\cart\components\payment\BasePaymentSystem;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\Payment;
 use panix\engine\controllers\WebController;
 use yii\web\Controller;
 

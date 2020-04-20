@@ -1,15 +1,15 @@
 <?php
 
-namespace panix\mod\cart\models\search;
+namespace shopium\mod\cart\models\search;
 
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\cart\models\Delivery;
+use shopium\mod\cart\models\Delivery;
 
 /**
  * Class DeliverySearch
  * @property integer $id
  * @property string $name
- * @package panix\mod\cart\models\search
+ * @package shopium\mod\cart\models\search
  */
 class DeliverySearch extends Delivery {
 

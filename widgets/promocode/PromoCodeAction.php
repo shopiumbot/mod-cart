@@ -1,16 +1,16 @@
 <?php
 
-namespace panix\mod\cart\widgets\promocode;
+namespace shopium\mod\cart\widgets\promocode;
 
 
 use panix\engine\Html;
-use panix\mod\shop\models\Category;
-use panix\mod\shop\models\Manufacturer;
+use shopium\mod\shop\models\Category;
+use shopium\mod\shop\models\Manufacturer;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\base\Action;
-use panix\mod\cart\models\PromoCode;
+use shopium\mod\cart\models\PromoCode;
 
 class PromoCodeAction extends Action
 {

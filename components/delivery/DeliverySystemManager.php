@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\components\delivery;
+namespace shopium\mod\cart\components\delivery;
 
 use Yii;
 use yii\base\Component;
@@ -50,7 +50,7 @@ class DeliverySystemManager extends Component {
 
     protected function getDefaultModelClasses() {
         return [
-            'NovaPoshtaDeliverySystem' => 'panix\mod\cart\widgets\delivery\novaposhta\NovaPoshtaDeliverySystem',
+            'NovaPoshtaDeliverySystem' => 'shopium\mod\cart\widgets\delivery\novaposhta\NovaPoshtaDeliverySystem',
         ];
     }
 

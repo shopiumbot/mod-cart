@@ -1,5 +1,5 @@
 <?php
-namespace panix\mod\cart\widgets\payment\liqpay;
+namespace shopium\mod\cart\widgets\payment\liqpay;
 
 use yii\base\InvalidArgumentException;
 

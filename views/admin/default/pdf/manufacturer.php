@@ -18,7 +18,7 @@ if (Yii::$app->request->get('image')) {
 foreach ($model as $order) {
     if (isset($order->products)) {
         foreach ($order->products as $item) {
-            /** @var $item \panix\mod\cart\models\OrderProduct */
+            /** @var $item \shopium\mod\cart\models\OrderProduct */
             $original = $item->originalProduct;
 
             if ($original) {
@@ -111,7 +111,7 @@ foreach ($array as $key => $items) {
                     if($row['model']->sku){
                         echo $row['item']->getAttributeLabel('sku').': <strong>'.$row['model']->sku.'</strong>; ';
                     }
-                    $query = \panix\mod\shop\models\Attribute::find();
+                    $query = \shopium\mod\shop\models\Attribute::find();
                     $query->where(['IN', 'name', array_keys($row['model']->eavAttributes)]);
                     $query->displayOnPdf();
                     $query->sort();

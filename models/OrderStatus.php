@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 use panix\engine\db\ActiveRecord;
 

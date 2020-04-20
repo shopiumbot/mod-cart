@@ -2,11 +2,11 @@
 
 use yii\widgets\Pjax;
 use panix\engine\grid\GridView;
-use panix\mod\cart\models\OrderProduct;
+use shopium\mod\cart\models\OrderProduct;
 use yii\helpers\Html;
 
 /**
- * @var \panix\mod\cart\models\Order $model
+ * @var \shopium\mod\cart\models\Order $model
  */
 $symbol = Yii::$app->currency->active['symbol'];
 

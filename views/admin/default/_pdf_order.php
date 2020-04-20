@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
- * @var \panix\mod\cart\models\Order $model
+ * @var \shopium\mod\cart\models\Order $model
  */
 $currency = Yii::$app->currency;
 
@@ -87,7 +87,7 @@ $currency = Yii::$app->currency;
         $totalCountPriceAll = 0;
         foreach ($model->products as $product) {
             /**
-             * @var \panix\mod\cart\models\OrderProduct $product
+             * @var \shopium\mod\cart\models\OrderProduct $product
              */
             $originalProduct = $product->originalProduct;
             $totalCountQuantity += $product->quantity;
@@ -112,7 +112,7 @@ $currency = Yii::$app->currency;
                     if($product->sku){
                         echo $product->getAttributeLabel('sku').': <strong>'.$product->sku.'</strong>; ';
                     }
-                    $query = \panix\mod\shop\models\Attribute::find();
+                    $query = \shopium\mod\shop\models\Attribute::find();
                     $query->where(['IN', 'name', array_keys($originalProduct->eavAttributes)]);
                     $query->displayOnPdf();
                     $query->sort();

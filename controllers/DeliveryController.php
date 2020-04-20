@@ -1,10 +1,10 @@
 <?php
 
-namespace panix\mod\cart\controllers;
+namespace shopium\mod\cart\controllers;
 
 use Yii;
-use panix\mod\cart\components\delivery\BaseDeliverySystem;
-use panix\mod\cart\models\Delivery;
+use shopium\mod\cart\components\delivery\BaseDeliverySystem;
+use shopium\mod\cart\models\Delivery;
 use panix\engine\controllers\WebController;
 
 class DeliveryController extends WebController

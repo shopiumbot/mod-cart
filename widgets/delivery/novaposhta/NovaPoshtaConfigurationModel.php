@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\delivery\novaposhta;
+namespace shopium\mod\cart\widgets\delivery\novaposhta;
 
 use Yii;
 use yii\base\Model;

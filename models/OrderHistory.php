@@ -1,5 +1,5 @@
 <?php
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 use Yii;
 use panix\engine\db\ActiveRecord;

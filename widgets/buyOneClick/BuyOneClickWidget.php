@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\buyOneClick;
+namespace shopium\mod\cart\widgets\buyOneClick;
 use Yii;
 /**
  * Виджет купить в один клик.

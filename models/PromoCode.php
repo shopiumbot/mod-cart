@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 use Yii;
 use panix\engine\db\ActiveRecord;
@@ -15,7 +15,7 @@ use panix\engine\db\ActiveRecord;
  * @property string $discount
  * @property string $code
  *
- * @package panix\mod\cart\models
+ * @package shopium\mod\cart\models
  *
  */
 class PromoCode extends ActiveRecord

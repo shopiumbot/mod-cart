@@ -34,7 +34,7 @@ to the require section of your `composer.json` file.
 Add to web config.
 ```
 'modules' => [
-    'cart' => ['class' => 'panix\mod\cart\Module'],
+    'cart' => ['class' => 'shopium\mod\cart\Module'],
 ]
 ```
 

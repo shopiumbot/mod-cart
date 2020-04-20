@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\components\delivery;
+namespace shopium\mod\cart\components\delivery;
 
 use Yii;
 use panix\engine\Html;

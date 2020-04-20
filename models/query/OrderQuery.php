@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models\query;
+namespace shopium\mod\cart\models\query;
 
 use panix\engine\traits\query\DefaultQueryTrait;
 use yii\db\ActiveQuery;

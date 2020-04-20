@@ -1,14 +1,14 @@
 <?php
 
-namespace panix\mod\cart\components;
+namespace shopium\mod\cart\components;
 
 use panix\engine\Html;
-use panix\mod\cart\models\Payment;
+use shopium\mod\cart\models\Payment;
 use Yii;
-use panix\mod\cart\models\Delivery;
-use panix\mod\cart\models\OrderStatus;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\OrderHistory;
+use shopium\mod\cart\models\Delivery;
+use shopium\mod\cart\models\OrderStatus;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\OrderHistory;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 

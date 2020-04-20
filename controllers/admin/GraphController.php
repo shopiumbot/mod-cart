@@ -1,18 +1,18 @@
 <?php
 
-namespace panix\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers\admin;
 
 
-use panix\mod\cart\models\Order;
+use shopium\mod\cart\models\Order;
 use Yii;
 use yii\db\Query;
 use yii\web\NotFoundHttpException;
 use panix\engine\controllers\AdminController;
 use panix\engine\pdf\Pdf;
-use panix\mod\shop\models\Product;
-use panix\mod\cart\models\OrderProduct;
-use panix\mod\shop\models\search\ProductSearch;
-use panix\mod\cart\models\search\OrderSearch;
+use shopium\mod\shop\models\Product;
+use shopium\mod\cart\models\OrderProduct;
+use shopium\mod\shop\models\search\ProductSearch;
+use shopium\mod\cart\models\search\OrderSearch;
 use yii\web\Response;
 
 class GraphController extends AdminController

@@ -1,5 +1,5 @@
 <?php
-namespace panix\mod\cart\widgets\payment\yandexmoney;
+namespace shopium\mod\cart\widgets\payment\yandexmoney;
 
 use Yii;
 use yii\base\Model;

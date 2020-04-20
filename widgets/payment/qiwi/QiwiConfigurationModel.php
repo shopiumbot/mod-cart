@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\qiwi;
+namespace shopium\mod\cart\widgets\payment\qiwi;
 
 use Yii;
 use yii\helpers\Url;

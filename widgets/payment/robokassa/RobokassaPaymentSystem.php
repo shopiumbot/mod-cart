@@ -1,13 +1,13 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\robokassa;
+namespace shopium\mod\cart\widgets\payment\robokassa;
 
 use panix\engine\Html;
 use Yii;
-use panix\mod\cart\widgets\payment\robokassa\RobokassaConfigurationModel;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\components\payment\BasePaymentSystem;
+use shopium\mod\cart\widgets\payment\robokassa\RobokassaConfigurationModel;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\components\payment\BasePaymentSystem;
 /**
  * Robokassa payment system
  */

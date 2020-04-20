@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use panix\mod\cart\models\OrderStatus;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\models\Delivery;
+use shopium\mod\cart\models\OrderStatus;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\models\Delivery;
 use panix\engine\bootstrap\ActiveForm;
 
 ?>

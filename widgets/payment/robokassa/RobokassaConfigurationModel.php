@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\robokassa;
+namespace shopium\mod\cart\widgets\payment\robokassa;
 
 use Yii;
 use yii\base\Model;

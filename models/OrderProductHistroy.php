@@ -1,5 +1,5 @@
 <?php
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 class OrderProductHistroy extends \panix\engine\db\ActiveRecord {
 
 

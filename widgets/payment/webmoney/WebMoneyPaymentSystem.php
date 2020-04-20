@@ -1,11 +1,11 @@
 <?php
-namespace panix\mod\cart\widgets\payment\webmoney;
+namespace shopium\mod\cart\widgets\payment\webmoney;
 
 use Yii;
-use panix\mod\cart\widgets\payment\webmoney\WebMoneyConfigurationModel;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\components\payment\BasePaymentSystem;
+use shopium\mod\cart\widgets\payment\webmoney\WebMoneyConfigurationModel;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\components\payment\BasePaymentSystem;
 
 /**
  * WebMoney payment system

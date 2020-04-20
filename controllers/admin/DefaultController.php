@@ -1,17 +1,17 @@
 <?php
 
-namespace panix\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers\admin;
 
 use panix\engine\CMS;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Response;
 use panix\engine\controllers\AdminController;
-use panix\mod\shop\models\Product;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\OrderProduct;
-use panix\mod\shop\models\search\ProductSearch;
-use panix\mod\cart\models\search\OrderSearch;
+use shopium\mod\shop\models\Product;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\OrderProduct;
+use shopium\mod\shop\models\search\ProductSearch;
+use shopium\mod\cart\models\search\OrderSearch;
 use Mpdf\Mpdf;
 
 class DefaultController extends AdminController
@@ -85,7 +85,7 @@ class DefaultController extends AdminController
             ],
             $this->pageName
         ];
-        \panix\mod\cart\OrderAsset::register($this->view);
+        \shopium\mod\cart\OrderAsset::register($this->view);
         $this->view->registerJs('
             var deleteQuestion = "' . Yii::t('cart/admin', 'Вы действительно удалить запись?') . '";
             var productSuccessAddedToOrder = "' . Yii::t('cart/admin', 'Продукт успешно добавлен к заказу.') . '";', \yii\web\View::POS_HEAD, 'myid'

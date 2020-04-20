@@ -1,16 +1,16 @@
 <?php
 
-namespace panix\mod\cart\models;
+namespace shopium\mod\cart\models;
 
 use panix\engine\behaviors\TranslateBehavior;
 use yii\helpers\ArrayHelper;
-use panix\mod\cart\models\translate\PaymentTranslate;
-use panix\mod\cart\components\payment\PaymentSystemManager;
+use shopium\mod\cart\models\translate\PaymentTranslate;
+use shopium\mod\cart\components\payment\PaymentSystemManager;
 use panix\engine\db\ActiveRecord;
 
 /**
  * Class Payment
- * @package panix\mod\cart\models
+ * @package shopium\mod\cart\models
  */
 class Payment extends ActiveRecord
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace panix\mod\cart\widgets\delivery\novaposhta;
+namespace shopium\mod\cart\widgets\delivery\novaposhta;
 
-use panix\mod\cart\models\forms\OrderCreateForm;
-use panix\mod\cart\widgets\delivery\novaposhta\api\NovaPoshtaApi;
+use shopium\mod\cart\models\forms\OrderCreateForm;
+use shopium\mod\cart\widgets\delivery\novaposhta\api\NovaPoshtaApi;
 use Yii;
 use panix\engine\CMS;
-use panix\mod\cart\models\Delivery;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\components\delivery\BaseDeliverySystem;
+use shopium\mod\cart\models\Delivery;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\components\delivery\BaseDeliverySystem;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\httpclient\Client;

@@ -3,11 +3,11 @@
 use yii\helpers\Url;
 use yii\jui\Spinner;
 use panix\engine\Html;
-use panix\mod\shop\models\Product;
+use shopium\mod\shop\models\Product;
 
 /**
- * @var $deliveryMethods \panix\mod\cart\models\Delivery
- * @var $paymentMethods \panix\mod\cart\models\Payment
+ * @var $deliveryMethods \shopium\mod\cart\models\Delivery
+ * @var $paymentMethods \shopium\mod\cart\models\Payment
  */
 
 $this->registerJs("
@@ -128,7 +128,7 @@ $formOrder = ActiveForm::begin([
 
                             // Display configurable options
                             if (isset($product['configurable_model'])) {
-                                $attributeModels = \panix\mod\shop\models\Attribute::model()->findAllByPk($product['model']->configurable_attributes);
+                                $attributeModels = \shopium\mod\shop\models\Attribute::model()->findAllByPk($product['model']->configurable_attributes);
                                 echo Html::beginTag('span', array('class' => 'cartProductOptions'));
                                 foreach ($attributeModels as $attribute) {
                                     $method = 'eav_' . $attribute->name;
@@ -180,7 +180,7 @@ $formOrder = ActiveForm::begin([
                 </td>
                 <td colspan="3">
                     <?php
-                    echo panix\mod\cart\widgets\promocode\PromoCodeWidget::widget([
+                    echo shopium\mod\cart\widgets\promocode\PromoCodeWidget::widget([
                         'model' => $this->context->form,
                         'attribute' => 'promocode_id'
                     ]);

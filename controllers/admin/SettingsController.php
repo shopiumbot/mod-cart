@@ -1,10 +1,10 @@
 <?php
 
-namespace panix\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers\admin;
 
 use Yii;
 use panix\engine\controllers\AdminController;
-use panix\mod\cart\models\forms\SettingsForm;
+use shopium\mod\cart\models\forms\SettingsForm;
 
 class SettingsController extends AdminController
 {

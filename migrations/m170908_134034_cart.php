@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\migrations;
+namespace shopium\mod\cart\migrations;
 
 /**
  * Generation migrate by PIXELION CMS
@@ -10,23 +10,23 @@ namespace panix\mod\cart\migrations;
  */
 use Yii;
 use panix\engine\db\Migration;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\OrderStatus;
-use panix\mod\cart\models\OrderProduct;
-use panix\mod\cart\models\OrderHistory;
-use panix\mod\cart\models\OrderProductHistroy;
-use panix\mod\cart\models\Delivery;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\models\translate\DeliveryTranslate;
-use panix\mod\cart\models\translate\PaymentTranslate;
-use panix\mod\cart\models\DeliveryPayment;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\OrderStatus;
+use shopium\mod\cart\models\OrderProduct;
+use shopium\mod\cart\models\OrderHistory;
+use shopium\mod\cart\models\OrderProductHistroy;
+use shopium\mod\cart\models\Delivery;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\models\translate\DeliveryTranslate;
+use shopium\mod\cart\models\translate\PaymentTranslate;
+use shopium\mod\cart\models\DeliveryPayment;
 
 /**
  * Class m170908_134034_cart
  */
 class m170908_134034_cart extends Migration
 {
-    public $settingsForm = 'panix\mod\cart\models\forms\SettingsForm';
+    public $settingsForm = 'shopium\mod\cart\models\forms\SettingsForm';
 
     public function up()
     {

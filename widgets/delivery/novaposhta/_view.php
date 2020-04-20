@@ -1,7 +1,7 @@
 <?php
 use panix\engine\Html;
 use panix\ext\bootstrapselect\BootstrapSelect;
-use panix\mod\cart\models\forms\OrderCreateForm;
+use shopium\mod\cart\models\forms\OrderCreateForm;
 
 /**
  * @var \yii\web\View $this

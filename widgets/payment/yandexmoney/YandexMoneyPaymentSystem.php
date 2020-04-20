@@ -1,10 +1,10 @@
 <?php
-namespace panix\mod\cart\widgets\payment\yandexmoney;
+namespace shopium\mod\cart\widgets\payment\yandexmoney;
 
-use panix\mod\cart\widgets\payment\yandexmoney\YandexMoneyConfigurationModel;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\components\payment\BasePaymentSystem;
+use shopium\mod\cart\widgets\payment\yandexmoney\YandexMoneyConfigurationModel;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\components\payment\BasePaymentSystem;
 use yii\web\NotFoundHttpException;
 use Yii;
 /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace panix\mod\cart\models\search;
+namespace shopium\mod\cart\models\search;
 
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\cart\models\OrderStatus;
+use shopium\mod\cart\models\OrderStatus;
 
 class OrderStatusSearch extends OrderStatus {
 

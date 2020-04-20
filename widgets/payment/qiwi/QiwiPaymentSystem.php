@@ -1,13 +1,13 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\qiwi;
+namespace shopium\mod\cart\widgets\payment\qiwi;
 
 use panix\engine\CMS;
 use panix\engine\Html;
 use Yii;
-use panix\mod\cart\models\Order;
-use panix\mod\cart\models\Payment;
-use panix\mod\cart\components\payment\BasePaymentSystem;
+use shopium\mod\cart\models\Order;
+use shopium\mod\cart\models\Payment;
+use shopium\mod\cart\components\payment\BasePaymentSystem;
 
 /**
  * Qiwi payment system

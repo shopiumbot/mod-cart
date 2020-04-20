@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\migrations;
+namespace shopium\mod\cart\migrations;
 
 /**
  * Generation migrate by PIXELION CMS
@@ -9,7 +9,7 @@ namespace panix\mod\cart\migrations;
  * Class m170915_134424_promocode
  */
 use yii\db\Migration;
-use panix\mod\cart\models\PromoCode;
+use shopium\mod\cart\models\PromoCode;
 
 /**
  * Class m170915_134424_promocode

@@ -4,8 +4,8 @@ use panix\engine\Html;
 
 /**
  * @var $form \yii\widgets\ActiveForm
- * @var $model \panix\mod\cart\models\forms\OrderCreateForm
- * @var $deliveryMethods \panix\mod\cart\models\Delivery
+ * @var $model \shopium\mod\cart\models\forms\OrderCreateForm
+ * @var $deliveryMethods \shopium\mod\cart\models\Delivery
  */
 ?>
 <?php if ($deliveryMethods) { ?>

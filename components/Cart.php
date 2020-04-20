@@ -1,12 +1,12 @@
 <?php
 
-namespace panix\mod\cart\components;
+namespace shopium\mod\cart\components;
 
-use panix\mod\shop\models\ProductVariant;
+use shopium\mod\shop\models\ProductVariant;
 use Yii;
 use yii\base\Component;
-use panix\mod\shop\models\Product;
-use panix\mod\shop\models\Currency;
+use shopium\mod\shop\models\Product;
+use shopium\mod\shop\models\Currency;
 use yii\web\Response;
 use yii\web\Session;
 
@@ -34,7 +34,7 @@ class Cart extends Component
     private $session;
     public $data = [];
 
-    /** @var \panix\mod\shop\models\Product */
+    /** @var \shopium\mod\shop\models\Product */
     protected $productModel;
 
     public function init()
@@ -47,7 +47,7 @@ class Cart extends Component
             $this->session['cart_data'] = [];
 
 
-        /** @var \panix\mod\shop\models\Product $productModel */
+        /** @var \shopium\mod\shop\models\Product $productModel */
         $this->productModel = Yii::$app->getModule('shop')->model('Product');
 
     }

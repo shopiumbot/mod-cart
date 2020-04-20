@@ -1,9 +1,9 @@
 <?php
 
-namespace panix\mod\cart\models\search;
+namespace shopium\mod\cart\models\search;
 
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\cart\models\Payment;
+use shopium\mod\cart\models\Payment;
 
 class PaymentSearch extends Payment {
 

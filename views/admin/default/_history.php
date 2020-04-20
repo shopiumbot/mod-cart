@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \panix\mod\cart\models\Order $model
+ * @var \shopium\mod\cart\models\Order $model
  */
 $history = $model->getHistory();
 

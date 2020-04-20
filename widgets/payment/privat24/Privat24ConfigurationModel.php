@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\payment\privat24;
+namespace shopium\mod\cart\widgets\payment\privat24;
 
 use Yii;
 use panix\engine\base\Model;

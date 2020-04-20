@@ -3,7 +3,7 @@ use panix\engine\Html;
 use panix\engine\CMS;
 
 /**
- * @var \panix\mod\cart\models\Order $model
+ * @var \shopium\mod\cart\models\Order $model
  */
 ?>
 <table width="100%">

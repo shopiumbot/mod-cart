@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Query;
-use panix\mod\cart\models\Order;
+use shopium\mod\cart\models\Order;
 
 ?>
 <div class="card">

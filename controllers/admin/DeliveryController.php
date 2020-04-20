@@ -1,12 +1,12 @@
 <?php
 
-namespace panix\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers\admin;
 
 
-use panix\mod\cart\components\delivery\DeliverySystemManager;
+use shopium\mod\cart\components\delivery\DeliverySystemManager;
 use Yii;
-use panix\mod\cart\models\search\DeliverySearch;
-use panix\mod\cart\models\Delivery;
+use shopium\mod\cart\models\search\DeliverySearch;
+use shopium\mod\cart\models\Delivery;
 use panix\engine\controllers\AdminController;
 use yii\web\HttpException;
 
@@ -65,7 +65,7 @@ class DeliveryController extends AdminController
     {
         $model = Delivery::findModel($id);
         $isNew = $model->isNewRecord;
-        \panix\mod\cart\CartDeliveryAsset::register($this->view);
+        \shopium\mod\cart\CartDeliveryAsset::register($this->view);
 
         $this->breadcrumbs[] = [
             'label' => Yii::t('cart/admin', 'ORDERS'),

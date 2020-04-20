@@ -1,10 +1,10 @@
 <?php
 
-namespace panix\mod\cart\models\search;
+namespace shopium\mod\cart\models\search;
 
 use Yii;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\cart\models\Order;
+use shopium\mod\cart\models\Order;
 
 class OrderSearch extends Order
 {

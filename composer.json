@@ -1,7 +1,7 @@
 {
-    "name": "panix/mod-cart",
+    "name": "shopium/mod-cart",
     "description": "Коризина",
-    "homepage": "https://github.com/andrtechno/mod-cart",
+    "homepage": "https://github.com/shopium/mod-cart",
     "type": "yii2-extension",
     "license": "MIT",
     "authors": [
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "panix\\mod\\cart\\": ""
+            "shopium\\mod\\cart\\": ""
         }
     }
 }

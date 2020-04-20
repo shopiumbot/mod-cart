@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models\translate;
+namespace shopium\mod\cart\models\translate;
 
 use yii\db\ActiveRecord;
 
@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
  *
  * @property string $name
  * @property string $description
- * @package panix\mod\cart\models\translate
+ * @package shopium\mod\cart\models\translate
  */
 class PaymentTranslate extends ActiveRecord
 {

@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use panix\engine\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use panix\mod\shop\models\Manufacturer;
-use panix\mod\shop\models\Category;
+use shopium\mod\shop\models\Manufacturer;
+use shopium\mod\shop\models\Category;
 
 $form = ActiveForm::begin();
 print_r($model->categories);

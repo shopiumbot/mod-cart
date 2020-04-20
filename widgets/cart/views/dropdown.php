@@ -1,9 +1,9 @@
 <?php
 use yii\helpers\Html;
-use panix\mod\shop\models\Product;
+use shopium\mod\shop\models\Product;
 
-/** @var $currency \panix\mod\shop\components\CurrencyManager */
-/** @var $items[] \panix\mod\shop\models\Product */
+/** @var $currency \shopium\mod\shop\components\CurrencyManager */
+/** @var $items[] \shopium\mod\shop\models\Product */
 ?>
 <div class="cart">
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\components\events;
+namespace shopium\mod\cart\components\events;
 
 use yii\base\ModelEvent;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\promocode;
+namespace shopium\mod\cart\widgets\promocode;
 
 use Yii;
 use yii\helpers\ArrayHelper;

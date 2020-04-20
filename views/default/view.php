@@ -2,11 +2,11 @@
 
 use panix\engine\Html;
 use yii\helpers\Url;
-use panix\mod\shop\models\Product;
+use shopium\mod\shop\models\Product;
 use panix\engine\bootstrap\Alert;
 
 /**
- * @var \panix\mod\cart\models\Order $model
+ * @var \shopium\mod\cart\models\Order $model
  */
 $config = Yii::$app->settings->get('shop');
 $currency = Yii::$app->currency;
@@ -31,7 +31,7 @@ if (Yii::$app->session->hasFlash('success-promocode')) {
         <?php
 
 
-        /* $liqpay = new \panix\mod\cart\widgets\payment\liqpay\LiqPay('i61699065543', 'ztgu6RktfUWoSCxEDuoBsOlbm762LQScuQ01c0BI');
+        /* $liqpay = new \shopium\mod\cart\widgets\payment\liqpay\LiqPay('i61699065543', 'ztgu6RktfUWoSCxEDuoBsOlbm762LQScuQ01c0BI');
          $html = $liqpay->cnb_form(array(
              'action' => 'pay',
              'amount' => '1',
@@ -59,7 +59,7 @@ if (Yii::$app->session->hasFlash('success-promocode')) {
                 </thead>
                 <tbody>
                 <?php foreach ($model->getOrderedProducts()->getModels() as $product) {
-                    /** @var \panix\mod\cart\models\OrderProduct $product */
+                    /** @var \shopium\mod\cart\models\OrderProduct $product */
 
                     //$model->getOrderedProducts()->getData()    ?>
                     <tr>
@@ -107,14 +107,14 @@ if (Yii::$app->session->hasFlash('success-promocode')) {
                     <td colspan="3">
                         <?php
                         echo Html::beginForm();
-                        echo panix\mod\cart\widgets\promocode\PromoCodeWidget::widget([
+                        echo shopium\mod\cart\widgets\promocode\PromoCodeWidget::widget([
                             'model' => $model,
                             'attribute' => 'promocode_id'
                         ]);
                         echo Html::error($model, 'promocode_id');
                         echo Html::endForm();
 
-                        /*echo \panix\mod\cart\widgets\promocode\PromoCodeInput::widget([
+                        /*echo \shopium\mod\cart\widgets\promocode\PromoCodeInput::widget([
                             'model' => $model,
                             'attribute' => 'promocode_id',
                             'options' => [

@@ -5,7 +5,7 @@ use panix\engine\bootstrap\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use panix\ext\tinymce\TinyMce;
-use panix\mod\shop\models\Currency;
+use shopium\mod\shop\models\Currency;
 
 ?>
 

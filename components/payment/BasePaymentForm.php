@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\components\payment;
+namespace shopium\mod\cart\components\payment;
 
 use yii\base\Model;
 

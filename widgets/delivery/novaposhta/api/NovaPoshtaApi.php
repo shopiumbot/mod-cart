@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\widgets\delivery\novaposhta\api;
+namespace shopium\mod\cart\widgets\delivery\novaposhta\api;
 
 use Yii;
 use yii\helpers\ArrayHelper;

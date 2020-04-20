@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\models\forms;
+namespace shopium\mod\cart\models\forms;
 
 use Yii;
 

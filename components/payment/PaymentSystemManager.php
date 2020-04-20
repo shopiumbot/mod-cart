@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\cart\components\payment;
+namespace shopium\mod\cart\components\payment;
 
 class PaymentSystemManager extends \yii\base\Component {
 
@@ -46,12 +46,12 @@ class PaymentSystemManager extends \yii\base\Component {
 
     protected function getDefaultModelClasses() {
         return [
-            'QiwiPaymentSystem' => 'panix\mod\cart\widgets\payment\qiwi\QiwiPaymentSystem',
-            'LiqPayPaymentSystem' => 'panix\mod\cart\widgets\payment\liqpay\LiqPayPaymentSystem',
-            'Privat24PaymentSystem' => 'panix\mod\cart\widgets\payment\privat24\Privat24PaymentSystem',
-            'RobokassaPaymentSystem' => 'panix\mod\cart\widgets\payment\robokassa\RobokassaPaymentSystem',
-            'WebMoneyPaymentSystem' => 'panix\mod\cart\widgets\payment\webmoney\WebMoneyPaymentSystem',
-            'YandexMoneyPaymentSystem' => 'panix\mod\cart\widgets\payment\yandexmoney\YandexMoneyPaymentSystem',
+            'QiwiPaymentSystem' => 'shopium\mod\cart\widgets\payment\qiwi\QiwiPaymentSystem',
+            'LiqPayPaymentSystem' => 'shopium\mod\cart\widgets\payment\liqpay\LiqPayPaymentSystem',
+            'Privat24PaymentSystem' => 'shopium\mod\cart\widgets\payment\privat24\Privat24PaymentSystem',
+            'RobokassaPaymentSystem' => 'shopium\mod\cart\widgets\payment\robokassa\RobokassaPaymentSystem',
+            'WebMoneyPaymentSystem' => 'shopium\mod\cart\widgets\payment\webmoney\WebMoneyPaymentSystem',
+            'YandexMoneyPaymentSystem' => 'shopium\mod\cart\widgets\payment\yandexmoney\YandexMoneyPaymentSystem',
         ];
     }
 

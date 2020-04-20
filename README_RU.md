@@ -34,7 +34,7 @@ php composer require --prefer-dist panix/mod-cart "*"
 Добавить в файл конфига.
 ```
 'modules' => [
-    'cart' => ['class' => 'panix\mod\cart\Module'],
+    'cart' => ['class' => 'shopium\mod\cart\Module'],
 ]
 ```
 

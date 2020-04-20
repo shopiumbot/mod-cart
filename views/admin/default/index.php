@@ -3,7 +3,7 @@
 use panix\engine\Html;
 use panix\engine\widgets\Pjax;
 use panix\engine\grid\GridView;
-use panix\mod\cart\models\Order;
+use shopium\mod\cart\models\Order;
 
 ?>
 
