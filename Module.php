@@ -2,7 +2,7 @@
 
 namespace shopium\mod\cart;
 
-use shopium\mod\admin\widgets\sidebar\BackendNav;
+use panix\mod\admin\widgets\sidebar\BackendNav;
 use Yii;
 use panix\engine\WebModule;
 use shopium\mod\cart\models\Order;
