@@ -83,6 +83,7 @@ class OrderSearch extends Order
         if ($this->price_min) {
             $query->applyPrice($this->price_min, '>=');
         }
+        $query->andFilterWhere(['checkout'=>1]);
 
         $query->andFilterWhere(['like', 'user_name', $this->user_name]);
         $query->andFilterWhere(['like', 'user_phone', $this->user_phone]);
