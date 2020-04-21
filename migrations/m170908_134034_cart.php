@@ -111,7 +111,6 @@ class m170908_134034_cart extends Migration
             'id' => $this->primaryKey()->unsigned(),
             'currency_id' => $this->integer()->unsigned(),
             'name' => $this->string(255),
-            'description' => $this->text(),
             'switch' => $this->boolean()->defaultValue(1),
             'payment_system' => $this->string(100),
             'ordern' => $this->integer()->unsigned(),
@@ -124,7 +123,6 @@ class m170908_134034_cart extends Migration
             'free_from' => $this->money(10, 2)->null(),
             'system' => $this->string(100),
             'name' => $this->string(255),
-            'description' => $this->text(),
             'switch' => $this->boolean()->defaultValue(1),
             'ordern' => $this->integer()->unsigned(),
         ], $this->tableOptions);
@@ -145,19 +143,19 @@ class m170908_134034_cart extends Migration
         ]);
 
 
-        $this->batchInsert(Payment::tableName(), ['currency_id', 'ordern', 'name', 'description'], [
-            [1, 1, 'Наличными', ''],
-            [1, 2, 'Наличными', ''],
+        $this->batchInsert(Payment::tableName(), ['currency_id', 'ordern', 'name'], [
+            [1, 1, 'Наличными'],
+            [1, 2, 'Наличными2'],
         ]);
 
 
-        $this->batchInsert(Delivery::tableName(), ['ordern', 'name', 'description'], [
-            [1, 'Самовывоз', ''],
-            [2, 'Новая почта', ''],
+        $this->batchInsert(Delivery::tableName(), ['ordern', 'name'], [
+            [1, 'Самовывоз'],
+            [2, 'Новая почта'],
         ]);
 
 
-        $columns = ['object_id', 'language_id', 'name', 'description'];
+
 
 
         if ($this->db->driverName != "sqlite") {
