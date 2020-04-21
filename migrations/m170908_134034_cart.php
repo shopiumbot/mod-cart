@@ -30,8 +30,8 @@ class m170908_134034_cart extends Migration
     {
         // create table order
         $this->createTable(Order::tableName(), [
-            'id' => $this->primaryKey()->unsigned(),
-            'user_id' => $this->integer()->unsigned(),
+            'id' => $this->bigPrimaryKey()->unsigned(),
+            'user_id' => $this->bigInteger()->unsigned(),
             'secret_key' => $this->string(10)->notNull(),
             'delivery_id' => $this->integer()->notNull()->unsigned(),
             'payment_id' => $this->integer()->notNull()->unsigned(),
@@ -67,8 +67,8 @@ class m170908_134034_cart extends Migration
 
         // create table order products
         $this->createTable(OrderProduct::tableName(), [
-            'id' => $this->primaryKey()->unsigned(),
-            'order_id' => $this->integer()->notNull()->unsigned(),
+            'id' => $this->bigPrimaryKey()->unsigned(),
+            'order_id' => $this->bigInteger()->notNull()->unsigned(),
             'product_id' => $this->integer()->notNull()->unsigned(),
             'currency_id' => $this->integer()->unsigned(),
             'supplier_id' => $this->integer()->unsigned(),
