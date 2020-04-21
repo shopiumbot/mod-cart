@@ -41,7 +41,7 @@ class OrderSearch extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = Order::find()->where(['checkout'=>1]);
         $className = substr(strrchr(__CLASS__, "\\"), 1);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -83,7 +83,7 @@ class OrderSearch extends Order
         if ($this->price_min) {
             $query->applyPrice($this->price_min, '>=');
         }
-        $query->andFilterWhere(['checkout'=>1]);
+
 
         $query->andFilterWhere(['like', 'user_name', $this->user_name]);
         $query->andFilterWhere(['like', 'user_phone', $this->user_phone]);

@@ -4,6 +4,7 @@ namespace shopium\mod\cart\models;
 
 use Yii;
 use panix\engine\Html;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -133,7 +134,7 @@ class Order extends ActiveRecord
             [['user_name', 'user_email', 'discount', 'ttn'], 'string', 'max' => 100],
             [['ttn'], 'default'],
             [['invoice'], 'string', 'max' => 50],
-            ['paid', 'boolean'],
+            [['paid','checkout'], 'boolean'],
             ['delivery_id', 'validateDelivery'],
             ['payment_id', 'validatePayment'],
             ['status_id', 'validateStatus'],
@@ -242,10 +243,10 @@ class Order extends ActiveRecord
         foreach ($products as $product) {
             /** @var OrderProduct $product */
 
-           // $currency_rate = Yii::$app->currency->active['rate'];
-           // if ($product->originalProduct) {
-           //     $this->total_price += $product->price * $currency_rate * $product->quantity;
-           // }
+            // $currency_rate = Yii::$app->currency->active['rate'];
+            // if ($product->originalProduct) {
+            //     $this->total_price += $product->price * $currency_rate * $product->quantity;
+            // }
 
             if ($product->originalProduct) {
                 $this->total_price += $product->price * $product->quantity;
@@ -309,6 +310,31 @@ class Order extends ActiveRecord
             return $this->status->color;
     }
 
+    public function behaviors()
+    {
+        $b = [];
+        if (isset($columns['created_at']) && isset($columns['updated_at'])) {
+            $b['timestamp'] = [
+                'class' => TimestampBehavior::class,
+            ];
+        }
+
+        return $b;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+
+        if (isset($this->behaviors['timestamp'])) {
+            $updatedAt = $this->behaviors['timestamp']->updatedAtAttribute;
+            if (isset($this->{$updatedAt})) {
+                $this->touch($updatedAt);
+            }
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     /**
      * @return mixed
      */
@@ -356,8 +382,8 @@ class Order extends ActiveRecord
         if (!$this->isNewRecord) {
             $image = NULL;
 
-            if($product->getImage()){
-                $image = "/uploads/store/product/{$product->id}/".basename($product->getImage()->getPathToOrigin());
+            if ($product->getImage()) {
+                $image = "/uploads/store/product/{$product->id}/" . basename($product->getImage()->getPathToOrigin());
             }
             $ordered_product = new OrderProduct;
             $ordered_product->order_id = $this->id;
@@ -375,14 +401,15 @@ class Order extends ActiveRecord
         }
         return false;
     }
+
     public function addProduct($product, $quantity, $price)
     {
 
         if (!$this->isNewRecord) {
             $image = NULL;
 
-            if($product->getImage()){
-                $image = "/uploads/store/product/{$product->id}/".basename($product->getImage()->getPathToOrigin());
+            if ($product->getImage()) {
+                $image = "/uploads/store/product/{$product->id}/" . basename($product->getImage()->getPathToOrigin());
             }
             $ordered_product = new OrderProduct();
             $ordered_product->order_id = $this->id;
@@ -398,6 +425,7 @@ class Order extends ActiveRecord
         }
         return false;
     }
+
     /**
      * Delete ordered product from order
      *
@@ -481,17 +509,17 @@ class Order extends ActiveRecord
      */
     public function sendClientEmail()
     {
-		if ($this->user_email) {
-			$mailer = Yii::$app->mailer;
-			$mailer->htmlLayout = '@cart/mail/layouts/client';
-			$mailer->compose('@cart/mail/order.tpl', ['order' => $this])
-				->setFrom('noreply@' . Yii::$app->request->serverName)
-				->setTo($this->user_email)
-				->setSubject(Yii::t('cart/default', 'MAIL_CLIENT_SUBJECT', $this->id))
-				->send();
+        if ($this->user_email) {
+            $mailer = Yii::$app->mailer;
+            $mailer->htmlLayout = '@cart/mail/layouts/client';
+            $mailer->compose('@cart/mail/order.tpl', ['order' => $this])
+                ->setFrom('noreply@' . Yii::$app->request->serverName)
+                ->setTo($this->user_email)
+                ->setSubject(Yii::t('cart/default', 'MAIL_CLIENT_SUBJECT', $this->id))
+                ->send();
 
-			return $mailer;
-		}
+            return $mailer;
+        }
     }
 
 }
