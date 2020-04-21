@@ -87,11 +87,11 @@ class DeliveryController extends AdminController
             if($model->validate()){
                 $model->save();
 
-                if ($model->system) {
+               /* if ($model->system) {
                     $manager = new DeliverySystemManager;
                     $system = $manager->getSystemClass($model->system);
                     $system->saveAdminSettings($model->id, $_POST);
-                }
+                }*/
 
                 return $this->redirectPage($isNew, $post);
             }

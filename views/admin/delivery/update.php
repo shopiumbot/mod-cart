@@ -19,24 +19,11 @@ $form = ActiveForm::begin();
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'price')->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'free_from')->textInput(['maxlength' => 255]) ?>
-        <?=
-        $form->field($model, 'system')->dropDownList($model->getDeliverySystemsArray(), [
-            'prompt' => html_entity_decode(Yii::t('cart/default','SELECT_SYSTEM_DELIVERY')),
-            'data-id'=>$model->id
-        ]);
-        ?>
+
         <div id="delivery_configuration"></div>
-        <?=
-        $form->field($model, 'payment_methods')->dropDownList(ArrayHelper::map(Payment::find()->all(), 'id', 'name'), [
-            'prompt' => html_entity_decode(Yii::t('cart/default','SELECT_SYSTEM_PAYMENT')),
-            'multiple' => true
-        ]);
-        ?>
+
         <div id="payment_configuration"></div>
-        <?= $form->field($model, 'description')->widget(TinyMce::class, [
-            'options' => ['rows' => 6]
-        ]);
-        ?>
+
     </div>
     <div class="card-footer text-center">
         <?= $model->submitButton(); ?>

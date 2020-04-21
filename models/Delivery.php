@@ -13,7 +13,6 @@ use panix\engine\db\ActiveRecord;
  * @property float $free_from
  * @property string $system
  * @property string $name
- * @property string $description
  *
  * @package shopium\mod\cart\models
  */
@@ -56,9 +55,9 @@ class Delivery extends ActiveRecord
             [['system'], 'default'],
             // ['price, free_from', 'number'],
 
-            ['payment_methods', 'validatePaymentMethods'],
+            //['payment_methods', 'validatePaymentMethods'],
             ['name', 'string', 'max' => 255],
-            [['description', 'price', 'free_from', 'system'], 'string'],
+            [['price', 'free_from', 'system'], 'string'],
         ];
     }
 

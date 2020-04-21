@@ -27,7 +27,6 @@ echo GridView::widget([
             'class' => '\panix\engine\grid\sortable\Column',
         ],
         'name',
-        'description:html',
         [
             'class' => 'panix\engine\grid\columns\ActionColumn',
             'template' => '{update} {switch} {delete}',

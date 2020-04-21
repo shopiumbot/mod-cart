@@ -20,25 +20,9 @@ $form = ActiveForm::begin();
     <div class="card-body">
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
-        <?=
-        $form->field($model, 'currency_id')->dropDownList(ArrayHelper::map(Currency::find()->all(), 'id', 'name'), [
-            'prompt' => Yii::t('shop/Product','SELECT_CURRENCY', [
-                'currency' => Yii::$app->currency->main['iso']
-            ])
-        ]);
-        ?>
-        <?=
-        $form->field($model, 'payment_system')->dropDownList($model->getPaymentSystemsArray(), [
-            'prompt' => html_entity_decode(Yii::t('cart/default','SELECT_SYSTEM_PAYMENT')),
-            'rel' => $model->id
-        ]);
-        ?>
-        <div id="payment_configuration"></div>
-        <?= $form->field($model, 'description')->widget(TinyMce::class, [
-            'options' => ['rows' => 6]
-        ]);
-        ?>
 
+
+        <div id="payment_configuration"></div>
 
     </div>
     <div class="card-footer text-center">

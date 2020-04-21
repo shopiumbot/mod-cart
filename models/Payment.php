@@ -28,10 +28,10 @@ class Payment extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'currency_id'], 'required'],
+            [['name'], 'required'],
             [['name'], 'trim'],
             [['name', 'payment_system'], 'string', 'max' => 255],
-            [['id', 'name', 'description', 'switch'], 'safe'],
+            [['id', 'name', 'switch'], 'safe'],
         ];
     }
 

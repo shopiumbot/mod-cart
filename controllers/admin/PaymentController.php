@@ -93,12 +93,12 @@ class PaymentController extends AdminController
         if ($model->load($post) && $model->validate()) {
             $model->save();
 
-            if ($model->payment_system) {
+            /*if ($model->payment_system) {
                 $manager = new PaymentSystemManager;
                 $system = $manager->getSystemClass($model->payment_system);
                 $system->saveAdminSettings($model->id, $_POST);
                 // print_r($system);die;
-            }
+            }*/
 
             return $this->redirectPage($isNew, $post);
         }
