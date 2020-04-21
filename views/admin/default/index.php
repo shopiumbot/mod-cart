@@ -30,7 +30,7 @@ echo GridView::widget([
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) {
                 /** @var $model Order */
-                return $model->getGridStatus() . ' ' . $model::t('NEW_ORDER_ID', ['id' => \panix\engine\CMS::idToNumber($model->id)]);
+                return $model->getGridStatus() . ' ' . Yii::t('cart/Order','NEW_ORDER_ID', ['id' => \panix\engine\CMS::idToNumber($model->id)]);
             }
         ],
         'user_name',
@@ -45,7 +45,7 @@ echo GridView::widget([
             'contentOptions' => ['class' => 'text-center'],
             'value' => function ($model) {
                 /** @var $model Order */
-                return Html::tel($model->user_phone);
+                return $model->user_phone;
             }
         ],
         [
