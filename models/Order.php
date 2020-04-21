@@ -57,7 +57,7 @@ class Order extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    public function ____behaviors()
     {
         $a = [];
         $a['historical'] = [
@@ -386,12 +386,12 @@ class Order extends ActiveRecord
             $ordered_product->price = $price;
 
             // Raise event
-            $event = new EventProduct([
+            /*$event = new EventProduct([
                 'product_model' => $product,
                 'ordered_product' => $ordered_product,
                 'quantity' => $quantity
             ]);
-            $this->eventProductAdded($event);
+            $this->eventProductAdded($event);*/
 
             return $ordered_product->save();
 
@@ -435,10 +435,10 @@ class Order extends ActiveRecord
         if ($model) {
             $model->delete();
 
-            $event = new EventProduct([
+            /*$event = new EventProduct([
                 'ordered_product' => $model
             ]);
-            $this->eventProductDeleted($event);
+            $this->eventProductDeleted($event);*/
         }
     }
 
@@ -488,11 +488,11 @@ class Order extends ActiveRecord
         foreach ($this->products as $product) {
             if (isset($data[$product->id])) {
                 if ((int)$product->quantity !== (int)$data[$product->id]) {
-                    $event = new ModelEvent($this, array(
+                    /*$event = new ModelEvent($this, array(
                         'ordered_product' => $product,
                         'new_quantity' => (int)$data[$product->id]
                     ));
-                    $this->onProductQuantityChanged($event);
+                    $this->onProductQuantityChanged($event);*/
                     //$this->trigger('onProductQuantityChanged');
                 }
 
