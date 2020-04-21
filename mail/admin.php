@@ -4,7 +4,7 @@ use panix\engine\Html;
 use yii\helpers\Url;
 use shopium\mod\shop\models\Product;
 
-$currency = Yii::$app->currency->active['symbol'];
+
 $thStyle = 'border-color:#D8D8D8; border-width:1px; border-style:solid;';
 ?>
 
@@ -49,22 +49,11 @@ $thStyle = 'border-color:#D8D8D8; border-width:1px; border-style:solid;';
             <td style="<?= $thStyle; ?>">
                 <?= Html::a($row->name, Url::toRoute($row->originalProduct->getUrl(), true), ['target' => '_blank']); ?>
 
-                <?php
-
-                // Display variant options
-                if (!empty($row->variants)) {
-                    $variants = unserialize($row->variants);
-                    echo '<br/>'.Html::beginTag('small');
-                    foreach ($variants as $name=>$variant)
-                        echo ' - ' . $name . ': <strong>' . $variant . '</strong><br/>';
-                    echo Html::endTag('small');
-                }
-                ?>
 
             </td>
             <td style="<?= $thStyle; ?>" align="center"><?= $row->quantity ?></td>
-            <td style="<?= $thStyle; ?>" align="center"><strong><?= Yii::$app->currency->convert($row->price) ?></strong> <sup><?= $currency ?></sup></td>
-            <td style="<?= $thStyle; ?>" align="center"><strong><?= Yii::$app->currency->convert($row->price * $row->quantity) ?></strong><sup> <?= $currency ?></sup></td>
+            <td style="<?= $thStyle; ?>" align="center"><strong><?= $row->price ?></strong> <sup>грн.</sup></td>
+            <td style="<?= $thStyle; ?>" align="center"><strong><?= $row->price * $row->quantity ?></strong><sup> грн.</sup></td>
         </tr>
     <?php } ?>
 
@@ -78,10 +67,10 @@ $thStyle = 'border-color:#D8D8D8; border-width:1px; border-style:solid;';
 <?php } ?>
 
 <a href="#" class="btn">dasd</a>
-    <p><strong><?= Yii::t('cart/default', 'DETAIL_ORDER_VIEW') ?>:</strong><br/> <?= Html::a(Url::to($order->getUrl(),true),Url::to($order->getUrl(),true),['target'=>'_blank']);?></p>
+    <p><strong><?= Yii::t('cart/default', 'DETAIL_ORDER_VIEW') ?>:</strong><br/></p>
 <br/><br/>
 
 
 
 <?= Yii::t('cart/default', 'TOTAL_PAY') ?>:
-<h1 style="display:inline"><?= Yii::$app->currency->number_format($order->total_price + $order->delivery_price); ?> <sup><?= $currency; ?></sup></h1>
+<h1 style="display:inline"><?= Yii::$app->currency->number_format($order->total_price + $order->delivery_price); ?> <sup>грн.</sup></h1>

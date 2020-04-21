@@ -1,7 +1,7 @@
 {use class="Yii"}
 {use class="yii\helpers\Url"}
 {use class="panix\engine\Html"}
-{use class="shopium\mod\shop\models\Product"}
+{use class="core\modules\shop\models\Product"}
 
 
 {if $order.user_name}
@@ -37,35 +37,35 @@
     {foreach from=$order.products item=product}
         <tr>
             <td style="border-color:#D8D8D8; border-width:1px; border-style:solid;" align="center">
-                {Html::a(Html::img(Url::to($product->originalProduct->getMainImage('x100')->url,true), [
+                {Html::img(Url::to($product->originalProduct->getMainImage('x100')->url,true), [
                 'alt' => $product->name,
                 'title' => $product->name
-                ]),$product->originalProduct->getUrl(),['target'=>'_blank'])}
+                ])}
             </td>
-            <td style="border-color:#D8D8D8; border-width:1px; border-style:solid;">{Html::a($product->originalProduct->name, Url::to($product->originalProduct->getUrl(), true), ['target' => '_blank'])}</td>
+            <td style="border-color:#D8D8D8; border-width:1px; border-style:solid;">$product->originalProduct->name</td>
             <td style="border-color:#D8D8D8; border-width:1px; border-style:solid;"
                 align="center">{$product->quantity}</td>
             <td style="border-color:#D8D8D8; border-width:1px; border-style:solid;" align="center">
-                <strong>{$app->currency->number_format($app->currency->convert($product->price))}</strong>
-                <sup>{$app->currency->active['symbol']}</sup></td>
+                <strong>{$app->currency->number_format($product->price)}</strong>
+                <sup>грн</sup></td>
             <td style="border-color:#D8D8D8; border-width:1px; border-style:solid;" align="center">
-                <strong>{$app->currency->number_format($app->currency->convert($product->price * $product->quantity))}</strong>
-                <sup>{$app->currency->active['symbol']}</sup></td>
+                <strong>{$app->currency->number_format($product->price * $product->quantity)}</strong>
+                <sup>грн</sup></td>
         </tr>
     {/foreach}
 </table>
 
-<p><strong>{Yii::t('cart/default', 'DETAIL_ORDER_VIEW')}:</strong><br/>
-    {Html::a(Url::to($order->getUrl(),true),Url::to($order->getUrl(),true),['target'=>'_blank'])}</p>
+<p><strong>{Yii::t('cart/default', 'DETAIL_ORDER_VIEW')}:</strong></p>>
+
 <br/><br/><br/>
 {if $order.delivery_price}
     {Yii::t('cart/default', 'DELIVERY_PRICE')}:
     <h2 style="display:inline">{$app->currency->number_format($order->delivery_price)}
-        <sup>{$app->currency->active['symbol']}</sup>
+        <sup>грн</sup>
     </h2>
 {/if}
 
 {Yii::t('cart/default', 'TOTAL_PAY')}:
 <h1 style="display:inline">{$app->currency->number_format($order->total_price + $order->delivery_price)}
-    <sup>{$app->currency->active['symbol']}</sup>
+    <sup>грн</sup>
 </h1>
