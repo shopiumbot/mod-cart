@@ -35,32 +35,11 @@ class Module extends WebModule implements BootstrapInterface
 
     public function bootstrap($app)
     {
-        $app->urlManager->addRules(
-            [
-                'cart' => 'cart/default/index',
-                'cart/view/<secret_key:[0-9a-z]{10}$>' => 'cart/default/view',
-                'cart/remove/<id:\d+>' => 'cart/default/remove',
-                'cart/promo-code' => 'cart/default/promoCode',
-                // 'cart/clear' => 'cart/default/clear',
-                // 'cart/payment' => 'cart/default/payment',
-                // 'cart/recount' => 'cart/default/recount',
 
-                'cart/payment/process' => 'cart/payment/process',
-                'cart/delivery/process' => 'cart/delivery/process',
-                'cart/orders/<page:\d+>' => 'cart/default/orders',
-                'cart/orders' => 'cart/default/orders',
-                'cart/<action:[0-9a-zA-Z_\-]+>' => 'cart/default/<action>',
-                // 'cart/<action:[0-9a-zA-Z_\-]+>/*' => 'cart/default/<action>',
-
-            ],
-            true
-        );
         if (!(Yii::$app instanceof yii\console\Application)) {
             $app->counters[$this->id] = (int)$this->count['num'];
         }
-        $app->setComponents([
-            'cart' => ['class' => 'shopium\mod\cart\components\Cart'],
-        ]);
+
     }
 
     public function getInfo()
