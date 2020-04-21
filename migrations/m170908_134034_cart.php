@@ -151,7 +151,7 @@ class m170908_134034_cart extends Migration
         ]);
 
 
-        $this->batchInsert(Delivery::tableName(), ['ordern'], [
+        $this->batchInsert(Delivery::tableName(), ['ordern', 'name', 'description'], [
             [1, 'Самовывоз', ''],
             [2, 'Новая почта', ''],
         ]);
