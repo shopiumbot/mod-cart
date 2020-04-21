@@ -408,8 +408,11 @@ class Order extends ActiveRecord
         if (!$this->isNewRecord) {
             $image = NULL;
 
-            if ($product->getImage()) {
-                $image = "/uploads/store/product/{$product->id}/" . basename($product->getImage()->getPathToOrigin());
+            $imageData = $product->getImage();
+            if($imageData){
+                $image = "/uploads/store/product/{$product->id}/".basename($imageData->getPathToOrigin());
+            }else{
+                $image = '/uploads/no-image.jpg';
             }
             $ordered_product = new OrderProduct();
             $ordered_product->order_id = $this->id;
