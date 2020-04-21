@@ -2,8 +2,8 @@
 
 namespace shopium\mod\cart\models;
 
-use shopium\mod\shop\models\Product;
-use panix\engine\db\ActiveRecord;
+use core\modules\shop\models\Product;
+use yii\db\ActiveRecord;
 
 /**
  * Class OrderProduct

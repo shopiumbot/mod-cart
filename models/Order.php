@@ -6,7 +6,7 @@ use Yii;
 use yii\base\ModelEvent;
 use yii\helpers\ArrayHelper;
 use panix\engine\Html;
-use panix\engine\db\ActiveRecord;
+use yii\db\ActiveRecord;
 use shopium\mod\cart\components\events\EventProduct;
 use shopium\mod\cart\components\HistoricalBehavior;
 
@@ -204,28 +204,16 @@ class Order extends ActiveRecord
 
         if ($this->isNewRecord) {
             $this->secret_key = $this->createSecretKey();
-            $this->ip_create = Yii::$app->request->getUserIP();
-
-
-            if (!Yii::$app->user->isGuest)
-                $this->user_id = Yii::$app->user->id;
         }
 
 
         // Set `New` status
         if (!$this->status_id)
-            $this->status_id = 1;
+            $this->status_id = 0;
 
         return parent::beforeSave($insert);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-    }
 
     /**
      * @return bool
@@ -270,9 +258,13 @@ class Order extends ActiveRecord
         foreach ($products as $product) {
             /** @var OrderProduct $product */
 
-            $currency_rate = Yii::$app->currency->active['rate'];
+           // $currency_rate = Yii::$app->currency->active['rate'];
+           // if ($product->originalProduct) {
+           //     $this->total_price += $product->price * $currency_rate * $product->quantity;
+           // }
+
             if ($product->originalProduct) {
-                $this->total_price += $product->price * $currency_rate * $product->quantity;
+                $this->total_price += $product->price * $product->quantity;
             }
 
         }
@@ -374,19 +366,24 @@ class Order extends ActiveRecord
      * @param integer $quantity
      * @param float $price
      */
-    public function addProduct($product, $quantity, $price)
+    public function addProduct2($product, $quantity, $price)
     {
 
         if (!$this->isNewRecord) {
+            $image = NULL;
+
+            if($product->getImage()){
+                $image = "/uploads/store/product/{$product->id}/".basename($product->getImage()->getPathToOrigin());
+            }
             $ordered_product = new OrderProduct;
             $ordered_product->order_id = $this->id;
+            $ordered_product->image = $image;
             $ordered_product->product_id = $product->id;
             $ordered_product->currency_id = $product->currency_id;
             $ordered_product->name = $product->name;
             $ordered_product->quantity = $quantity;
             $ordered_product->sku = $product->sku;
             $ordered_product->price = $price;
-            $ordered_product->save();
 
             // Raise event
             $event = new EventProduct([
@@ -396,10 +393,35 @@ class Order extends ActiveRecord
             ]);
             $this->eventProductAdded($event);
 
+            return $ordered_product->save();
+
 
         }
+        return false;
     }
+    public function addProduct($product, $quantity, $price)
+    {
 
+        if (!$this->isNewRecord) {
+            $image = NULL;
+
+            if($product->getImage()){
+                $image = "/uploads/store/product/{$product->id}/".basename($product->getImage()->getPathToOrigin());
+            }
+            $ordered_product = new OrderProduct();
+            $ordered_product->order_id = $this->id;
+            $ordered_product->product_id = $product->id;
+            $ordered_product->image = $image;
+            //$ordered_product->client_id = $this->client_id;
+            // $ordered_product->currency_id = $product->currency_id;
+            $ordered_product->name = $product->name;
+            $ordered_product->quantity = $quantity;
+            //   $ordered_product->sku = $product->sku;
+            $ordered_product->price = $price;
+            return $ordered_product->save();
+        }
+        return false;
+    }
     /**
      * Delete ordered product from order
      *
