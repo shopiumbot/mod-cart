@@ -77,7 +77,7 @@ class DefaultController extends AdminController
     {
         $model = Order::findModel($id, Yii::t('cart/admin', 'ORDER_NOT_FOUND'));
         $isNew = $model->isNewRecord;
-        $this->pageName = ($isNew) ? $model::t('CREATE_ORDER') : $model::t('NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
+        $this->pageName = ($isNew) ? Yii::t('cart/Order','CREATE_ORDER') : Yii::t('cart/Order','NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
         $this->breadcrumbs = [
             [
                 'label' => Yii::t('cart/admin', 'ORDERS'),

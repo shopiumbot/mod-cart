@@ -19,7 +19,6 @@ return [
     'ADMIN_COMMENT' => 'Комментарий администратора',
     'INVOICE' => 'Номер накладной',
     'ORDER_ID' => 'Номер заказа',
-    'IP_CREATE' => 'IP адрес',
     'DISCOUNT' => 'Скидка',
     'SECRET_KEY' => 'Секретный ключ',
     'USER_AGENT' => 'User-агент',

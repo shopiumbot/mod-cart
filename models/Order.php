@@ -134,7 +134,7 @@ class Order extends ActiveRecord
             [['user_name', 'user_email', 'discount', 'ttn'], 'string', 'max' => 100],
             [['ttn'], 'default'],
             [['invoice'], 'string', 'max' => 50],
-            [['paid','checkout'], 'boolean'],
+            [['paid', 'checkout'], 'boolean'],
             ['delivery_id', 'validateDelivery'],
             ['payment_id', 'validatePayment'],
             ['status_id', 'validateStatus'],
@@ -504,6 +504,21 @@ class Order extends ActiveRecord
         return $mailer;
     }
 
+    public function attributeLabels()
+    {
+
+        return [
+            'status_id' => Yii::t('cart/Order', 'STATUS_ID'),
+            'delivery_id' => Yii::t('cart/Order', 'DELIVERY_ID'),
+            'payment_id' => Yii::t('cart/Order', 'PAYMENT_ID'),
+            'total_price' => Yii::t('cart/Order', 'TOTAL_PRICE'),
+            'user_phone' => Yii::t('cart/Order', 'USER_PHONE'),
+            'invoice' => Yii::t('cart/Order', 'INVOICE'),
+
+
+        ];
+    }
+
     /**
      * @return \yii\mail\MailerInterface
      */
@@ -522,4 +537,16 @@ class Order extends ActiveRecord
         }
     }
 
+    public static function findModel($id, $message = null)
+    {
+
+        if (($model = static::findOne($id)) !== null) {
+            //if (($model = static::find()->one((int)$id)) !== null) {
+            return $model;
+        } else {
+            if (!$id)
+                return new static();
+            throw new NotFoundHttpException($message ? $message : Yii::t('app/error', 404));
+        }
+    }
 }

@@ -55,7 +55,7 @@ echo GridView::widget([
                     $priceValue = $model->price;
                 }
                 $price = Yii::$app->currency->number_format($priceValue) . ' ' . Yii::$app->currency->main['symbol'];
-                return (($model->originalProduct) ? Html::a($model->name . ' [' . $model->product_id . ']', $model->originalProduct->getUrl()) : $model->name).'<br/>'.$price;
+                return (($model->originalProduct) ? $model->name : $model->name).'<br/>'.$price;
             },
         ],
         [

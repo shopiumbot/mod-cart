@@ -18,13 +18,14 @@ $form = ActiveForm::begin();
         ?>
         <?=
         $form->field($model, 'payment_id')->dropDownList(ArrayHelper::map(Payment::find()->all(), 'id', 'name'), [
-            'prompt' => html_entity_decode($model::t('SELECT_PAYMENT'))
+            'prompt' => html_entity_decode(Yii::t('cart/Order','SELECT_PAYMENT'))
         ]);
         ?>
         <?=
         $form->field($model, 'delivery_id')->dropDownList(ArrayHelper::map(Delivery::find()->all(), 'id', 'name'), [
-            'prompt' => html_entity_decode($model::t('SELECT_DELIVERY'))
+            'prompt' => html_entity_decode(Yii::t('cart/Order','SELECT_DELIVERY'))
         ]);
+        ?>
         <?= $form->field($model, 'ttn')->textInput()->hint('После заполнение ТТН, клиенту будет отправлено уведомление на почту.'); ?>
         <?= $form->field($model, 'paid')->checkbox(); ?>
         <?= $form->field($model, 'user_name')->textInput(); ?>
