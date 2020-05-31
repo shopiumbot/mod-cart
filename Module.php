@@ -17,7 +17,7 @@ class Module extends WebModule implements BootstrapInterface
     {
         if (!(Yii::$app instanceof yii\console\Application) && !Yii::$app->user->isGuest) {
             $count = Order::find()->where(['status_id' => 1])->count();
-            $this->count['num'] = $count;
+            $this->count['num'] = (int) $count;
             $this->count['label'] = Yii::t('cart/default', 'WP_COUNT', ['num' => $this->count['num']]);
             $this->count['url'] = ['/admin/cart', 'OrderSearch[status_id]' => 1];
         }
@@ -61,13 +61,13 @@ class Module extends WebModule implements BootstrapInterface
             'cart' => [
                 'label' => Yii::t('cart/admin', 'ORDERS'),
                 'icon' => $this->icon,
-                'badge' => $this->count['num'],
+                'badge' => (isset($this->count['num'])) ? $this->count['num'] : 0,
                 'badgeOptions' => ['id' => 'navbar-badge-cart','class' => 'badge badge-success badge-pulse-success'],
                 'items' => [
                     [
                         'label' => Yii::t('cart/admin', 'ORDERS_LIST'),
                         'url' => ['/admin/cart'],
-                        'badge' => $this->count['num'],
+                        'badge' => (isset($this->count['num'])) ? $this->count['num'] : 0,
                         'badgeOptions' => ['class' => 'badge badge-success badge-pulse'],
                         'icon' => $this->icon,
                     ],

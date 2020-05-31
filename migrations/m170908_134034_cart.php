@@ -39,6 +39,7 @@ class m170908_134034_cart extends Migration
             'promocode_id' => $this->integer()->null()->unsigned(),
             'delivery_price' => $this->money(10, 2),
             'total_price' => $this->money(10, 2),
+            'total_price_purchase' => $this->money(10, 2),
             'firstname' => $this->string(100),
             'lastname' => $this->string(100),
             'user_name' => $this->string(100),
@@ -157,13 +158,10 @@ class m170908_134034_cart extends Migration
         ]);
 
 
-
-
-
         if ($this->db->driverName != "sqlite") {
-           // $this->addForeignKey('{{%fk_order_status}}', Order::tableName(), 'status_id', OrderStatus::tableName(), 'id', "NO ACTION", "NO ACTION");
-           // $this->addForeignKey('{{%fk_order_payment}}', Order::tableName(), 'payment_id', Payment::tableName(), 'id', "NO ACTION", "NO ACTION");
-           // $this->addForeignKey('{{%fk_order_delivery}}', Order::tableName(), 'delivery_id', Delivery::tableName(), 'id', "NO ACTION", "NO ACTION");
+            // $this->addForeignKey('{{%fk_order_status}}', Order::tableName(), 'status_id', OrderStatus::tableName(), 'id', "NO ACTION", "NO ACTION");
+            // $this->addForeignKey('{{%fk_order_payment}}', Order::tableName(), 'payment_id', Payment::tableName(), 'id', "NO ACTION", "NO ACTION");
+            // $this->addForeignKey('{{%fk_order_delivery}}', Order::tableName(), 'delivery_id', Delivery::tableName(), 'id', "NO ACTION", "NO ACTION");
             //$this->addForeignKey('{{%fk_product_order}}', OrderProduct::tableName(), 'order_id', Order::tableName(), 'id', "CASCADE", "CASCADE");
         }
 
