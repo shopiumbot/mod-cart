@@ -37,7 +37,8 @@ class Module extends WebModule implements BootstrapInterface
     {
 
         if (!(Yii::$app instanceof yii\console\Application)) {
-            $app->counters[$this->id] = (int)$this->count['num'];
+            if ($this->count)
+                $app->counters[$this->id] = $this->count['num'];
         }
 
     }
