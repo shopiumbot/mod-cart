@@ -7,10 +7,10 @@ use Yii;
 use yii\helpers\Url;
 use yii\web\Response;
 use panix\engine\controllers\AdminController;
-use shopium\mod\shop\models\Product;
+use core\modules\shop\models\Product;
 use shopium\mod\cart\models\Order;
 use shopium\mod\cart\models\OrderProduct;
-use shopium\mod\shop\models\search\ProductSearch;
+use core\modules\shop\models\search\ProductSearch;
 use shopium\mod\cart\models\search\OrderSearch;
 use Mpdf\Mpdf;
 
@@ -21,7 +21,7 @@ class DefaultController extends AdminController
     {
         $currentDate = CMS::date(time());
         $model = Order::findModel($id);
-        $title = $model::t('NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
+        $title = Yii::t('cart/Order','NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
         $mpdf = new Mpdf([
             // 'debug' => true,
             //'mode' => 'utf-8',
@@ -47,8 +47,8 @@ class DefaultController extends AdminController
         ]));
         $mpdf->WriteHTML(file_get_contents(Yii::getAlias('@vendor/panix/engine/pdf/assets/mpdf-bootstrap.min.css')), 1);
         $mpdf->WriteHTML($this->renderPartial('_pdf_order', ['model' => $model]), 2);
-        echo $mpdf->Output($model::t('NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]) . ".pdf", 'I');
-		die;
+        echo $mpdf->Output(Yii::t('cart/Order','NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]) . ".pdf", 'I');
+        die;
     }
 
     public function actionIndex()

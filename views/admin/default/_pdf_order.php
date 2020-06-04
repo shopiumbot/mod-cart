@@ -112,7 +112,7 @@ $currency = Yii::$app->currency;
                     if($product->sku){
                         echo $product->getAttributeLabel('sku').': <strong>'.$product->sku.'</strong>; ';
                     }
-                    $query = \shopium\mod\shop\models\Attribute::find();
+                    $query = \core\modules\shop\models\Attribute::find();
                     $query->where(['IN', 'name', array_keys($originalProduct->eavAttributes)]);
                     $query->displayOnPdf();
                     $query->sort();
@@ -121,7 +121,7 @@ $currency = Yii::$app->currency;
                     $attributes = $originalProduct->eavAttributes;
                     foreach ($result as $q) {
                         echo $q->title . ': ';
-                        echo '<strong>'.$q->renderValue($attributes[$q->name]) . '</strong>; ';
+                        echo '<strong>'.$q->renderValue($attributes[$q->name]) . '</strong>;<br/>';
                     }
                     ?>
                     <br/>
