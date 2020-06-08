@@ -4,7 +4,7 @@ namespace shopium\mod\cart;
 
 use panix\mod\admin\widgets\sidebar\BackendNav;
 use Yii;
-use panix\engine\WebModule;
+use core\components\WebModule;
 use shopium\mod\cart\models\Order;
 use yii\base\BootstrapInterface;
 
