@@ -4,7 +4,7 @@ namespace shopium\mod\cart\controllers\admin;
 
 use panix\engine\Html;
 use Yii;
-use panix\engine\controllers\AdminController;
+use core\components\controllers\AdminController;
 use shopium\mod\cart\models\OrderStatus;
 use shopium\mod\cart\models\search\OrderStatusSearch;
 use yii\web\HttpException;

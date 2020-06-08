@@ -7,7 +7,7 @@ use shopium\mod\cart\models\Order;
 use Yii;
 use yii\db\Query;
 use yii\web\NotFoundHttpException;
-use panix\engine\controllers\AdminController;
+use core\components\controllers\AdminController;
 use panix\engine\pdf\Pdf;
 use shopium\mod\shop\models\Product;
 use shopium\mod\cart\models\OrderProduct;

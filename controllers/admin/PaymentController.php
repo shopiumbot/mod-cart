@@ -7,7 +7,7 @@ use shopium\mod\cart\models\search\PaymentSearch;
 use shopium\mod\cart\models\Payment;
 use shopium\mod\cart\components\payment\PaymentSystemManager;
 use panix\engine\Html;
-use panix\engine\controllers\AdminController;
+use core\components\controllers\AdminController;
 
 class PaymentController extends AdminController
 {

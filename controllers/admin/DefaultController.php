@@ -6,7 +6,7 @@ use panix\engine\CMS;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Response;
-use panix\engine\controllers\AdminController;
+use core\components\controllers\AdminController;
 use core\modules\shop\models\Product;
 use shopium\mod\cart\models\Order;
 use shopium\mod\cart\models\OrderProduct;

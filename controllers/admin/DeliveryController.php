@@ -7,7 +7,7 @@ use shopium\mod\cart\components\delivery\DeliverySystemManager;
 use Yii;
 use shopium\mod\cart\models\search\DeliverySearch;
 use shopium\mod\cart\models\Delivery;
-use panix\engine\controllers\AdminController;
+use core\components\controllers\AdminController;
 use yii\web\HttpException;
 
 class DeliveryController extends AdminController
