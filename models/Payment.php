@@ -3,7 +3,7 @@
 namespace shopium\mod\cart\models;
 
 use shopium\mod\cart\components\payment\PaymentSystemManager;
-use panix\engine\db\ActiveRecord;
+use core\components\ActiveRecord;
 
 /**
  * Class Payment

@@ -4,7 +4,7 @@ namespace shopium\mod\cart\models;
 
 
 use shopium\mod\cart\components\delivery\DeliverySystemManager;
-use panix\engine\db\ActiveRecord;
+use core\components\ActiveRecord;
 
 /**
  * Class Delivery

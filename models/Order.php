@@ -2,10 +2,11 @@
 
 namespace shopium\mod\cart\models;
 
+use shopium\mod\telegram\models\User;
 use Yii;
 use panix\engine\Html;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use core\components\ActiveRecord;
 
 /**
  * Class Order
@@ -97,6 +98,12 @@ class Order extends ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(OrderStatus::class, ['id' => 'status_id']);
+    }
+
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

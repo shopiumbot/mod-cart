@@ -23,6 +23,7 @@ return [
     'TABLE_PRODUCT' => 'Товар',
     'PAYMENT' => 'Оплата',
     'COST' => 'Стоимость',
+    'ORDERS_COUNTER'=> '{0, plural, =0{нет заказов} =1{один заказ} one{# заказ} few{# заказа} many{# заказов} other{# заказ}}',
     'ORDER_PRICE' => 'Сумма заказа',
     'DELIVERY_PRICE' => 'Цена доставки',
     'DELIVERY_PAYMENT' => 'Доставки и оплаты',

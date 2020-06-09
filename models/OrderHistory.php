@@ -2,7 +2,7 @@
 namespace shopium\mod\cart\models;
 
 use Yii;
-use panix\engine\db\ActiveRecord;
+use core\components\ActiveRecord;
 /**
  * This is the model class for table "OrderHistory".
  *

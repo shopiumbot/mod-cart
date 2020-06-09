@@ -1,17 +1,23 @@
 <?php
-namespace shopium\mod\cart\models;
-class OrderProductHistroy extends \panix\engine\db\ActiveRecord {
 
+namespace shopium\mod\cart\models;
+
+use core\components\ActiveRecord;
+
+class OrderProductHistroy extends ActiveRecord
+{
 
 
     /**
      * @return string the associated database table name
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return '{{%order__history_product}}';
     }
 
-    public function relations() {
+    public function relations()
+    {
         Yii::import('mod.shop.models.*');
         return array(
             'supplier' => array(self::BELONGS_TO, 'ShopSuppliers', 'supplier_id'),
@@ -30,7 +36,8 @@ class OrderProductHistroy extends \panix\engine\db\ActiveRecord {
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('product_id', 'required'),
             array('date_create', 'date', 'format' => 'yyyy-M-d H:m:s'),
@@ -41,7 +48,8 @@ class OrderProductHistroy extends \panix\engine\db\ActiveRecord {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         $this->_attrLabels = array(
             'id' => 'ID',
             'name' => Yii::t('CartModule.core', 'Название'),
@@ -54,7 +62,8 @@ class OrderProductHistroy extends \panix\engine\db\ActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->with = array('product');
         $criteria->compare('t.id', $this->id);
@@ -63,8 +72,8 @@ class OrderProductHistroy extends \panix\engine\db\ActiveRecord {
         $criteria->compare('t.date_create', $this->date_create, true);
 
         return new ActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
 }

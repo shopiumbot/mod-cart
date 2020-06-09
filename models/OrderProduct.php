@@ -3,7 +3,7 @@
 namespace shopium\mod\cart\models;
 
 use core\modules\shop\models\Product;
-use yii\db\ActiveRecord;
+use core\components\ActiveRecord;
 
 /**
  * Class OrderProduct
