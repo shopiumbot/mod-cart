@@ -7,6 +7,7 @@ use Yii;
 use panix\engine\Html;
 use yii\behaviors\TimestampBehavior;
 use core\components\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class Order
