@@ -28,6 +28,7 @@ class m170908_134034_cart extends Migration
 
     public function up()
     {
+
         // create table order
         $this->createTable(Order::tableName(), [
             'id' => $this->bigPrimaryKey()->unsigned(),
@@ -117,7 +118,7 @@ class m170908_134034_cart extends Migration
             'switch' => $this->boolean()->defaultValue(1),
             'payment_system' => $this->string(100),
             'ordern' => $this->integer()->unsigned(),
-        ], $this->tableOptions);
+        ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
 
 
         $this->createTable(Delivery::tableName(), [
@@ -128,7 +129,7 @@ class m170908_134034_cart extends Migration
             'name' => $this->string(255),
             'switch' => $this->boolean()->defaultValue(1),
             'ordern' => $this->integer()->unsigned(),
-        ], $this->tableOptions);
+        ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
 
         $this->createTable(DeliveryPayment::tableName(), [
             'id' => $this->primaryKey()->unsigned(),
