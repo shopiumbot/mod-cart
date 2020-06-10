@@ -2,13 +2,13 @@
 
 namespace shopium\mod\cart\models\query;
 
-use panix\engine\traits\query\DefaultQueryTrait;
+use core\components\traits\query\QueryTrait;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 
 class OrderQuery extends ActiveQuery
 {
-    use DefaultQueryTrait;
+    use QueryTrait;
 
     public function init()
     {
