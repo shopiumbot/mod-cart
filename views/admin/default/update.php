@@ -7,7 +7,7 @@ use panix\ext\fancybox\Fancybox;
 ?>
 <div class="row">
     <div class="col-sm-6">
-        <div class="card bg-light">
+        <div class="card">
             <div class="card-header">
                 <h5><?= Html::encode($this->context->pageName) ?></h5>
             </div>
