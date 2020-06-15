@@ -9,7 +9,18 @@ use panix\engine\bootstrap\ActiveForm;
 
 ?>
 <?php
-$form = ActiveForm::begin();
+$form = ActiveForm::begin([
+    'fieldConfig' => [
+        'template' => "<div class=\"col-sm-5 col-md-5 col-lg-4 col-xl-4\">{label}</div>\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+        'horizontalCssClasses' => [
+            'label' => 'col-form-label',
+            'offset' => 'offset-sm-5 offset-lg-4 offset-xl-4',
+            'wrapper' => 'col-sm-7 col-md-7 col-lg-8 col-xl-8',
+            'error' => '',
+            'hint' => '',
+        ],
+    ]
+]);
 ?>
     <div class="card-body">
 
