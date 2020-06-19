@@ -56,6 +56,13 @@ class m170908_134034_cart extends Migration
             'paid' => $this->boolean()->defaultValue(0),
             'checkout' => $this->boolean()->defaultValue(0),
             'ttn' => $this->string(100)->null(),
+            'city_id' => $this->string(36)->null(),
+            'area_id' => $this->string(36)->null(),
+            'warehouse_id' => $this->string(36)->null(),
+            'city' => $this->string(255)->null(),
+            'area' => $this->string(255)->null(),
+            'warehouse' => $this->string(255)->null(),
+
         ], $this->tableOptions);
 
         // create table order status

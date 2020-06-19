@@ -35,7 +35,7 @@ class NovaPoshtaArea extends ActiveRecord
 
     public static function find()
     {
-        return new query\DeliveryQuery(get_called_class());
+        return parent::find();
     }
 
 }
