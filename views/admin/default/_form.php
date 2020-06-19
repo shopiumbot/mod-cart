@@ -29,14 +29,36 @@ $form = ActiveForm::begin([
         ?>
         <?=
         $form->field($model, 'payment_id')->dropDownList(ArrayHelper::map(Payment::find()->all(), 'id', 'name'), [
-            'prompt' => html_entity_decode(Yii::t('cart/Order','SELECT_PAYMENT'))
+            'prompt' => html_entity_decode(Yii::t('cart/Order', 'SELECT_PAYMENT'))
         ]);
         ?>
         <?=
         $form->field($model, 'delivery_id')->dropDownList(ArrayHelper::map(Delivery::find()->all(), 'id', 'name'), [
-            'prompt' => html_entity_decode(Yii::t('cart/Order','SELECT_DELIVERY'))
+            'prompt' => html_entity_decode(Yii::t('cart/Order', 'SELECT_DELIVERY'))
         ]);
         ?>
+
+        <?php
+        if ($model->deliveryMethod->system) {
+            echo '<div class="form-group row field-order-ttn"><div class="offset-xl-4 col-sm-7 col-md-7 col-lg-8 col-xl-8">';
+            if ($model->area_id && $model->area) {
+                echo $model->area.' обл., ';
+            }
+            if ($model->city_id && $model->city) {
+                echo 'г. ' . $model->city.'<br/>';
+            }
+            if ($model->warehouse_id && $model->warehouse) {
+                $warehouse = \shopium\mod\cart\models\NovaPoshtaWarehouses::findOne(['Ref' => trim($model->warehouse_id)]);
+                if ($warehouse) {
+                    echo '' . $warehouse->DescriptionRu;
+                } else {
+                    echo 'Отделение: ' . $model->warehouse;
+                }
+            }
+            echo '</div></div>';
+        }
+        ?>
+
         <?= $form->field($model, 'ttn')->textInput()->hint('После заполнение ТТН, клиенту будет отправлено уведомление на почту.'); ?>
         <?= $form->field($model, 'paid')->checkbox(); ?>
         <?= $form->field($model, 'user_name')->textInput(); ?>
