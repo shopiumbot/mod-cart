@@ -17,6 +17,15 @@ use Mpdf\Mpdf;
 class DefaultController extends AdminController
 {
 
+    public function actions()
+    {
+        return [
+            'delete' => [
+                'class' => 'panix\engine\actions\DeleteAction',
+                'modelClass' => Order::class,
+            ],
+        ];
+    }
     public function actionPrint($id)
     {
         $currentDate = CMS::date(time());

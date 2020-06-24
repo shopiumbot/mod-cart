@@ -515,7 +515,7 @@ class Order extends ActiveRecord
         return $mailer;
     }
 
-    public function attributeLabels()
+    public function attributeLabels2()
     {
 
         return [

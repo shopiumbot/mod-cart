@@ -71,7 +71,7 @@ echo GridView::widget([
         ],
         [
             'class' => 'panix\engine\grid\columns\ActionColumn',
-            'template' => '{view} {print} {update}',
+            'template' => '{print} {update} {delete}',
             'buttons' => [
                 'print' => function ($url, $model, $key) {
                     return Html::a(Html::icon('print'), ['print', 'id' => $model->id], [
@@ -81,14 +81,6 @@ echo GridView::widget([
                         'target' => '_blank'
                     ]);
                 },
-                'view' => function ($url, $model, $key) {
-                    return Html::a(Html::icon('search'), $model->getUrl(), [
-                        'title' => Yii::t('cart/admin', 'ORDER_VIEW'),
-                        'class' => 'btn btn-sm btn-outline-secondary',
-                        'data-pjax' => 0,
-                        'target' => '_blank'
-                    ]);
-                }
             ]
         ]
     ]
