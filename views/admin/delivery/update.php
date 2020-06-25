@@ -19,7 +19,7 @@ $form = ActiveForm::begin();
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'price')->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'free_from')->textInput(['maxlength' => 255]) ?>
-
+        <?= $form->field($model, 'system')->dropDownList(['novaposhta'=>'Нова пошта'],['prompt'=>'---']) ?>
         <div id="delivery_configuration"></div>
 
         <div id="payment_configuration"></div>

@@ -156,13 +156,13 @@ class m170908_134034_cart extends Migration
 
         $this->batchInsert(Payment::tableName(), ['currency_id', 'ordern', 'name'], [
             [1, 1, 'Наличными'],
-            [1, 2, 'Наличными2'],
+            [1, 2, 'Кредитная карта'],
         ]);
 
 
-        $this->batchInsert(Delivery::tableName(), ['ordern', 'name'], [
-            [1, 'Самовывоз'],
-            [2, 'Новая почта'],
+        $this->batchInsert(Delivery::tableName(), ['ordern', 'name','system'], [
+            [1, 'Самовывоз',NULL],
+            [2, 'Новая почта','novaposhta'],
         ]);
 
 

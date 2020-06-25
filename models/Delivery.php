@@ -106,30 +106,7 @@ class Delivery extends ActiveRecord
         $this->_payment_methods = $data;
     }
 
-    public function getDeliverySystemsArray()
-    {
 
-        $result = [];
-
-        $systems = new DeliverySystemManager();
-
-        foreach ($systems->getSystems() as $system) {
-            $result[$system['id']] = $system['name'];
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return mixed|DeliverySystemManager
-     */
-    public function getDeliverySystemClass()
-    {
-        if ($this->system) {
-            $manager = new DeliverySystemManager;
-            return $manager->getSystemClass($this->system);
-        }
-    }
     /**
      * @return array
      */
