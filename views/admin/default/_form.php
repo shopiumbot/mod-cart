@@ -27,7 +27,7 @@ $form = ActiveForm::begin([
         <?=
         $form->field($model, 'status_id')
             ->dropDownList(ArrayHelper::map(OrderStatus::find()->all(), 'id', 'name'))
-            ->hint('Пользователю будет отправлено уведомление об изменение статуса.');
+            ->hint('После заполнение статуса, клиенту будет отправлено уведомление.');
         ?>
         <?=
         $form->field($model, 'payment_id')->dropDownList(ArrayHelper::map(Payment::find()->all(), 'id', 'name'), [
