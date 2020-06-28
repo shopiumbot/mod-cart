@@ -44,23 +44,29 @@ $form = ActiveForm::begin([
         if ($model->deliveryMethod->system) {
             echo '<div class="form-group row"><div class="offset-xl-4 col-sm-7 col-md-7 col-lg-8 col-xl-8">';
             if ($model->area_id && $model->area) {
-                echo $model->area.' обл., ';
+                echo $model->area . ' обл., ';
             }
             if ($model->city_id && $model->city) {
-                echo 'г. ' . $model->city.'<br/>';
+                echo 'г. ' . $model->city . '<br/>';
             }
-            if ($model->warehouse_id && $model->warehouse) {
+            /*if ($model->warehouse_id && $model->warehouse) {
                 $warehouse = \shopium\mod\cart\models\NovaPoshtaWarehouses::findOne(['Ref' => trim($model->warehouse_id)]);
                 if ($warehouse) {
                     echo '' . $warehouse->DescriptionRu;
                 } else {
                     echo 'Отделение: ' . $model->warehouse;
                 }
-            }
+            }*/
             echo '</div></div>';
         }
+
+        if ($model->warehouse_id && $model->warehouse) {
+            echo $form->field($model, 'user_address')->dropDownList(ArrayHelper::map(\shopium\mod\cart\models\NovaPoshtaWarehouses::find()->orderBy(['Number' => SORT_ASC])->where(['CityRef' => $model->city_id, 'POSTerminal' => 1])->all(), 'Ref', 'DescriptionRu'));
+        } else {
+            echo $form->field($model, 'user_address')->textInput();
+        }
         ?>
-        <?= $form->field($model, 'user_address')->textInput(); ?>
+
         <?= $form->field($model, 'invoice')->textInput(['maxlength' => 50])->hint('После заполнение ТТН, клиенту будет отправлено уведомление.'); ?>
         <?= $form->field($model, 'paid')->checkbox(); ?>
         <?= $form->field($model, 'user_name')->textInput(); ?>

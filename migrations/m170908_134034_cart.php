@@ -28,7 +28,9 @@ class m170908_134034_cart extends Migration
 
     public function up()
     {
-
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
+        }
         // create table order
         $this->createTable(Order::tableName(), [
             'id' => $this->bigPrimaryKey()->unsigned(),

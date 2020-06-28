@@ -5,7 +5,6 @@ return [
     'STATUS_NEW_NOTIFY' => 'Данный статус присваивается новому заказу',
     'ORDER_TITLE_UPDATE' => 'Редактирование заказа №{id}',
     'ORDER_TITLE_CREATE' => 'Создание заказа',
-    'MSG_BUYONECLICK' => 'Заказ оформлен через кнопку купить в 1 клик.',
     'CREATE_ORDER' => 'Добавить заказ',
     'ORDERS' => 'Заказы',
     'ORDERS_LIST' => 'Список заказов',
