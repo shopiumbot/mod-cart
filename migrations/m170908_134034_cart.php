@@ -123,7 +123,7 @@ class m170908_134034_cart extends Migration
             'currency_id' => $this->integer()->unsigned(),
             'name' => $this->string(255),
             'switch' => $this->boolean()->defaultValue(1),
-            'payment_system' => $this->string(100),
+            'system' => $this->string(100),
             'ordern' => $this->integer()->unsigned(),
         ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
 

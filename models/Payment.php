@@ -2,7 +2,6 @@
 
 namespace shopium\mod\cart\models;
 
-use shopium\mod\cart\components\payment\PaymentSystemManager;
 use core\components\ActiveRecord;
 
 /**
@@ -30,46 +29,10 @@ class Payment extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'trim'],
-            [['name', 'payment_system'], 'string', 'max' => 255],
+            [['name', 'system'], 'string', 'max' => 255],
             [['id', 'name', 'switch'], 'safe'],
         ];
     }
 
-    public function getPaymentSystemsArray()
-    {
-        // Yii::import('application.modules.shop.components.payment.PaymentSystemManager');
-        $result = array();
-
-        $systems = new PaymentSystemManager();
-
-        foreach ($systems->getSystems() as $system) {
-            $result[(string)$system->id] = $system->name;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Renders form display on the order view page
-     */
-    public function renderPaymentForm(Order $order)
-    {
-        if ($this->payment_system) {
-            $manager = new PaymentSystemManager;
-            $system = $manager->getSystemClass($this->payment_system);
-            return $system->renderPaymentForm($this, $order);
-        }
-    }
-
-    /**
-     * @return null|BasePaymentSystem
-     */
-    public function getPaymentSystemClass()
-    {
-        if ($this->payment_system) {
-            $manager = new PaymentSystemManager;
-            return $manager->getSystemClass($this->payment_system);
-        }
-    }
 
 }
