@@ -25,7 +25,9 @@ $form = ActiveForm::begin([
     <div class="card-body">
 
         <?=
-        $form->field($model, 'status_id')->dropDownList(ArrayHelper::map(OrderStatus::find()->all(), 'id', 'name'));
+        $form->field($model, 'status_id')
+            ->dropDownList(ArrayHelper::map(OrderStatus::find()->all(), 'id', 'name'))
+            ->hint('Пользователю будет отправлено уведомление об изменение статуса.');
         ?>
         <?=
         $form->field($model, 'payment_id')->dropDownList(ArrayHelper::map(Payment::find()->all(), 'id', 'name'), [
@@ -40,7 +42,7 @@ $form = ActiveForm::begin([
 
         <?php
         if ($model->deliveryMethod->system) {
-            echo '<div class="form-group row field-order-ttn"><div class="offset-xl-4 col-sm-7 col-md-7 col-lg-8 col-xl-8">';
+            echo '<div class="form-group row"><div class="offset-xl-4 col-sm-7 col-md-7 col-lg-8 col-xl-8">';
             if ($model->area_id && $model->area) {
                 echo $model->area.' обл., ';
             }
@@ -58,18 +60,14 @@ $form = ActiveForm::begin([
             echo '</div></div>';
         }
         ?>
-
-        <?= $form->field($model, 'ttn')->textInput()->hint('После заполнение ТТН, клиенту будет отправлено уведомление на почту.'); ?>
+        <?= $form->field($model, 'user_address')->textInput(); ?>
+        <?= $form->field($model, 'invoice')->textInput(['maxlength' => 50])->hint('После заполнение ТТН, клиенту будет отправлено уведомление.'); ?>
         <?= $form->field($model, 'paid')->checkbox(); ?>
         <?= $form->field($model, 'user_name')->textInput(); ?>
-        <?= $form->field($model, 'user_address')->textInput(); ?>
-        <?= $form->field($model, 'user_email')->textInput(); ?>
         <?= $form->field($model, 'user_phone')->widget(\panix\ext\telinput\PhoneInput::class); ?>
         <?= $form->field($model, 'user_comment')->textArea(); ?>
         <?= $form->field($model, 'admin_comment')->textArea(); ?>
-
         <?= $form->field($model, 'discount')->textInput(); ?>
-        <?= $form->field($model, 'invoice')->textInput(['maxlength' => 50]); ?>
     </div>
     <div class="card-footer text-center">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app/default', 'CREATE') : Yii::t('app/default', 'UPDATE'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

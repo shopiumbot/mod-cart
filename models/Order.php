@@ -22,7 +22,6 @@ use yii\web\NotFoundHttpException;
  * @property float $delivery_price
  * @property float $full_price
  * @property string $user_name
- * @property string $user_email
  * @property string $user_address
  * @property string $user_phone
  * @property string $user_comment
@@ -134,13 +133,12 @@ class Order extends ActiveRecord
     {
         return [
             ['user_phone', 'panix\ext\telinput\PhoneInputValidator'],
-            [['user_name', 'user_email', 'delivery_id', 'payment_id', 'user_phone'], 'required'],
-            ['user_email', 'email'],
+            [['user_name', 'delivery_id', 'payment_id', 'user_phone'], 'required'],
             [['user_comment', 'admin_comment'], 'string', 'max' => 500],
             [['user_address'], 'string', 'max' => 255],
             [['user_phone'], 'string', 'max' => 30],
-            [['user_name', 'user_email', 'discount', 'ttn'], 'string', 'max' => 100],
-            [['ttn'], 'default'],
+            [['user_name', 'discount'], 'string', 'max' => 100],
+            [['invoice'], 'default'],
             [['invoice'], 'string', 'max' => 50],
             [['paid', 'checkout'], 'boolean'],
             ['delivery_id', 'validateDelivery'],
@@ -532,7 +530,7 @@ class Order extends ActiveRecord
 
     /**
      * @return \yii\mail\MailerInterface
-     */
+
     public function sendClientEmail()
     {
         if ($this->user_email) {
@@ -546,7 +544,7 @@ class Order extends ActiveRecord
 
             return $mailer;
         }
-    }
+    }*/
 
     public static function findModel($id, $message = null)
     {

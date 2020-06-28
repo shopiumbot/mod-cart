@@ -2,6 +2,8 @@
 
 namespace shopium\mod\cart\controllers\admin;
 
+use Longman\TelegramBot\DB;
+use Longman\TelegramBot\Request;
 use panix\engine\CMS;
 use Yii;
 use yii\helpers\Url;
@@ -26,11 +28,12 @@ class DefaultController extends AdminController
             ],
         ];
     }
+
     public function actionPrint($id)
     {
         $currentDate = CMS::date(time());
         $model = Order::findModel($id);
-        $title = Yii::t('cart/Order','NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
+        $title = Yii::t('cart/Order', 'NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
         $mpdf = new Mpdf([
             // 'debug' => true,
             //'mode' => 'utf-8',
@@ -56,7 +59,7 @@ class DefaultController extends AdminController
         ]));
         $mpdf->WriteHTML(file_get_contents(Yii::getAlias('@vendor/panix/engine/pdf/assets/mpdf-bootstrap.min.css')), 1);
         $mpdf->WriteHTML($this->renderPartial('_pdf_order', ['model' => $model]), 2);
-        echo $mpdf->Output(Yii::t('cart/Order','NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]) . ".pdf", 'I');
+        echo $mpdf->Output(Yii::t('cart/Order', 'NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]) . ".pdf", 'I');
         die;
     }
 
@@ -86,7 +89,7 @@ class DefaultController extends AdminController
     {
         $model = Order::findModel($id, Yii::t('cart/admin', 'ORDER_NOT_FOUND'));
         $isNew = $model->isNewRecord;
-        $this->pageName = ($isNew) ? Yii::t('cart/Order','CREATE_ORDER') : Yii::t('cart/Order','NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
+        $this->pageName = ($isNew) ? Yii::t('cart/Order', 'CREATE_ORDER') : Yii::t('cart/Order', 'NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
         $this->breadcrumbs = [
             [
                 'label' => Yii::t('cart/admin', 'ORDERS'),
@@ -119,29 +122,27 @@ class DefaultController extends AdminController
         $post = Yii::$app->request->post();
         if ($model->load($post) && $model->validate()) {
             $model->save();
-
-            if (Yii::$app->settings->get('cart', 'notify_changed_status') && $old['status_id'] != $model->status_id) {
-                if ($model->user_email) {
-                    $mailer = Yii::$app->mailer;
-                    $mailer->htmlLayout = '@cart/mail/layouts/client';
-                    $mailer->compose(['html' => '@cart/mail/changed_status.tpl'], ['order' => $model])
-                        ->setFrom(['noreply@' . Yii::$app->request->serverName => Yii::$app->settings->get('app', 'sitename')])
-                        ->setTo([$model->user_email])
-                        ->setSubject(Yii::t('cart/default', 'MAIL_CHANGE_STATUS_SUBJECT', CMS::idToNumber($model->id)))
-                        ->send();
+            $api = Yii::$app->telegram;
+            if ($old['status_id'] != $model->status_id) {
+                $data['chat_id'] = $model->user_id;
+                $data['parse_mode'] = 'Markdown';
+                $data['text'] = "Ваш заказ *№" . CMS::idToNumber($model->id) . "*" . PHP_EOL;
+                $data['text'] .= "Статус: *{$model->status->name}*";
+                $response = Request::sendMessage($data);
+                if ($response->isOk()) {
+                    $db = DB::insertMessageRequest($response->getResult());
                 }
             }
 
 
-            if (isset($old['ttn']) != $model->ttn && !empty($model->ttn)) {
-                if ($model->user_email) {
-                    $mailer = Yii::$app->mailer;
-                    $mailer->htmlLayout = '@cart/mail/layouts/client';
-                    $mailer->compose(['html' => '@cart/mail/ttn.tpl'], ['order' => $model])
-                        ->setFrom(['noreply@' . Yii::$app->request->serverName => Yii::$app->settings->get('app', 'sitename')])
-                        ->setTo([$model->user_email])
-                        ->setSubject(Yii::t('cart/default', 'MAIL_TTN_SUBJECT', CMS::idToNumber($model->id)))
-                        ->send();
+            if ($old['invoice'] != $model->invoice && !empty($model->invoice)) {
+                $data['chat_id'] = $model->user_id;
+                $data['parse_mode'] = 'Markdown';
+                $data['text'] = "Ваш заказ *№" . CMS::idToNumber($model->id) . "*" . PHP_EOL;
+                $data['text'] .= "ТТН: *{$model->invoice}*";
+                $response = Request::sendMessage($data);
+                if ($response->isOk()) {
+                    $db = DB::insertMessageRequest($response->getResult());
                 }
             }
 
@@ -335,13 +336,13 @@ class DefaultController extends AdminController
         } else {
             $model->joinWith(['products p']);
             $model->between($dateStart, $dateEnd);
-            if(Yii::$app->request->get('render') == 'manufacturer'){
+            if (Yii::$app->request->get('render') == 'manufacturer') {
                 $view = 'pdf/manufacturer';
                 $model->andWhere(['not', ['p.manufacturer_id' => null]]);
                 $model->orderBy(['p.manufacturer_id' => SORT_DESC]);
 
             }
-            if(Yii::$app->request->get('render') == 'supplier'){
+            if (Yii::$app->request->get('render') == 'supplier') {
                 $view = 'pdf/supplier';
                 $model->andWhere(['not', ['p.supplier_id' => null]]);
                 $model->orderBy(['p.supplier_id' => SORT_DESC]);

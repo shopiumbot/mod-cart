@@ -20,7 +20,6 @@ class OrderCreateForm extends Model
     public static $category = 'cart';
     protected $module = 'cart';
     public $user_name;
-    public $user_email;
     public $user_phone;
     public $user_address;
     public $user_comment;
@@ -60,10 +59,9 @@ class OrderCreateForm extends Model
     public function rules()
     {
         return [
-            [['user_name', 'user_email', 'user_phone', 'user_address'], 'required'],
+            [['user_name', 'user_phone', 'user_address'], 'required'],
             [['delivery_id', 'payment_id'], 'required'],
             [['delivery_id', 'payment_id', 'promocode_id'], 'integer'],//
-            ['user_email', 'email'],
             ['user_comment', 'string'],
             [['user_address','delivery_city','delivery_address'], 'string', 'max' => 255],
             [['user_phone'], 'string', 'max' => 30],
@@ -114,7 +112,6 @@ class OrderCreateForm extends Model
             $user = new User(['scenario' => 'register_fast']);
             $user->password = CMS::gen(5);
             $user->username = $this->user_name;
-            $user->email = $this->user_email;
             //$user->address = $this->user_address;
             $user->phone = $this->user_phone;
             // $user->group_id = 2;

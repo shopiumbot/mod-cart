@@ -31,7 +31,6 @@ class SettingsForm extends \panix\engine\SettingsModel
 <p><strong>Контактные данные:</strong></p>
 <p>Имя: {user_name}</p>
 <p>Телефон: {user_phone}</p>
-<p>Почта: {user_email}</p>
 <p>Адрес: {user_address}</p>
 <p>Комментарий: {user_comment}</p>',
             'tpl_body_user' => '<p>Здравствуйте, <strong>{user_name}</strong></p>
