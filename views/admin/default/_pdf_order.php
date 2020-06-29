@@ -33,6 +33,25 @@ $currency = Yii::$app->currency;
         </td>
         <td width="50%" valign="top">
             <table border="0" cellspacing="0" cellpadding="5" style="width:100%;">
+                <?php if ($model->city_id) { ?>
+                    <tr>
+                        <td align="left" class="text-left" style="border-bottom: 1px dotted #777;">
+                            г.<strong><?= $model->city; ?></strong>
+                            <?php if ($model->area_id) { ?>
+                                обл. <strong><?= $model->area; ?></strong>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+                <?php if ($model->warehouse_id) {
+                    $s = \shopium\mod\cart\models\NovaPoshtaWarehouses::findOne(['Ref' => $model->warehouse_id]);
+                    //todo this need deleted, use user_adress ?>
+                    <tr>
+                        <td align="left" class="text-left" style="border-bottom: 1px dotted #777;">
+                           <?= $s->DescriptionRu; ?>
+                        </td>
+                    </tr>
+                <?php } ?>
                 <?php if ($model->user_address) { ?>
                     <tr>
                         <td align="left" class="text-left" style="border-bottom: 1px dotted #777;">
@@ -88,7 +107,7 @@ $currency = Yii::$app->currency;
             if ($originalProduct) {
                 $image = $originalProduct->getMainImage('50x50')->url;
             } else {
-                $image = '/uploads/no-image.png';
+                $image = '/uploads/no-image.jpg';
             }
 
             $price = $currency->convert($product->price, $product->currency_id);
@@ -101,26 +120,33 @@ $currency = Yii::$app->currency;
                     <?= $product->name; ?>
                     <br/>
                     <?php
-                    if($product->sku){
-                        echo $product->getAttributeLabel('sku').': <strong>'.$product->sku.'</strong>; ';
+                    if ($product->sku) {
+                        echo $product->getAttributeLabel('sku') . ': <strong>' . $product->sku . '</strong>; ';
                     }
-                    $query = \core\modules\shop\models\Attribute::find();
-                    $query->where(['IN', 'name', array_keys($originalProduct->eavAttributes)]);
-                    $query->displayOnPdf();
-                    $query->sort();
-                    $result = $query->all();
-                    // print_r($query);
-                    $attributes = $originalProduct->eavAttributes;
-                    foreach ($result as $q) {
-                        echo $q->title . ': ';
-                        echo '<strong>'.$q->renderValue($attributes[$q->name]) . '</strong>;<br/>';
-                    }
-                    ?>
+                    if ($originalProduct) {
+                        $query = \core\modules\shop\models\Attribute::find();
+                        $query->where(['IN', 'name', array_keys($originalProduct->eavAttributes)]);
+                        $query->displayOnPdf();
+                        $query->sort();
+                        $result = $query->all();
+                        // print_r($query);
+                        $attributes = $originalProduct->eavAttributes;
+                        foreach ($result as $q) {
+                            echo $q->title . ': ';
+                            echo '<strong>' . $q->renderValue($attributes[$q->name]) . '</strong>;<br/>';
+                        } ?>
+                    <?php } else { ?>
+                        <strong>Товар удален</strong>
+                    <?php } ?>
+
                     <br/>
                     <strong><?= $currency->number_format($price) ?></strong>
-                    <?= $currency->active['symbol'] ?> / <?= $originalProduct->units[$originalProduct->unit]; ?>
+                    <?= $currency->active['symbol'] ?>
+
                 </td>
-                <td align="center"><strong><?= $product->quantity; ?></strong> <?= $originalProduct->units[$originalProduct->unit]; ?></td>
+                <td align="center">
+                    <strong><?= $product->quantity; ?></strong>
+                </td>
                 <td align="center"><?= $currency->number_format($price) ?>
                     <?= $currency->active['symbol'] ?></td>
                 <td align="center"><?= $currency->number_format($price * $product->quantity) ?>

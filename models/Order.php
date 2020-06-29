@@ -316,7 +316,7 @@ class Order extends ActiveRecord
             return $this->status->color;
     }
 
-    public function behaviors()
+    public function behaviors2()
     {
         $b = [];
         if (isset($columns['created_at']) && isset($columns['updated_at'])) {

@@ -27,4 +27,7 @@ return [
     'CREATE_ORDER' => 'Добавить заказ',
     'SELECT_PAYMENT' => '&mdash; Оплата &mdash;',
     'SELECT_DELIVERY' => '&mdash; Доставка &mdash;',
+    'CITY' => 'Город',
+    'AREA' => 'Область',
+    'WAREHOUSE'=>'Отделение'
 ];
