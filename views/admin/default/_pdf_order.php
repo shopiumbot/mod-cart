@@ -126,6 +126,7 @@ $currency = Yii::$app->currency;
                     if ($originalProduct) {
                         $query = \core\modules\shop\models\Attribute::find();
                         $query->where(['IN', 'name', array_keys($originalProduct->eavAttributes)]);
+                        $query->published();
                         $query->displayOnPdf();
                         $query->sort();
                         $result = $query->all();
