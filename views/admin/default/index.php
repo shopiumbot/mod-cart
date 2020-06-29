@@ -35,11 +35,6 @@ echo GridView::widget([
         ],
         'user_name',
         [
-            'attribute' => 'user_email',
-            'format' => 'email',
-            'contentOptions' => ['class' => 'text-center'],
-        ],
-        [
             'attribute' => 'user_phone',
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center'],

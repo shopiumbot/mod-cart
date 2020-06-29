@@ -10,9 +10,6 @@
 {if $order.user_phone}
     <p><strong>{$order->getAttributeLabel('user_phone')}:</strong> {Html::tel($order->user_phone)}</p>
 {/if}
-{if $order.user_email}
-    <p><strong>{$order->getAttributeLabel('user_email')}:</strong> {$order->user_email}</p>
-{/if}
 {if $order.deliveryMethod.name}
     <p><strong>{$order->getAttributeLabel('delivery_id')}:</strong> {$order.deliveryMethod.name}</p>
 {/if}

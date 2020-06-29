@@ -17,9 +17,6 @@ $thStyle = 'border-color:#D8D8D8; border-width:1px; border-style:solid;';
     <p><strong><?= $order->getAttributeLabel('user_phone') ?>:</strong> <?= Html::tel($order->user_phone); ?></p>
 <?php } ?>
 
-<?php if ($order->user_email) { ?>
-    <p><strong><?= $order->getAttributeLabel('user_email') ?>:</strong> <?= $order->user_email; ?></p>
-<?php } ?>
 <?php if ($order->deliveryMethod->name) { ?>
     <p><strong><?= $order->getAttributeLabel('delivery_id') ?>:</strong> <?= $order->deliveryMethod->name; ?></p>
 <?php } ?>

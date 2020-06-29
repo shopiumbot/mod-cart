@@ -1,7 +1,6 @@
 <?php
 return [
     'USER_NAME' => 'Имя',
-    'USER_EMAIL' => 'Email',
     'QUANTITY' => 'количество(шт)',
     'USER_COMMENT' => 'Комментарий к заказу',
     'USER_ADDRESS' => 'Адрес доставки',

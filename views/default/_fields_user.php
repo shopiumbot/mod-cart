@@ -16,10 +16,6 @@ use panix\engine\Html;
 
 </div>
 
-<div class="form-group">
-    <?= $form->field($model, 'user_email'); ?>
-</div>
-
 
 <div class="form-group">
     <?= $form->field($model, 'user_comment')->textarea(['style' => 'resize:none;']); ?>

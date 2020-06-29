@@ -29,14 +29,6 @@ $currency = Yii::$app->currency;
                         </td>
                     </tr>
                 <?php } ?>
-                <?php if ($model->user_email) { ?>
-                    <tr>
-                        <td align="left" class="text-left" style="border-bottom: 1px dotted #777;">
-                            <?= $model->getAttributeLabel('user_email'); ?>:
-                            <strong><?= $model->user_email; ?></strong>
-                        </td>
-                    </tr>
-                <?php } ?>
             </table>
         </td>
         <td width="50%" valign="top">

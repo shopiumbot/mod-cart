@@ -276,7 +276,6 @@ class DefaultController extends WebController
         // Set main data
         $order->user_id = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
         $order->user_name = $this->form->user_name;
-        $order->user_email = $this->form->user_email;
         $order->user_phone = $this->form->user_phone;
         $order->user_address = $this->form->user_address;
         $order->user_comment = $this->form->user_comment;

@@ -40,7 +40,7 @@ class OrderCreateForm extends Model
             $this->user_name = $user->getDisplayName();
             $this->user_phone = $user->phone;
             //$this->user_address = Yii::app()->user->address; //comment for april
-            $this->user_email = $user->getEmail();
+            //$this->user_email = $user->getEmail();
 
         } else {
             //  $this->_password = User::encodePassword(CMS::gen((int) Yii::$app->settings->get('users', 'min_password') + 2));

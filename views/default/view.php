@@ -140,9 +140,6 @@ if (Yii::$app->session->hasFlash('success-promocode')) {
                     <div class="float-right font-weight-bold"><?= Html::encode($model->user_name); ?></div>
                 </div>
 
-                <div class="form-group"><?= $model->getAttributeLabel('user_email') ?>:
-                    <div class="float-right font-weight-bold"><?= Html::encode($model->user_email); ?></div>
-                </div>
 
                 <div class="form-group"><?= $model->getAttributeLabel('user_phone') ?>:
                     <div class="float-right font-weight-bold"><?= Html::tel($model->user_phone); ?></div>
