@@ -20,7 +20,11 @@ $form = ActiveForm::begin();
     <div class="card-body">
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
-
+        <?= $form->field($model, 'system')->dropDownList([
+            'liqpay'=>'LiqPay',
+            'yandexkassa'=>'ЯндексКасса',
+            'tranzzo'=>'Tranzzo'
+        ],['prompt'=>'---']) ?>
 
         <div id="payment_configuration"></div>
 
