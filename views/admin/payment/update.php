@@ -22,8 +22,8 @@ $form = ActiveForm::begin();
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'system')->dropDownList([
             'liqpay'=>'LiqPay',
-            'yandexkassa'=>'ЯндексКасса',
-            'tranzzo'=>'Tranzzo'
+            //'yandexkassa'=>'Яндекс.Касса',
+            //'tranzzo'=>'Tranzzo'
         ],['prompt'=>'---']) ?>
 
         <div id="payment_configuration"></div>
