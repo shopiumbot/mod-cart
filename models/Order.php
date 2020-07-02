@@ -328,7 +328,7 @@ class Order extends ActiveRecord
         return $b;
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave2($insert, $changedAttributes)
     {
 
 

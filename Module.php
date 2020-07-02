@@ -16,8 +16,8 @@ class Module extends WebModule implements BootstrapInterface
     public function init()
     {
         if (!(Yii::$app instanceof yii\console\Application) && !Yii::$app->user->isGuest) {
-            $count = Order::find()->where(['status_id' => 1])->count();
-            $this->count['num'] = (int) $count;
+            $count = Order::find()->where(['status_id' => 1, 'checkout' => 1])->count();
+            $this->count['num'] = (int)$count;
             $this->count['label'] = Yii::t('cart/default', 'WP_COUNT', ['num' => $this->count['num']]);
             $this->count['url'] = ['/admin/cart', 'OrderSearch[status_id]' => 1];
         }
@@ -62,7 +62,7 @@ class Module extends WebModule implements BootstrapInterface
                 'label' => Yii::t('cart/admin', 'ORDERS'),
                 'icon' => $this->icon,
                 'badge' => (isset($this->count['num'])) ? $this->count['num'] : 0,
-                'badgeOptions' => ['id' => 'navbar-badge-cart','class' => 'badge badge-success badge-pulse-success'],
+                'badgeOptions' => ['id' => 'navbar-badge-cart', 'class' => 'badge badge-success badge-pulse-success'],
                 'items' => [
                     [
                         'label' => Yii::t('cart/admin', 'ORDERS_LIST'),
@@ -75,7 +75,7 @@ class Module extends WebModule implements BootstrapInterface
                         'label' => Yii::t('cart/admin', 'PROMOCODE'),
                         'url' => ['/admin/cart/promo-code'],
                         'icon' => $this->icon,
-                        'visible'=>false
+                        'visible' => false
                     ],
                     [
                         'label' => Yii::t('cart/admin', 'STATUSES'),
