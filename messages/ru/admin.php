@@ -18,7 +18,7 @@ return [
     'PROMOCODE' => 'Промо-код',
     'OVER_PERIOD' => 'за период',
     'ORDER_PRINT' => 'Печать заказа',
-    'ORDER_VIEW' => 'Просмотр заказа',
+    //'ORDER_VIEW' => 'Просмотр заказа',
     'CREATE_PROMOCODE' => 'Добавить промо-код',
     'ERR_DELETE_STATUS' => 'Ошибка удаления статуса. Он используется заказами.',
     'ERR_ORDER_PRODUCT_EXISTS' => 'Ошибка, товар в этом заказе уже существует.',

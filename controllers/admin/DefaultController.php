@@ -106,12 +106,6 @@ class DefaultController extends AdminController
 
         $this->buttons = [
             [
-                'label' => Yii::t('cart/admin', 'ORDER_VIEW'),
-                'icon' => 'eye',
-                'url' => $model->getUrl(),
-                'options' => ['class' => 'btn btn-primary', 'target' => '_blank']
-            ],
-            [
                 'label' => Yii::t('cart/admin', 'PRINT_PDF'),
                 'icon' => 'print',
                 'url' => ['print', 'id' => $model->id],
