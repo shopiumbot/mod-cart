@@ -4,12 +4,19 @@ use yii\helpers\Html;
 
 use panix\ext\fancybox\Fancybox;
 
+/**
+ * @var \yii\web\View $this ;
+ * @var \shopium\mod\cart\models\Order $model
+ */
 ?>
 <div class="row">
     <div class="col-sm-6">
         <div class="card">
             <div class="card-header">
-                <h5><?= Html::encode($this->context->pageName) ?></h5>
+                <h5 class="float-left"><?= Html::encode($this->context->pageName) ?></h5>
+                <?php if (!$model->isNewRecord) { ?>
+                    <span class="badge badge-secondary float-right"><?= \panix\engine\CMS::date($model->created_at); ?></span>
+                <?php } ?>
             </div>
             <?= $this->render('_form', ['model' => $model]) ?>
         </div>

@@ -523,8 +523,6 @@ class Order extends ActiveRecord
             'total_price' => Yii::t('cart/Order', 'TOTAL_PRICE'),
             'user_phone' => Yii::t('cart/Order', 'USER_PHONE'),
             'invoice' => Yii::t('cart/Order', 'INVOICE'),
-
-
         ];
     }
 
@@ -557,5 +555,96 @@ class Order extends ActiveRecord
                 return new static();
             throw new NotFoundHttpException($message ? $message : Yii::t('app/error', 404));
         }
+    }
+
+
+
+    public function getGridColumns()
+    {
+
+
+        $columns = [];
+        $columns['id']=[
+            'attribute' => 'id',
+            'header' => Yii::t('cart/Order', 'ORDER_ID'),
+            'format' => 'html',
+            'contentOptions' => ['class' => 'text-left'],
+            'value' => function ($model) {
+                /** @var $model Order */
+                return $model->getGridStatus() . ' ' . Yii::t('cart/Order','NEW_ORDER_ID', ['id' => \panix\engine\CMS::idToNumber($model->id)]);
+            }
+        ];
+        $columns['user_name']=[
+            'attribute' => 'user_name',
+            'format' => 'raw',
+            'value' => function ($model) {
+                /** @var $model Order */
+                return $model->user_name;
+            }
+        ];
+         $columns['user_phone']=[
+            'attribute' => 'user_phone',
+            'format' => 'raw',
+            'contentOptions' => ['class' => 'text-center'],
+            'value' => function ($model) {
+                /** @var $model Order */
+                return Html::tel($model->user_phone);
+            }
+        ];
+        $columns['total_price']=[
+            'attribute' => 'total_price',
+            'format' => 'html',
+            'class' => 'panix\engine\grid\columns\jui\SliderColumn',
+            'max' => (int)Order::find()->aggregateTotalPrice('MAX'),
+            'min' => (int)Order::find()->aggregateTotalPrice('MIN'),
+            'prefix' => '<sup>' . Yii::$app->currency->main['symbol'] . '</sup>',
+            'contentOptions' => ['class' => 'text-center'],
+            'minCallback' => function ($value) {
+                return Yii::$app->currency->number_format($value);
+            },
+            'maxCallback' => function ($value) {
+                return Yii::$app->currency->number_format($value);
+            },
+            'value' => function ($model) {
+                /** @var $model Order */
+                $priceHtml = Yii::$app->currency->number_format(Yii::$app->currency->convert($model->total_price));
+                $symbol = Html::tag('sup', Yii::$app->currency->main['symbol']);
+                return Html::tag('span', $priceHtml, ['class' => 'text-success font-weight-bold']) . ' ' . $symbol;
+            }
+        ];
+
+        $columns['created_at'] = [
+            'attribute' => 'created_at',
+            'class' => 'panix\engine\grid\columns\jui\DatepickerColumn',
+        ];
+        $columns['updated_at'] = [
+            'attribute' => 'updated_at',
+            'class' => 'panix\engine\grid\columns\jui\DatepickerColumn',
+        ];
+
+        $columns['DEFAULT_CONTROL'] = [
+            'class' => 'panix\engine\grid\columns\ActionColumn',
+            'template' => '{print} {update} {delete}',
+            'buttons' => [
+                'print' => function ($url, $model, $key) {
+                    return Html::a(Html::icon('print'), ['print', 'id' => $model->id], [
+                        'title' => Yii::t('cart/admin', 'ORDER_PRINT'),
+                        'class' => 'btn btn-sm btn-info',
+                        'data-pjax' => 0,
+                        'target' => '_blank'
+                    ]);
+                },
+            ]
+        ];
+        $columns['DEFAULT_COLUMNS'] = [
+            [
+                'class' => \panix\engine\grid\sortable\Column::class,
+            ],
+            [
+                'class' => 'panix\engine\grid\columns\CheckboxColumn',
+            ]
+        ];
+
+        return $columns;
     }
 }

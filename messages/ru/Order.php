@@ -7,6 +7,7 @@ return [
     'DELIVERY_PRICE' => 'Цена доставки',
     'TOTAL_PRICE' => 'Сумма заказа',
     'CREATED_AT' => 'Дата заказа',
+    'UPDATED_AT' => 'Дата редактирования',
     'FULL_PRICE' => 'К оплате',
     'STATUS_ID' => 'Статус',
     'PAID' => 'Оплачен',

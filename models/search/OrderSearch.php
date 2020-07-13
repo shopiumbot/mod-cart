@@ -20,6 +20,7 @@ class OrderSearch extends Order
             [['id', 'status_id', 'price_min', 'price_max'], 'integer'],
             [['status_id', 'user_name', 'total_price'], 'safe'],
             [['user_phone'], 'string'],
+            [['created_at', 'updated_at'], 'date', 'format' => 'php:Y-m-d']
         ];
     }
 
