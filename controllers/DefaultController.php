@@ -84,7 +84,6 @@ class DefaultController extends WebController
                 return ActiveForm::validate($this->form);
             }
             if ($this->form->load($post) && $this->form->validate()) {
-                $this->form->registerGuest();
                 $order = $this->createOrder();
                 Yii::$app->cart->clear();
                 Yii::$app->session->setFlash('success', Yii::t('cart/default', 'SUCCESS_ORDER'));

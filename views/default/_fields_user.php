@@ -22,11 +22,5 @@ use panix\engine\Html;
 </div>
 
 
-<?php if (Yii::$app->user->isGuest && $model->registerGuest) { ?>
-    <div class="form-group">
-        <?= $form->field($model, 'registerGuest')->checkbox(); ?>
-    </div>
-<?php } ?>
-
 
 

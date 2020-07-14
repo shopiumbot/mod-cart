@@ -26,7 +26,6 @@ class OrderCreateForm extends Model
     public $delivery_id;
     public $payment_id;
     public $promocode_id;
-    public $registerGuest = false;
 
     //delivery
     public $delivery_city; //for delivery systems;
@@ -65,7 +64,6 @@ class OrderCreateForm extends Model
             ['user_comment', 'string'],
             [['user_address','delivery_city','delivery_address'], 'string', 'max' => 255],
             [['user_phone'], 'string', 'max' => 30],
-            ['registerGuest', 'boolean'],
             ['delivery_id', 'validateDelivery'],
             ['payment_id', 'validatePayment'],
 			['user_phone', 'panix\ext\telinput\PhoneInputValidator'],
@@ -104,42 +102,6 @@ class OrderCreateForm extends Model
     {
         if (Payment::find()->where(['id' => $this->payment_id])->count() == 0)
             $this->addError('payment_id', Yii::t('cart/OrderCreateForm', 'VALID_PAYMENT'));
-    }
-
-    public function registerGuest()
-    {
-        if (Yii::$app->user->isGuest && $this->registerGuest) {
-            $user = new User(['scenario' => 'register_fast']);
-            $user->password = CMS::gen(5);
-            $user->username = $this->user_name;
-            //$user->address = $this->user_address;
-            $user->phone = $this->user_phone;
-            // $user->group_id = 2;
-            if ($user->validate()) {
-                $user->save();
-                // $this->sendRegisterMail($user);
-                Yii::$app->session->setFlash('success_register', Yii::t('app/default', 'SUCCESS_REGISTER'));
-            } else {
-                $this->addError('registerGuest', 'Ошибка регистрации');
-                Yii::$app->session->setFlash('error_register', Yii::t('cart/default', 'ERROR_REGISTER'));
-                print_r($user->getErrors());
-                die('error register');
-            }
-        }
-    }
-
-    private function sendRegisterMail()
-    {
-        $mailer = Yii::$app->mail;
-        $mailer->From = 'noreply@' . Yii::$app->request->serverName;
-        $mailer->FromName = Yii::$app->settings->get('app', 'sitename');
-        $mailer->Subject = 'Вы загеристрованы';
-        $mailer->Body = 'Ваш пароль: ' . $this->_newpassword;
-        $mailer->AddAddress($this->email);
-        $mailer->AddReplyTo('noreply@' . Yii::$app->request->serverName);
-        $mailer->isHtml(true);
-        $mailer->Send();
-        $mailer->ClearAddresses();
     }
 
 }

@@ -9,7 +9,6 @@ return [
     'PAYMENT_ID' => 'Способ оплаты',
     'VALID_PAYMENT' => 'Необходимо выбрать способ опталы.',
     'VALID_DELIVERY' => 'Необходимо выбрать способ доставки.',
-    'REGISTERGUEST' => 'Зарегистрироватся',
     'DELIVERY_TYPE' => 'Тип доставки',
     'DELIVERY_ADDRESS' => 'Адрес доставки',
     'DELIVERY_CITY' => 'Город доставки'
