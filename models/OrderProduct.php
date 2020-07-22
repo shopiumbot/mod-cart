@@ -12,8 +12,10 @@ use core\components\ActiveRecord;
  * @property integer $product_id
  * @property integer $configurable_id
  * @property integer $currency_id
- * @property integer $supplier_id
+ * @property integer $manufacturer_id
+ * @property string $discount
  * @property string $name
+ * @property string $image
  * @property string $configurable_name
  * @property integer $quantity Quantity products
  * @property float $price Products price

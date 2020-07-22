@@ -8,6 +8,8 @@ namespace shopium\mod\cart\migrations;
  *
  * Class m170908_134034_cart
  */
+use shopium\mod\cart\models\OrderProductTemp;
+use shopium\mod\cart\models\OrderTemp;
 use Yii;
 use panix\engine\db\Migration;
 use shopium\mod\cart\models\Order;
@@ -62,7 +64,29 @@ class m170908_134034_cart extends Migration
             'city' => $this->string(255)->null(),
             'area' => $this->string(255)->null(),
             'warehouse' => $this->string(255)->null(),
+        ], $this->tableOptions);
 
+
+
+        $this->createTable(OrderTemp::tableName(), [
+           // 'id' => $this->bigPrimaryKey()->unsigned(),
+            'id' => $this->bigInteger()->unsigned(),
+            'promocode_id' => $this->integer()->null()->unsigned(),
+            'total_price' => $this->money(10, 2),
+        ], $this->tableOptions);
+
+        $this->addPrimaryKey('user_id',OrderTemp::tableName(),'user_id');
+
+        // create table order products
+        $this->createTable(OrderProductTemp::tableName(), [
+            'id' => $this->bigPrimaryKey()->unsigned(),
+            'order_id' => $this->bigInteger()->notNull()->unsigned(),
+            'product_id' => $this->integer()->notNull()->unsigned(),
+            'configurable_id' => $this->integer()->unsigned(),
+            'configurable_name' => $this->text(),
+            'configurable_data' => $this->text(),
+            'variants' => $this->text(),
+            'quantity' => $this->smallInteger(8),
         ], $this->tableOptions);
 
         // create table order status
@@ -80,7 +104,6 @@ class m170908_134034_cart extends Migration
             'order_id' => $this->bigInteger()->notNull()->unsigned(),
             'product_id' => $this->integer()->notNull()->unsigned(),
             'currency_id' => $this->integer()->unsigned(),
-            'supplier_id' => $this->integer()->unsigned(),
             'manufacturer_id' => $this->integer()->unsigned(),
             'configurable_id' => $this->integer()->unsigned(),
             'name' => $this->string(255),
@@ -212,7 +235,6 @@ class m170908_134034_cart extends Migration
         $this->createIndex('order_id', OrderProduct::tableName(), 'order_id');
         $this->createIndex('product_id', OrderProduct::tableName(), 'product_id');
         $this->createIndex('currency_id', OrderProduct::tableName(), 'currency_id');
-        $this->createIndex('supplier_id', OrderProduct::tableName(), 'supplier_id');
         $this->createIndex('configurable_id', OrderProduct::tableName(), 'configurable_id');
         $this->createIndex('manufacturer_id', OrderProduct::tableName(), 'manufacturer_id');
 

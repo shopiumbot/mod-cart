@@ -42,7 +42,7 @@ class OrderSearch extends Order
      */
     public function search($params)
     {
-        $query = Order::find()->where(['checkout'=>1])->andWhere(['!=', 'status_id', 0]);
+        $query = Order::find()->andWhere(['!=', 'status_id', 0]);
         $className = substr(strrchr(__CLASS__, "\\"), 1);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
