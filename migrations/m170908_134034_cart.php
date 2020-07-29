@@ -30,9 +30,7 @@ class m170908_134034_cart extends Migration
 
     public function up()
     {
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
-        }
+        $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci ENGINE=InnoDB';
         // create table order
         $this->createTable(Order::tableName(), [
             'id' => $this->bigPrimaryKey()->unsigned(),
@@ -64,7 +62,7 @@ class m170908_134034_cart extends Migration
             'city' => $this->string(255)->null(),
             'area' => $this->string(255)->null(),
             'warehouse' => $this->string(255)->null(),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
 
 
@@ -73,9 +71,8 @@ class m170908_134034_cart extends Migration
             'id' => $this->bigInteger()->unsigned(),
             'promocode_id' => $this->integer()->null()->unsigned(),
             'total_price' => $this->money(10, 2),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
-        $this->addPrimaryKey('user_id',OrderTemp::tableName(),'user_id');
 
         // create table order products
         $this->createTable(OrderProductTemp::tableName(), [
@@ -87,7 +84,7 @@ class m170908_134034_cart extends Migration
             'configurable_data' => $this->text(),
             'variants' => $this->text(),
             'quantity' => $this->smallInteger(8),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
         // create table order status
         $this->createTable(OrderStatus::tableName(), [
@@ -95,7 +92,7 @@ class m170908_134034_cart extends Migration
             'name' => $this->string(100),
             'color' => $this->string(7),
             'ordern' => $this->integer(),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
 
         // create table order products
@@ -116,7 +113,7 @@ class m170908_134034_cart extends Migration
             'sku' => $this->string(100),
             'price' => $this->money(10, 2),
             'price_purchase' => $this->money(10, 2)->comment('Цена закупки'),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
 
         // create table order history
@@ -129,7 +126,7 @@ class m170908_134034_cart extends Migration
             'data_before' => $this->text(),
             'data_after' => $this->text(),
             'date_create' => $this->datetime(),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
         // create table order history product
         $this->createTable(OrderProductHistroy::tableName(), [
@@ -137,7 +134,7 @@ class m170908_134034_cart extends Migration
             'order_id' => $this->integer()->notNull()->unsigned(),
             'product_id' => $this->integer()->notNull()->unsigned(),
             'date_create' => $this->datetime(),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
 
         // create table order history product
@@ -148,7 +145,7 @@ class m170908_134034_cart extends Migration
             'switch' => $this->boolean()->defaultValue(1),
             'system' => $this->string(100),
             'ordern' => $this->integer()->unsigned(),
-        ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
+        ], $tableOptions);
 
 
         $this->createTable(Delivery::tableName(), [
@@ -159,13 +156,13 @@ class m170908_134034_cart extends Migration
             'name' => $this->string(255),
             'switch' => $this->boolean()->defaultValue(1),
             'ordern' => $this->integer()->unsigned(),
-        ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
+        ], $tableOptions);
 
         $this->createTable(DeliveryPayment::tableName(), [
             'id' => $this->primaryKey()->unsigned(),
             'delivery_id' => $this->integer()->unsigned(),
             'payment_id' => $this->integer()->unsigned(),
-        ], $this->tableOptions);
+        ], $tableOptions);
 
 
         $this->addIndexes();
