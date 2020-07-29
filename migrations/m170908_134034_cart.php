@@ -73,6 +73,7 @@ class m170908_134034_cart extends Migration
             'total_price' => $this->money(10, 2),
         ], $tableOptions);
 
+        $this->createIndex('promocode_id', OrderTemp::tableName(), 'promocode_id');
 
         // create table order products
         $this->createTable(OrderProductTemp::tableName(), [
@@ -85,6 +86,9 @@ class m170908_134034_cart extends Migration
             'variants' => $this->text(),
             'quantity' => $this->smallInteger(8),
         ], $tableOptions);
+
+        $this->createIndex('order_id', OrderProductTemp::tableName(), 'order_id');
+        $this->createIndex('product_id', OrderProductTemp::tableName(), 'product_id');
 
         // create table order status
         $this->createTable(OrderStatus::tableName(), [
