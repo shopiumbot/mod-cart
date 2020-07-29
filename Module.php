@@ -16,7 +16,7 @@ class Module extends WebModule implements BootstrapInterface
     public function init()
     {
         if (!(Yii::$app instanceof yii\console\Application) && !Yii::$app->user->isGuest) {
-            $count = Order::find()->where(['status_id' => 1, 'checkout' => 1])->count();
+            $count = Order::find()->where(['status_id' => 1])->count();
             $this->count['num'] = (int)$count;
             $this->count['label'] = Yii::t('cart/default', 'WP_COUNT', ['num' => $this->count['num']]);
             $this->count['url'] = ['/admin/cart', 'OrderSearch[status_id]' => 1];

@@ -67,7 +67,8 @@ echo GridView::widget([
         [
             'attribute' => 'price',
             'format' => 'raw',
-            'contentOptions' => ['class' => 'text-center'],
+            'headerOptions'=>['class' => 'text-center'],
+            'contentOptions' => ['class' => 'text-center','style'=>'width:120px'],
             'footer' => Yii::$app->currency->number_format($model->total_price) . ' ' . Yii::$app->currency->main['symbol'],
             'value' => function ($model) {
                 return Yii::$app->currency->number_format($model->price) . ' ' . Yii::$app->currency->main['symbol'];
@@ -76,6 +77,7 @@ echo GridView::widget([
         [
             'class' => 'panix\engine\grid\columns\ActionColumn',
             'template' => '{delete}',
+            'headerOptions'=>['class' => 'text-center'],
             'buttons' => [
                 'delete' => function ($url, $data, $key) {
                     return Html::a('<i class="icon-delete"></i>', '#', [
