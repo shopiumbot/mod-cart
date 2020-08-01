@@ -65,15 +65,16 @@ class m170908_134034_cart extends Migration
         ], $tableOptions);
 
 
-
         $this->createTable(OrderTemp::tableName(), [
-           // 'id' => $this->bigPrimaryKey()->unsigned(),
+            // 'id' => $this->bigPrimaryKey()->unsigned(),
             'id' => $this->bigInteger()->unsigned(),
             'promocode_id' => $this->integer()->null()->unsigned(),
             'total_price' => $this->money(10, 2),
         ], $tableOptions);
 
         $this->createIndex('promocode_id', OrderTemp::tableName(), 'promocode_id');
+        $this->addPrimaryKey('id', OrderTemp::tableName(), 'id');
+
 
         // create table order products
         $this->createTable(OrderProductTemp::tableName(), [
@@ -184,9 +185,9 @@ class m170908_134034_cart extends Migration
         ]);
 
 
-        $this->batchInsert(Delivery::tableName(), ['ordern', 'name','system'], [
-            [1, 'Самовывоз',NULL],
-            [2, 'Новая почта','novaposhta'],
+        $this->batchInsert(Delivery::tableName(), ['ordern', 'name', 'system'], [
+            [1, 'Самовывоз', NULL],
+            [2, 'Новая почта', 'novaposhta'],
         ]);
 
 
