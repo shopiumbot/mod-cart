@@ -11,7 +11,7 @@ use panix\ext\fancybox\Fancybox;
 
 //$model->amoCRM($model);
 
-
+/*
 $amo = new \AmoCRM\Client('pixelion', 'andrew.panix@gmail.com', 'b58823639ceb496decfc9ec1ebfd4f963783bbf9');
 $lead = $amo->custom_field->getValues();
 $catalog_id = 3055;
@@ -53,7 +53,7 @@ $field['origin'] = '528d0285c1f9180911159a9dc6f759b3_zendesk_widget';
 
 //$id = $field->apiAdd();
 //\panix\engine\CMS::dump($id);
-
+*/
 ?>
 <div class="row">
     <div class="col-sm-6">
