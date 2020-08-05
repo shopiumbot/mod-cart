@@ -332,15 +332,134 @@ class Order extends ActiveRecord
     {
 
 
-        if (isset($this->behaviors['timestamp'])) {
+        /*if (isset($this->behaviors['timestamp'])) {
             $updatedAt = $this->behaviors['timestamp']->updatedAtAttribute;
             if (isset($this->{$updatedAt})) {
                 $this->touch($updatedAt);
             }
-        }
+        }*/
         parent::afterSave($insert, $changedAttributes);
     }
+    /**
+     * @param Order $order
+     */
+    public function amoCRM($order)
+    {
+        $amo = new \AmoCRM\Client('pixelion', 'andrew.panix@gmail.com', 'b58823639ceb496decfc9ec1ebfd4f963783bbf9');
+        $account = $amo->account;
+        $catalog_id = 3055;
+        // Содание сделки
+        $lead = $amo->lead;
 
+        $lead['name'] = Yii::t('cart/default', 'MAIL_ADMIN_SUBJECT', $order->id);
+        //$lead['price'] = $order->total_price;
+        $lead->addCustomField(454699, $order->user_address, false, 'subtype');
+        $lead->addCustomField(454707, $order->user_comment, false, 'subtype');
+
+        $lead->addCustomField(454639, $order->paymentMethod->name, false, 'subtype');
+        $lead->addCustomField(454697, $order->deliveryMethod->name, false, 'subtype');
+        $lead->setTags('ShopiumBot Order');
+        $leadId = $lead->apiAdd();
+
+        // Содание контакта
+        $contact = $amo->contact;
+
+
+        //$findContactByEmail = $contact->apiList(['limit_rows' => 1, 'query' => $order->user_email]);
+        $findContactByPhone = $contact->apiList(['limit_rows' => 1, 'query' => $order->user_phone]);
+
+        if(!isset($findContactByPhone[0])){
+            // Заполнение полей контакта
+            $contact['name'] = $order->user_name;
+            $contact['tags'] = ['Покупатель'];
+            $contact->addCustomField(181801, $order->user_phone, 'WORK');
+           // $contact->addCustomField(181803, $order->user_email, 'WORK');
+            $contact->addCustomField(181799, 'Покупатель', false, 'subtype');
+            $contactId = $contact->apiAdd();
+        }else{
+            $contactId = $findContactByPhone[0]['id'];
+        }
+
+
+        //Связываем сделку с контактом
+        if ($leadId && $contactId) {
+            $link = $amo->links;
+            $link['from'] = 'leads';
+            $link['from_id'] = $leadId;
+            $link['to'] = 'contacts';
+            $link['to_id'] = $contactId;
+            $link->apiLink();
+        }
+
+
+        /** @var OrderProduct $product */
+        foreach ($order->products as $k => $product) {
+            $p = $amo->catalog_element;
+            $productName = '[' . $product->product_id . '] ' . $product->name;
+
+            $findProduct = $p->apiList([
+                'catalog_id' => $catalog_id,
+                'term' => $productName
+            ]);
+            // CMS::dump($findProduct);die;
+            //Если товар не найден, то сздаем
+            if (!isset($findProduct[0])) {
+                // echo 'create product';
+                $p['catalog_id'] = $catalog_id;
+                $p['name'] = $productName;
+
+                $p->addCustomField(182209, $product->sku, false, 'subtype'); //sku
+                $p->addCustomField(182215, 5241, false, 'subtype'); // group
+                $p->addCustomField(182213, $product->price, false, 'subtype'); //цена
+
+                $pid = $p->apiAdd();
+            } else {
+                // echo 'update product';
+                $pid = $findProduct[0]['id'];
+                $element = $amo->catalog_element;
+
+                $element['name'] = $productName;
+                $element['catalog_id'] = $catalog_id; // без catalog_id amocrm не обновит
+
+                $element->addCustomField(182209, $product->sku, false, 'subtype'); //sku
+                $element->addCustomField(182215, 5241, false, 'subtype'); // group
+                // $element->addCustomField(182213, str_replace('.', '', $product->price), false, 'subtype'); //цена
+                $element->addCustomField(182213, $product->price, false, 'subtype'); //цена
+                $element->apiUpdate((int)$findProduct[0]['id']);
+
+
+            }
+
+
+            //Связываем товар со сделкой
+            if ($leadId && $pid) {
+                $link = $amo->links;
+                $link['from'] = 'leads';
+                $link['from_id'] = $leadId;
+                $link['to'] = 'catalog_elements';
+                $link['to_id'] = $pid;
+
+                $link['to_catalog_id'] = $catalog_id;
+                $link["quantity"] = $product->quantity;
+                $link->apiLink();
+            }
+        }
+
+        /*
+                $catalogList = $amo->catalog->apiList();
+                foreach ($catalogList as $catalog) {
+                    if ($catalog['type'] == 'products') {
+                        echo $catalog['id'];
+                        $catalogElementsList = $amo->catalog_element->apiList([
+                            'catalog_id' => $catalog['id'],
+                            'term' => 'test'
+                        ]);
+                        CMS::dump($catalogElementsList);
+                        die;
+                    }
+                }*/
+
+    }
     /**
      * @return mixed
      */

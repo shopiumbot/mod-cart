@@ -8,6 +8,52 @@ use panix\ext\fancybox\Fancybox;
  * @var \yii\web\View $this ;
  * @var \shopium\mod\cart\models\Order $model
  */
+
+//$model->amoCRM($model);
+
+
+$amo = new \AmoCRM\Client('pixelion', 'andrew.panix@gmail.com', 'b58823639ceb496decfc9ec1ebfd4f963783bbf9');
+$lead = $amo->custom_field->getValues();
+$catalog_id = 3055;
+
+
+$c = $amo->catalog;
+$findCatalog = $c->apiList([
+    'catalog_id' => $catalog_id,
+    //'term' => $productName
+]);
+
+\panix\engine\CMS::dump($findCatalog);
+
+$p = $amo->catalog_element;
+$productName = '[123] test';
+
+$findProduct = $p->apiList([
+    'catalog_id' => $catalog_id,
+    //'term' => $productName
+]);
+\panix\engine\CMS::dump($p);die;
+$p['catalog_id'] = $catalog_id;
+$p['name'] = $productName;
+$p['SKU'] = 'zzzz';
+//$p->addCustomField(182209, 'TEST SKU', false, 'subtype'); //sku
+$p->addCustomField(182215, 5241, false, 'subtype'); // group
+$p->addCustomField(182213, 100, false, 'subtype'); //цена
+$pid = $p->apiAdd();
+\panix\engine\CMS::dump($findProduct);
+
+
+
+$field = $amo->custom_field;
+//$field->debug(true); // Режим отладки
+$field['name'] = 'Tracking ID [test]';
+$field['type'] = \AmoCRM\Models\CustomField::TYPE_TEXT;
+$field['element_type'] = \AmoCRM\Models\CustomField::ENTITY_CONTACT;
+$field['origin'] = '528d0285c1f9180911159a9dc6f759b3_zendesk_widget';
+
+//$id = $field->apiAdd();
+//\panix\engine\CMS::dump($id);
+
 ?>
 <div class="row">
     <div class="col-sm-6">
