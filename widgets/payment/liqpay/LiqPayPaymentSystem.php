@@ -3,6 +3,7 @@
 namespace shopium\mod\cart\widgets\payment\liqpay;
 
 use panix\engine\Html;
+use shopium\mod\cart\components\payment\PaymentSystemInterface;
 use Yii;
 use panix\engine\CMS;
 use shopium\mod\cart\models\Payment;
@@ -16,14 +17,14 @@ use yii\web\NotFoundHttpException;
  * Class LiqPayPaymentSystem
  * @package shopium\mod\cart\widgets\payment\liqpay
  */
-class LiqPayPaymentSystem extends BasePaymentSystem
+class LiqPayPaymentSystem extends BasePaymentSystem implements PaymentSystemInterface
 {
 
     /**
      * This method will be triggered after redirection from payment system site.
      * If payment accepted method must return Order model to make redirection to order view.
      * @param Payment $method
-     * @return boolean|Order
+     * @return mixed|Order
      */
     public function processPaymentRequest(Payment $method)
     {
@@ -105,6 +106,7 @@ class LiqPayPaymentSystem extends BasePaymentSystem
      */
     public function saveAdminSettings($paymentMethodId, $postData)
     {
+
         $this->setSettings($paymentMethodId, $postData['LiqPayConfigurationModel']);
     }
 
@@ -126,7 +128,7 @@ class LiqPayPaymentSystem extends BasePaymentSystem
     {
         $model = new LiqPayConfigurationModel;
         $nameClass = (new \ReflectionClass($model))->getShortName();
-        $model->load([$nameClass => (array)$this->getSettings($paymentMethodId)]);
+        $model->load([$nameClass => (array) $this->getSettings($paymentMethodId)]);
 
         return $model;
     }

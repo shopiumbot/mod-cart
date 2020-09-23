@@ -98,8 +98,9 @@ class PaymentController extends AdminController
 
                 $manager = new PaymentSystemManager;
                 $system = $manager->getSystemClass($model->system);
+
                 $system->saveAdminSettings($model->id, $_POST);
-                CMS::dump($system);die;
+
             }
 
             return $this->redirectPage($isNew, $post);

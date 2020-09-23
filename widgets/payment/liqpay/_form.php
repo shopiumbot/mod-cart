@@ -5,8 +5,7 @@ use panix\engine\Html;
 
 $form = ActiveForm::begin([]);
 ?>
-<?= $form->field($model, 'public_key')->textInput(['maxlength' => 255]) ?>
-<?= $form->field($model, 'private_key')->textInput(['maxlength' => 255]) ?>
-<?= $form->field($model, 'commission_user')->dropDownList(['user'=>'User','self'=>'Мы']) ?>
+<?= $form->field($model, 'key')->textInput(['maxlength' => 255]) ?>
+<?= $form->field($model, 'commission_check')->checkbox() ?>
 
 <?php ActiveForm::end(); ?>

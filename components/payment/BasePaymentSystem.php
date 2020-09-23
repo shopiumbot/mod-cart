@@ -2,11 +2,10 @@
 
 namespace shopium\mod\cart\components\payment;
 
-use panix\engine\CMS;
 use Yii;
-use panix\engine\Html;
+use yii\base\BaseObject;
 
-class BasePaymentSystem extends \yii\base\Component
+class BasePaymentSystem extends BaseObject
 {
 
     public function init()
@@ -27,9 +26,8 @@ class BasePaymentSystem extends \yii\base\Component
      * @param $paymentMethodId
      * @param $data
      */
-    public function setSettings($paymentMethodId, $data)
+    protected function setSettings($paymentMethodId, $data)
     {
-
         Yii::$app->settings->set($paymentMethodId, $data);
     }
 
