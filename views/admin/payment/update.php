@@ -24,7 +24,7 @@ $form = ActiveForm::begin();
             'liqpay'=>'LiqPay',
             //'yandexkassa'=>'Яндекс.Касса',
             //'tranzzo'=>'Tranzzo'
-        ],['prompt'=>'---']) ?>
+        ],['prompt'=>'---', 'data-id' => $model->id]) ?>
 
         <div id="payment_configuration"></div>
 

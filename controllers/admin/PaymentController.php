@@ -2,6 +2,7 @@
 
 namespace shopium\mod\cart\controllers\admin;
 
+use panix\engine\CMS;
 use Yii;
 use shopium\mod\cart\models\search\PaymentSearch;
 use shopium\mod\cart\models\Payment;
@@ -93,12 +94,13 @@ class PaymentController extends AdminController
         if ($model->load($post) && $model->validate()) {
             $model->save();
 
-            /*if ($model->payment_system) {
+            if ($model->system) {
+
                 $manager = new PaymentSystemManager;
-                $system = $manager->getSystemClass($model->payment_system);
+                $system = $manager->getSystemClass($model->system);
                 $system->saveAdminSettings($model->id, $_POST);
-                // print_r($system);die;
-            }*/
+                CMS::dump($system);die;
+            }
 
             return $this->redirectPage($isNew, $post);
         }

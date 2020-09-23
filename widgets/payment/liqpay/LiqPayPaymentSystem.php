@@ -30,7 +30,7 @@ class LiqPayPaymentSystem extends BasePaymentSystem
 
         $request = Yii::$app->request;
 
-        $settings = $this->getSettings($method->id);
+        $settings = $this->getSettings($this->getSettingsKey($method->id));
 
 
         if ($request->post('data')) {
@@ -96,39 +96,6 @@ class LiqPayPaymentSystem extends BasePaymentSystem
 
 
         return $order;
-    }
-
-    public function renderPaymentForm(Payment $method, Order $order)
-    {
-        $settings = $this->getSettings($method->id);
-        $liqpay = new LiqPay($settings->public_key, $settings->private_key);
-        $html = Html::beginForm('https://www.liqpay.ua/api/3/checkout', 'POST', [
-            'csrf' => false,
-            'accept-charset' => 'utf-8'
-        ]);
-
-
-        $data = [
-            'public_key' => $settings->public_key,
-            'action' => 'pay',
-            'language' => Yii::$app->language, //Язык клиента ru, uk, en
-            // 'amount' => Yii::$app->currency->convert($order->full_price, $method->currency_id),
-            'amount' => 1,
-            'currency' => 'UAH',
-            'description' => Yii::t('cart/default', 'PAYMENT_ORDER', ['id' => $order->id]),
-            'order_id' => CMS::gen(5) . '_' . $order->id,
-            'sandbox' => '1', //1 test mode
-            'server_url' => Url::toRoute(['/cart/payment/process', 'payment_id' => $method->id, 'result' => true], true),
-            'result_url' => Url::toRoute(['/cart/payment/process', 'payment_id' => $method->id], true),
-            'version' => '3'
-        ];
-
-        $html .= Html::hiddenInput('data', base64_encode(json_encode($data)));
-        $html .= Html::hiddenInput('signature', $liqpay->cnb_signature($liqpay->cnb_params($data)));
-        $html .= $this->renderSubmit(['name' => 'btn_text']);
-        $html .= Html::endForm();
-
-        return ($order->paid) ? false : $html;
     }
 
     /**

@@ -48,7 +48,7 @@ class LiqPay
      * @param array $params
      * @param int $timeout
      *
-     * @return stdClass
+     * @return \stdClass
      */
     public function api($path, $params = array(), $timeout = 5)
     {
