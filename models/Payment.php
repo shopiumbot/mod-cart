@@ -3,10 +3,15 @@
 namespace shopium\mod\cart\models;
 
 use core\components\ActiveRecord;
+use shopium\mod\cart\components\payment\PaymentSystemManager;
 
 /**
  * Class Payment
  * @package shopium\mod\cart\models
+ *
+ * @property string $name
+ * @property integer $id
+ * @property string $system
  */
 class Payment extends ActiveRecord
 {
@@ -34,5 +39,12 @@ class Payment extends ActiveRecord
         ];
     }
 
+
+    public function getPaymentSystemClass() {
+        if ($this->system) {
+            $manager = new PaymentSystemManager();
+            return $manager->getSystemClass($this->system);
+        }
+    }
 
 }
