@@ -91,13 +91,13 @@ $field['origin'] = '528d0285c1f9180911159a9dc6f759b3_zendesk_widget';
             </div>
 
         <?php } else { ?>
-            <div class="alert alert-info">Товары можно будет добавить после создание заказа</div>
+            <div class="alert alert-info"><?= Yii::t('cart/admin','ALERT_CREATE_PRODUCT'); ?></div>
         <?php } ?>
     </div>
 </div>
 <div class="card">
     <div class="card-header">
-        <h5>История действий заказа</h5>
+        <h5><?= Yii::t('cart/admin','ORDER_HISTORY'); ?></h5>
     </div>
     <div class="card-body">
         <?php

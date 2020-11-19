@@ -7,11 +7,13 @@ use Yii;
 use core\components\WebModule;
 use shopium\mod\cart\models\Order;
 use yii\base\BootstrapInterface;
+use yii\web\GroupUrlRule;
 
 class Module extends WebModule implements BootstrapInterface
 {
 
     public $icon = 'cart';
+
 
     public function init()
     {
@@ -40,8 +42,17 @@ class Module extends WebModule implements BootstrapInterface
             if ($this->count)
                 $app->counters[$this->id] = $this->count['num'];
         }
-
+        $groupUrlRule = new GroupUrlRule([
+            'prefix' => $this->id,
+            'rules' => [
+                ''=> 'default/index',
+                '<controller:[0-9a-zA-Z_\-]+>'=> '<controller>/index',
+                '<controller:[0-9a-zA-Z_\-]+>/<action:[0-9a-zA-Z_\-]+>'=> '<controller>/<action>',
+            ],
+        ]);
+        $app->getUrlManager()->addRules($groupUrlRule->rules, true);
     }
+
 
     public function getInfo()
     {

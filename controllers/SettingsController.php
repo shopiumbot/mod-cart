@@ -1,6 +1,6 @@
 <?php
 
-namespace shopium\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers;
 
 use Yii;
 use core\components\controllers\AdminController;

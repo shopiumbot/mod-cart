@@ -1,6 +1,6 @@
 <?php
 
-namespace shopium\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers;
 
 
 use shopium\mod\cart\models\Order;
@@ -25,7 +25,7 @@ class GraphController extends AdminController
         $this->buttons = [
             [
                 'label' => Yii::t('cart/default', 'CREATE_ORDER'),
-                'url' => ['/admin/cart/default/create'],
+                'url' => ['/cart/default/create'],
                 'options' => ['class' => 'btn btn-success']
             ]
         ];

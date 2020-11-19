@@ -27,7 +27,7 @@ return [
     'NEW_ORDER_ID' => 'Order number #{id}',
     'CREATE_ORDER' => 'Add order',
     'SELECT_PAYMENT' => '&mdash; Payment &mdash;',
-    'SELECT_DELIVERY' => '&mdash; Delivery & mdash;',
+    'SELECT_DELIVERY' => '&mdash; Delivery &mdash;',
     'CITY' => 'City',
     'AREA' => 'Area',
     'WAREHOUSE' => 'Branch'

@@ -2,492 +2,382 @@
 
 namespace shopium\mod\cart\controllers;
 
-
-use panix\engine\bootstrap\ActiveForm;
+use Longman\TelegramBot\DB;
+use Longman\TelegramBot\Request;
 use panix\engine\CMS;
-use shopium\mod\cart\CartAsset;
-use shopium\mod\shop\models\Attribute;
 use Yii;
-use yii\base\Exception;
-use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\web\BadRequestHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
-use panix\engine\controllers\WebController;
-use shopium\mod\cart\models\forms\OrderCreateForm;
-use shopium\mod\cart\models\Delivery;
-use shopium\mod\cart\models\Payment;
+use yii\web\Response;
+use core\components\controllers\AdminController;
+use core\modules\shop\models\Product;
 use shopium\mod\cart\models\Order;
 use shopium\mod\cart\models\OrderProduct;
-use shopium\mod\shop\models\Product;
+use core\modules\shop\models\search\ProductSearch;
 use shopium\mod\cart\models\search\OrderSearch;
-use shopium\mod\shop\models\ProductVariant;
-use yii\web\Response;
+use Mpdf\Mpdf;
 
-class DefaultController extends WebController
+class DefaultController extends AdminController
 {
-
-    /**
-     * @var OrderCreateForm
-     */
-    public $form;
-
-    /**
-     * @var bool
-     */
-    protected $_errors = false;
-
 
     public function actions()
     {
         return [
-            'promoCode' => [
-                'class' => 'shopium\mod\cart\widgets\promocode\PromoCodeAction',
+            'delete' => [
+                'class' => 'panix\engine\actions\DeleteAction',
+                'modelClass' => Order::class,
             ],
         ];
     }
 
-    public function actionRecount()
+    public function actionPrint($id)
     {
-        if (Yii::$app->request->isAjax) {
-            if (Yii::$app->request->isPost && !empty($_POST['quantities'])) {
-                $test = [];
-                $test[Yii::$app->request->post('product_id')] = Yii::$app->request->post('quantities');
-                return Yii::$app->cart->ajaxRecount($test);
-            }
-        } else {
-            throw new ForbiddenHttpException(Yii::t('app/error', 403));
-        }
+        $currentDate = CMS::date(time());
+        $model = Order::findModel($id);
+        $title = Yii::t('cart/Order', 'NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
+        $mpdf = new Mpdf([
+            // 'debug' => true,
+            //'mode' => 'utf-8',
+            'default_font_size' => 9,
+            'default_font' => 'times',
+            'margin_top' => 25,
+            'margin_bottom' => 9,
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_footer' => 5,
+            'margin_header' => 5,
+        ]);
+
+        $mpdf->SetCreator(Yii::$app->name);
+        $mpdf->SetAuthor(Yii::$app->user->getDisplayName());
+
+        //$mpdf->SetProtection(['copy','print'], 'asdsad', 'MyPassword');
+        $mpdf->SetTitle($title);
+        $mpdf->SetHTMLFooter($this->renderPartial('@theme/views/pdf/footer', ['currentDate' => $currentDate]));
+        $mpdf->SetHTMLHeader($this->renderPartial('pdf/_header_order', [
+
+            'model' => $model
+        ]));
+        $mpdf->WriteHTML(file_get_contents(Yii::getAlias('@vendor/panix/engine/pdf/assets/mpdf-bootstrap.min.css')), 1);
+        $mpdf->WriteHTML($this->renderPartial('_pdf_order', ['model' => $model]), 2);
+        echo $mpdf->Output(Yii::t('cart/Order', 'NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]) . ".pdf", 'I');
+        die;
     }
 
-    /**
-     * Display list of product added to cart
-     */
     public function actionIndex()
     {
-        $this->pageName = Yii::t('cart/default', 'MODULE_NAME');
-        $this->view->title = $this->pageName;
-        $this->breadcrumbs = [$this->pageName];
+        $this->pageName = Yii::t('cart/admin', 'ORDERS');
+        $this->buttons = [
+            [
+                'label' => Yii::t('cart/admin', 'CREATE_ORDER'),
+                'url' => ['create'],
+                'icon' => 'add',
+                'options' => ['class' => 'btn btn-success']
+            ]
+        ];
 
-        if (Yii::$app->request->isPost && Yii::$app->request->post('recount') && !empty($_POST['quantities'])) {
-            $this->processRecount();
-        }
-        $this->form = new OrderCreateForm(); //['scenario' => 'create-form-order']
+        $this->breadcrumbs[] = $this->pageName;
 
-        // Make order
-        $post = Yii::$app->request->post();
-
-        if ($post) {
-            if (Yii::$app->request->isAjax && $this->form->load($post)) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($this->form);
-            }
-            if ($this->form->load($post) && $this->form->validate()) {
-                $order = $this->createOrder();
-                Yii::$app->cart->clear();
-                Yii::$app->session->setFlash('success', Yii::t('cart/default', 'SUCCESS_ORDER'));
-                return $this->redirect(['view', 'secret_key' => $order->secret_key]);
-            }
-        }
-
-
-        $deliveryMethods = Delivery::find()
-            ->published()
-            ->orderByName()
-            ->all();
-        // echo($deliveryMethods->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql);die;
-
-
-        $paymentMethods = Payment::find()->all();
-
-        $this->view->registerJs("
-            var penny = '" . Yii::$app->currency->active['penny'] . "';
-            var separator_thousandth = '" . Yii::$app->currency->active['separator_thousandth'] . "';
-            var separator_hundredth = '" . Yii::$app->currency->active['separator_hundredth'] . "';
-        ", yii\web\View::POS_HEAD, 'numberformat');
-
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
         return $this->render('index', [
-            'items' => Yii::$app->cart->getDataWithModels(),
-            'totalPrice' => Yii::$app->cart->getTotalPrice(),
-            'deliveryMethods' => $deliveryMethods,
-            'paymentMethods' => $paymentMethods,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
-    public function actionPayment()
+    public function actionUpdate($id = false)
     {
-        if (isset($_POST)) {
-            $this->form = Payment::find()->all();
-            echo $this->render('_payment', ['model' => $this->form]);
+        $model = Order::findModel($id, Yii::t('cart/admin', 'ORDER_NOT_FOUND'));
+        $isNew = $model->isNewRecord;
+        $this->pageName = ($isNew) ? Yii::t('cart/Order', 'CREATE_ORDER') : Yii::t('cart/Order', 'NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]);
+        $this->breadcrumbs = [
+            [
+                'label' => Yii::t('cart/admin', 'ORDERS'),
+                'url' => ['index']
+            ],
+            $this->pageName
+        ];
+        \shopium\mod\cart\OrderAsset::register($this->view);
+        $this->view->registerJs('
+            var deleteQuestion = "' . Yii::t('cart/admin', 'Вы действительно удалить запись?') . '";
+            var productSuccessAddedToOrder = "' . Yii::t('cart/admin', 'Продукт успешно добавлен к заказу.') . '";', \yii\web\View::POS_HEAD, 'myid'
+        );
+
+        if (!$isNew) {
+            $this->buttons = [
+                [
+                    'label' => Yii::t('cart/admin', 'PRINT_PDF'),
+                    'icon' => 'print',
+                    'url' => ['print', 'id' => $model->id],
+                    'options' => ['class' => 'btn btn-primary', 'target' => '_blank']
+                ]
+            ];
         }
-    }
-
-    /**
-     * Find order by secret_key and display.
-     * @throws \yii\web\NotFoundHttpException
-     */
-    public function actionView()
-    {
-        $secret_key = Yii::$app->request->get('secret_key');
-        $model = Order::find()->where(['secret_key' => $secret_key])->one();
-        if (!$model)
-            $this->error404(Yii::t('cart/default', 'ERROR_ORDER_NO_FIND'));
-
+        $old = $model->oldAttributes;
         $post = Yii::$app->request->post();
-        if ($post) {
-            if ($model->load($post)) {
-                if ($model->validate()) {
-                    //$model->save();
-                    $model->updateTotalPrice();
-                    $model->updateDeliveryPrice();
-                    //Yii::$app->session->setFlash('success-promocode','YAhhoo');
-                    //Yii::$app->session->addFlash('success-promocode','YAhhoo');
-                    $this->refresh();
+        if ($model->load($post) && $model->validate()) {
+            $model->save();
+            $api = Yii::$app->telegram;
+            if ($old['status_id'] != $model->status_id) {
+                $data['chat_id'] = $model->user_id;
+                $data['parse_mode'] = 'Markdown';
+                $data['text'] = "Ваш заказ *№" . CMS::idToNumber($model->id) . "*" . PHP_EOL;
+                $data['text'] .= "Статус: *{$model->status->name}*";
+                $response = Request::sendMessage($data);
+                if ($response->isOk()) {
+                    $db = DB::insertMessageRequest($response->getResult());
                 }
             }
-            // print_r($post);
-            //  die;
+
+
+            if ($old['invoice'] != $model->invoice && !empty($model->invoice)) {
+                $data['chat_id'] = $model->user_id;
+                $data['parse_mode'] = 'Markdown';
+                $data['text'] = "Ваш заказ *№" . CMS::idToNumber($model->id) . "*" . PHP_EOL;
+                $data['text'] .= "ТТН: *{$model->invoice}*";
+                $response = Request::sendMessage($data);
+                if ($response->isOk()) {
+                    $db = DB::insertMessageRequest($response->getResult());
+                }
+            }
+
+
+            if (sizeof(Yii::$app->request->post('quantity', [])))
+                $model->setProductQuantities(Yii::$app->request->post('quantity'));
+
+            return $this->redirectPage($isNew, $post);
+        }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionAddProductList()
+    {
+
+        $request = Yii::$app->request;
+        $order_id = $request->post('id');
+
+        $model = Order::findModel($order_id, Yii::t('cart/admin', 'ORDER_NOT_FOUND'));
+
+        if ($order_id) {
+            if (!$request->isAjax) {
+                return $this->redirect(['/cart/default/update', 'id' => $order_id]);
+            }
+        }
+        if (!$request->isAjax) {
+            return $this->redirect(['/cart/default/index']);
         }
 
-        $this->pageName = Yii::t('cart/default', 'VIEW_ORDER', ['id' => CMS::idToNumber($model->id)]);
-        $this->breadcrumbs[] = $this->pageName;
-        return $this->render('view', [
+
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search($request->getQueryParams());
+
+
+        return $this->renderAjax('_addProduct', [
+            'dataProvider' => $dataProvider,
+            'order_id' => $order_id,
             'model' => $model,
         ]);
     }
 
     /**
-     * Validate POST data and add product to cart
-     * @throws BadRequestHttpException
+     * Add product to order
      */
-    public function actionAdd()
+    public function actionAddProduct()
     {
-        if (!Yii::$app->request->isAjax) {
-            throw new BadRequestHttpException(Yii::t('app/default', 'ACCESS_DENIED'));
-        }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $result = [];
+        $request = Yii::$app->request;
+        if ($request->isPost) {
+            if ($request->isAjax) {
+                $order = Order::findModel($request->post('order_id'), Yii::t('cart/admin', 'ORDER_NOT_FOUND'));
 
+                $product = Product::findModel($request->post('product_id'));
 
-        $variants = [];
+                $find = OrderProduct::find()->where(['order_id' => $order->id, 'product_id' => $product->id])->one();
 
-        // Load product model
-        $model = Product::findOne(Yii::$app->request->post('product_id', 0));
+                if ($find) {
+                    if ($request->isAjax) {
+                        $result = [
+                            'success' => false,
+                            'message' => Yii::t('cart/admin', 'ERR_ORDER_PRODUCT_EXISTS'),
+                        ];
 
-        // Check product
-        if (!isset($model))
-            $this->_addError(Yii::t('cart/default', 'ERROR_PRODUCT_NO_FIND'), true);
-
-        // Update counter
-        $model->updateCounters(['added_to_cart_count' => 1]);
-
-        // Process variants
-        if (!empty($_POST['eav'])) {
-            foreach ($_POST['eav'] as $attribute_id => $variant_id) {
-                if (!empty($variant_id)) {
-                    // Check if attribute/option exists
-                    if (!$this->_checkVariantExists($_POST['product_id'], $attribute_id, $variant_id))
-                        $this->_addError(Yii::t('cart/default', 'ERROR_VARIANT_NO_FIND'));
-                    else
-                        array_push($variants, $variant_id);
+                    }
                 }
+
+                if ($request->isAjax) {
+                    $result = [
+                        'success' => false,
+                        'message' => Yii::t('cart/default', 'ERROR_PRODUCT_NO_FIND'),
+                    ];
+
+                }
+
+
+                $order->addProduct($product, $request->post('quantity'), $request->post('price'));
+                $result = [
+                    'success' => true,
+                    'message' => Yii::t('cart/admin', 'SUCCESS_ADD_PRODUCT_ORDER'),
+                ];
+            } else {
+                //throw new CHttpException(500, Yii::t('error', '500'));
             }
+        } else {
+            //throw new CHttpException(500, Yii::t('error', '500'));
         }
 
-        // Process configurable products
-        if ($model->use_configurations) {
-            // Get last configurable item
-            $configurable_id = Yii::$app->request->post('configurable_id', 0);
+        return $result;
+    }
 
-            if (!$configurable_id || !in_array($configurable_id, $model->configurations))
-                $this->_addError(Yii::t('cart/default', 'ERROR_SELECT_VARIANT'), true);
-        } else
-            $configurable_id = 0;
+    /**
+     * Delete product from order
+     */
+    public function actionDeleteProduct()
+    {
+        $order = Order::findModel(Yii::$app->request->post('order_id'), Yii::t('cart/admin', 'ORDER_NOT_FOUND'));
 
+        //if ($order->is_deleted)
+        //    throw new NotFoundHttpException(Yii::t('cart/admin', 'ORDER_ISDELETED'));
 
-        Yii::$app->cart->add(array(
-            'product_id' => $model->id,
-            'variants' => $variants,
-            'currency_id' => $model->currency_id,
-            'supplier_id' => $model->supplier_id,
-            'configurable_id' => $configurable_id,
-            'quantity' => (int)Yii::$app->request->post('quantity', 1),
-            'price' => $model->price,
+        $order->deleteProduct(Yii::$app->request->post('id'));
+    }
+
+    public function actionRenderOrderedProducts($order_id)
+    {
+        $this->pageName = Yii::t('cart/default', 'MODULE_NAME');
+        return $this->renderAjax('_order-products', array(
+            'model' => Order::findModel($order_id)
         ));
-
-        $this->_finish($model->name);
     }
 
-    /**
-     * Remove product from cart and redirect
-     * @param $id
-     * @return array|Response
-     */
-    public function actionRemove($id)
+    public function actionPdfOrders($render = 'delivery', $type = 0, $start, $end)
     {
-        Yii::$app->cart->remove($id);
-        if (!Yii::$app->request->isAjax || !Yii::$app->cart->countItems()) {
-            return $this->redirect(['index']);
-        } else {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'id' => $id,
-                'success' => true,
-                'total_price' => Yii::$app->currency->number_format(Yii::$app->cart->totalPrice),
-                'message' => Yii::t('cart/default', 'SUCCESS_PRODUCT_CART_DELETE')
-            ];
-        }
-    }
-
-    /**
-     * Clear cart
-     */
-    public function actionClear()
-    {
-        Yii::$app->cart->clear();
-        if (!Yii::$app->request->isAjax)
-            return $this->redirect(['index']);
-    }
-
-    /**
-     * Render data to display in theme header.
-     * @throws BadRequestHttpException
-     */
-    public function actionRenderSmallCart()
-    {
-        if (!Yii::$app->request->isAjax) {
-            throw new BadRequestHttpException(Yii::t('app/default', 'ACCESS_DENIED'));
-        }
-        return \shopium\mod\cart\widgets\cart\CartWidget::widget(['skin' => Yii::$app->request->post('skin')]);
-    }
-
-    /**
-     * Create new order
-     * @return Order|boolean
-     * @throws Exception
-     */
-    public function createOrder()
-    {
-        if (Yii::$app->cart->countItems() == 0)
-            return false;
-
-        $order = new Order;
-
-        // Set main data
-        $order->user_id = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
-        $order->user_name = $this->form->user_name;
-        $order->user_phone = $this->form->user_phone;
-        $order->user_address = $this->form->user_address;
-        $order->user_comment = $this->form->user_comment;
-        $order->delivery_id = $this->form->delivery_id;
-        $order->payment_id = $this->form->payment_id;
-        $order->promocode_id = $this->form->promocode_id;
-		$order->status_id = 1;
-        if ($order->validate()) {
-            $order->save();
-        } else {
-            print_r($order->getErrors());
-            die;
-            throw new Exception(503, Yii::t('cart/default', 'ERROR_CREATE_ORDER'));
-        }
-
-        // Process products
-        $productsCount = 0;
-        foreach (Yii::$app->cart->getDataWithModels() as $item) {
-
-            $ordered_product = new OrderProduct;
-            $ordered_product->order_id = $order->id;
-            $ordered_product->product_id = $item['model']->id;
-            $ordered_product->configurable_id = $item['configurable_id'];
-            $ordered_product->currency_id = $item['model']->currency_id;
-            $ordered_product->supplier_id = $item['model']->supplier_id;
-            $ordered_product->name = $item['model']->name;
-            $ordered_product->quantity = $item['quantity'];
-            $ordered_product->sku = $item['model']->sku;
-            $ordered_product->price_purchase = $item['model']->price_purchase;
-            // if($item['currency_id']){
-            //     $currency = Currency::model()->findByPk($item['currency_id']);
-            //$ordered_product->price = Product::calculatePrices($item['model'], $item['variant_models'], $item['configurable_id']) * $currency->rate;
-            // }else{
-            $ordered_product->price = Product::calculatePrices($item['model'], $item['variant_models'], $item['configurable_id']);
-            // }
 
 
-            if (isset($item['configurable_model']) && $item['configurable_model'] instanceof Product) {
-                $configurable_data = [];
+        $dateStart = strtotime($start);
 
-                $ordered_product->configurable_name = $item['configurable_model']->name;
-                // Use configurable product sku
-                $ordered_product->sku = $item['configurable_model']->sku;
-                // Save configurable data
-
-                $attributeModels = Attribute::find()
-                    ->where(['id' => $item['model']->configurable_attributes])->all();
-                //->findAllByPk($item['model']->configurable_attributes);
-                foreach ($attributeModels as $attribute) {
-                    $method = 'eav_' . $attribute->name;
-                    $configurable_data[$attribute->title] = $item['configurable_model']->$method;
-                }
-                $ordered_product->configurable_data = serialize($configurable_data);
-            }
-
-            // Save selected variants as key/value array
-            if (!empty($item['variant_models'])) {
-                $variants = [];
-                foreach ($item['variant_models'] as $variant)
-                    $variants[$variant->productAttribute->title] = $variant->option->value;
-                $ordered_product->variants = serialize($variants);
-            }
-
-
-            $ordered_product->save();
-            $productsCount++;
-        }
-
-        // Reload order data.
-        $order->refresh(); //@todo panix text email tpl
-        // All products added. Update delivery price.
-        $order->updateDeliveryPrice();
-        $text = (Yii::$app->user->isGuest) ? 'NOTIFICATION_GUEST_TEXT' : 'NOTIFICATION_USER_TEXT';
-        $order->attachBehavior('notification', [
-            'class' => 'panix\engine\behaviors\NotificationBehavior',
-            'type' => 'success',
-            'url' => Url::to($order->getUpdateUrl()),
-            'sound' => CartAsset::register($this->view)->baseUrl . '/notification_new-order.mp3',
-            'text' => Yii::t('cart/default', $text, [
-                'num' => $productsCount,
-                'total' => Yii::$app->currency->number_format($order->total_price),
-                'currency' => Yii::$app->currency->active['symbol'],
-                'username' => Yii::$app->user->isGuest ? $order->user_name : Yii::$app->user->getDisplayName()
-            ])
+        $dateEnd = strtotime($end) + 86400;
+        $mpdf = new Mpdf([
+            // 'debug' => true,
+            //'mode' => 'utf-8',
+            'default_font_size' => 9,
+            'default_font' => 'times',
+            'margin_top' => 35,
+            'margin_bottom' => 10,
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_footer' => 5,
+            'margin_header' => 5,
         ]);
+        if ($type) {
+            /*Yii::import('ext.tcpdf.TCPDF');
+            $contact = Yii::app()->settings->get('contacts');
+            $phones = explode(',', $contact['phone']);
+            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $pdf->SetCreator(PDF_CREATOR);
+            $pdf->SetHeaderData("", "", Yii::app()->settings->get('app', 'site_name'), $phones[0].', '.$phones[1].', 3 konteynernaya, rolet 460');
+            //$pdf->SetHeaderData("", "", Yii::app()->settings->get('app', 'site_name'), "phone " . $phones[0]);
+            $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+            $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+            $pdf->SetMargins(0, PDF_MARGIN_TOP, 0); //PDF_MARGIN_TOP
+            $pdf->SetMargins(10, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+            $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+            $pdf->SetFooterMargin(0); //PDF_MARGIN_FOOTER
+            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM); //PDF_MARGIN_BOTTOM
+            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+            $pdf->setJPEGQuality(100);
+            $pdf->AddPage();
+            $pdf->setFontSubsetting(true);
+            $pdf->SetFont('freeserif', '', 12);
+            $pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);*/
 
-        // Send email to user.
-        $order->sendClientEmail();
-        // Send email to admin.
-        $order->sendAdminEmail();
-        // $order->detachBehavior('notification');
+            $mpdf->use_kwt = true;
+            $mpdf->SetCreator(Yii::$app->name);
+            $mpdf->SetAuthor(Yii::$app->user->getDisplayName());
 
+            // $mpdf->SetProtection(['print','copy'], 'admin', '111');
+            //$mpdf->SetTitle($title);
+            $mpdf->SetHTMLFooter($this->renderPartial('@cart/views/admin/default/pdf/_footer_delivery', ['currentDate' => 'dsadsa']));
 
-        //\machour\yii2\notifications\components\Notification::notify(\machour\yii2\notifications\components\Notification::KEY_NEW_ORDER, 1,$order->primaryKey);
-        return $order;
-    }
+            $mpdf->WriteHTML(file_get_contents(Yii::getAlias('@vendor/panix/engine/pdf/assets/mpdf-bootstrap.min.css')), 1);
+            // $mpdf->WriteHTML($this->renderPartial('_pdf_order', ['model' => $model]), 2);
+            // return $mpdf->Output($model::t('NEW_ORDER_ID', ['id' => CMS::idToNumber($model->id)]) . ".pdf", 'I');
 
-    /**
-     * Check if product variantion exists
-     * @param $product_id
-     * @param $attribute_id
-     * @param $variant_id
-     * @return string
-     */
-    protected function _checkVariantExists($product_id, $attribute_id, $variant_id)
-    {
-        return ProductVariant::find()->where([
-            'id' => $variant_id,
-            'product_id' => $product_id,
-            'attribute_id' => $attribute_id
-        ])->count();
-    }
-
-    /**
-     * Recount product quantity and redirect
-     */
-    public function processRecount()
-    {
-        Yii::$app->cart->recount(Yii::$app->request->post('quantities'));
-
-        if (!Yii::$app->request->isAjax)
-            return $this->redirect($this->createUrl('index'));
-    }
-
-    /**
-     * Add message to errors array.
-     * @param string $message
-     * @param bool $fatal finish request
-     */
-    protected function _addError($message, $fatal = false)
-    {
-        if ($this->_errors === false)
-            $this->_errors = array();
-
-        array_push($this->_errors, $message);
-
-        if ($fatal === true)
-            $this->_finish();
-    }
-
-    /**
-     * Process result
-     * @param null $product
-     * @return Response
-     */
-    protected function _finish($product = null)
-    {
-        $data = [
-            'errors' => $this->_errors,
-            'message' => Yii::t('cart/default', 'SUCCESS_ADDCART', [
-                'product_name' => $product
-            ]),
-            'url'=>Url::to(['/cart/default/index'])
-        ];
-        return $this->asJson($data);
-    }
-
-    /**
-     * @param Order $order
-     * @return \yii\mail\MailerInterface
-     */
-    private function sendAdminEmail(Order $order)
-    {
-
-        $mailer = Yii::$app->mailer;
-        $mailer->compose(['html' => '@cart/mail/order.tpl'], ['order' => $order])
-            ->setFrom(['noreply@' . Yii::$app->request->serverName => Yii::$app->name . ' robot'])
-            ->setTo([Yii::$app->settings->get('app', 'email') => Yii::$app->name])
-            ->setSubject(Yii::t('cart/default', 'MAIL_ADMIN_SUBJECT', ['id' => $order->id]))
-            ->send();
-        return $mailer;
-    }
-
-    /**
-     * @param Order $order
-     * @return \yii\mail\MailerInterface
-     */
-    private function sendClientEmail(Order $order)
-    {
-        $mailer = Yii::$app->mailer;
-        $mailer->htmlLayout = '@cart/mail/layouts/client';
-        $mailer->compose('@cart/mail/order.tpl', ['order' => $order])
-            ->setFrom('noreply@' . Yii::$app->request->serverName)
-            ->setTo($order->user_email)
-            ->setSubject(Yii::t('cart/default', 'MAIL_CLIENT_SUBJECT', ['id' => $order->id]))
-            ->send();
-
-        return $mailer;
-    }
-
-    /**
-     * Display user orders
-     */
-    public function actionOrders()
-    {
-        if (!Yii::$app->user->isGuest) {
-            $searchModel = new OrderSearch();
-
-            $this->pageName = Yii::t('cart/default', 'MY_ORDERS');
-            $this->breadcrumbs[] = $this->pageName;
-
-            //Yii::$app->request->getQueryParams()
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            $dataProvider->query->andWhere(['user_id' => Yii::$app->user->id]);
-
-            $this->view->title = $this->pageName;
-            return $this->render('user_orders', [
-                'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
-            ]);
-        } else {
-            $this->error404();
         }
+
+
+        /* $model = Order::find()->with([
+          'products' => function (\yii\db\ActiveQuery $query) {
+               $query->andWhere(['not', ['manufacturer_id' => null]]);
+           },
+       ]);*/
+
+
+        $model = Order::find()->with('products');
+        // $model->where(['status_id' => 1]);
+        if ($render == 'delivery') {
+
+            $view = 'pdf/delivery';
+            $model->between($dateStart, $dateEnd);
+            $model->orderBy(['delivery_id' => SORT_DESC]);
+
+            $mpdf->SetHTMLHeader($this->renderPartial('pdf/_header_delivery', [
+                'start_date' => CMS::date($dateStart, false),
+                'end_date' => CMS::date($dateEnd, false),
+            ]));
+        } else {
+            $model->joinWith(['products p']);
+            $model->between($dateStart, $dateEnd);
+            if (Yii::$app->request->get('render') == 'manufacturer') {
+                $view = 'pdf/manufacturer';
+                $model->andWhere(['not', ['p.manufacturer_id' => null]]);
+                $model->orderBy(['p.manufacturer_id' => SORT_DESC]);
+
+            }
+            if (Yii::$app->request->get('render') == 'supplier') {
+                $view = 'pdf/supplier';
+                $model->andWhere(['not', ['p.supplier_id' => null]]);
+                $model->orderBy(['p.supplier_id' => SORT_DESC]);
+            }
+
+            $mpdf->SetHTMLHeader($this->renderPartial('pdf/_header_products', [
+                'start_date' => CMS::date($dateStart, false),
+                'end_date' => CMS::date($dateEnd, false),
+            ]));
+        }
+        $model = $model->all();
+
+
+        $array = [];
+        if ($type) {
+            $mpdf->WriteHTML($this->renderPartial($view, [
+                'array' => $array,
+                'model' => $model,
+                'dateStart' => CMS::date($dateStart),
+                //'dateStart' => date('Y-m-d', $dateStart),
+                'dateEnd' => date('Y-m-d', $dateEnd - 86400)
+
+            ]), 2);
+            $mpdf->Ln();
+            echo $mpdf->Output($this->action->id . ".pdf", 'I');
+            die;
+        } else {
+            $this->layout = 'mod.admin.views.layouts.print';
+            $this->render($view, [
+                'array' => $array,
+                'model' => $model,
+                'dateStart' => date('Y-m-d', strtotime($dateStart)),
+                'dateEnd' => date('Y-m-d', strtotime($dateEnd) - 86400)
+            ]);
+        }
+
     }
 
+    public function titleSort($a, $b)
+    {
+        return strnatcmp($a['title'], $b['title']);
+    }
 }

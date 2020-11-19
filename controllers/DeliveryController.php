@@ -2,47 +2,146 @@
 
 namespace shopium\mod\cart\controllers;
 
-use Yii;
-use shopium\mod\cart\components\delivery\BaseDeliverySystem;
-use shopium\mod\cart\models\Delivery;
-use panix\engine\controllers\WebController;
 
-class DeliveryController extends WebController
+use shopium\mod\cart\components\delivery\DeliverySystemManager;
+use Yii;
+use shopium\mod\cart\models\search\DeliverySearch;
+use shopium\mod\cart\models\Delivery;
+use core\components\controllers\AdminController;
+use yii\web\HttpException;
+
+class DeliveryController extends AdminController
 {
-    /**
-     * @inheritdoc
-     */
-    public function beforeAction($action)
+
+    public $icon = 'delivery';
+
+    public function actions()
     {
-        $this->enableCsrfValidation = false;
-        return parent::beforeAction($action);
+        return [
+            'sortable' => [
+                'class' => 'panix\engine\grid\sortable\Action',
+                'modelClass' => Delivery::class,
+            ],
+            'delete' => [
+                'class' => 'panix\engine\actions\DeleteAction',
+                'modelClass' => Delivery::class,
+            ],
+            'switch' => [
+                'class' => 'panix\engine\actions\SwitchAction',
+                'modelClass' => Delivery::class,
+            ],
+        ];
     }
 
-    public function actionProcess($id)
+    public function actionIndex()
     {
-        $model = Delivery::findOne($id);
+        $this->pageName = Yii::t('cart/admin', 'DELIVERY');
 
-        if (!$model)
-            $this->error404();
+        $this->buttons = [
+            [
+                'icon' => 'add',
+                'label' => Yii::t('app/default', 'CREATE'),
+                'url' => ['create'],
+                'options' => ['class' => 'btn btn-success']
+            ],
+
+        ];
+        $this->breadcrumbs[] = [
+            'label' => Yii::t('cart/default', 'MODULE_NAME'),
+            'url' => ['/cart/default/index']
+        ];
+        $this->breadcrumbs[] = $this->pageName;
+
+        $searchModel = new DeliverySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
+    public function actionUpdate($id = false)
+    {
+        $model = Delivery::findModel($id);
+        $isNew = $model->isNewRecord;
+        \shopium\mod\cart\CartDeliveryAsset::register($this->view);
+
+        $this->breadcrumbs[] = [
+            'label' => Yii::t('cart/admin', 'ORDERS'),
+            'url' => ['/cart/default/index']
+        ];
+        $this->breadcrumbs[] = [
+            'label' => Yii::t('cart/admin', 'DELIVERY'),
+            'url' => ['index']
+        ];
+
+        $this->pageName = Yii::t('app/default', $isNew ? 'CREATE' : 'UPDATE');
+
+        $this->breadcrumbs[] = $this->pageName;
+
+        $post = Yii::$app->request->post();
 
 
-        $system = $model->getDeliverySystemClass();
+        if ($model->load($post)) {
+            if($model->validate()){
+                $model->save();
 
-        if ($system instanceof BaseDeliverySystem) {
-            //return $system->processRequest($model);
-            return $system->renderDeliveryForm($model);
+               /* if ($model->system) {
+                    $manager = new DeliverySystemManager;
+                    $system = $manager->getSystemClass($model->system);
+                    $system->saveAdminSettings($model->id, $_POST);
+                }*/
 
-            // return $this->asJson($system->renderDeliveryForm($model));
+                return $this->redirectPage($isNew, $post);
+            }
 
-            /*return $this->render("@cart/widgets/delivery/novaposhta/_view", [
-                'cities' => ['test'],
-                'address' => ['test'],
-                'method' => $model
-            ]);*/
+        }
 
-        } else {
-            $this->error404();
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Delete method
+     * @param array $id
+     */
+    public function actionDelete($id = [])
+    {
+        if (Yii::$app->request->isPost) {
+            $model = Delivery::find()->where(['id'=>$_REQUEST['id']])->all();
+
+            if (!empty($model)) {
+                foreach ($model as $m) {
+                    if ($m->countOrders() == 0)
+                        $m->delete();
+                    else
+                        throw new HttpException(409, Yii::t('cart/admin', 'ERR_DEL_DELIVERY'));
+                }
+            }
+
+            if (!Yii::$app->request->isAjax)
+                return $this->redirect('index');
         }
     }
+
+
+    /**
+     * Renders payment system configuration form
+     */
+    public function actionRenderConfigurationForm()
+    {
+
+        $systemId = Yii::$app->request->get('system');
+        $delivery_id = Yii::$app->request->get('delivery_id');
+        if (empty($systemId))
+            exit;
+        $manager = new DeliverySystemManager();
+        $system = $manager->getSystemClass($systemId);
+
+        return $this->renderPartial('@cart/widgets/delivery/' . $systemId . '/_form', ['model' => $system->getConfigurationFormHtml($delivery_id)]);
+    }
+
 
 }

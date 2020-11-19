@@ -1,6 +1,6 @@
 <?php
 
-namespace shopium\mod\cart\controllers\admin;
+namespace shopium\mod\cart\controllers;
 
 use panix\engine\Html;
 use Yii;
@@ -29,7 +29,7 @@ class StatusesController extends AdminController
         $this->pageName = Yii::t('cart/admin', 'STATUSES');
         $this->breadcrumbs[] = [
             'label' => Yii::t('cart/admin', 'ORDERS'),
-            'url' => ['/admin/cart']
+            'url' => ['/cart/default/index']
         ];
         $this->breadcrumbs[] = $this->pageName;
 
@@ -69,7 +69,7 @@ class StatusesController extends AdminController
 
         $this->breadcrumbs[] = [
             'label' => Yii::t('cart/admin', 'ORDERS'),
-            'url' => ['/admin/cart']
+            'url' => ['/cart/default/index']
         ];
 
         $this->breadcrumbs[] = [
@@ -128,19 +128,19 @@ class StatusesController extends AdminController
         return array(
             array(
                 'label' => Yii::t('cart/admin', 'ORDER', 0),
-                'url' => ['/admin/cart'],
+                'url' => ['/cart/default/index'],
                 'icon' => Html::icon('cart'),
 
             ),
             array(
                 'label' => Yii::t('cart/admin', 'STATS'),
-                'url' => ['/admin/cart/statistics'],
+                'url' => ['/cart/statistics/index'],
                 'icon' => Html::icon('stats'),
 
             ),
             array(
                 'label' => Yii::t('cart/admin', 'HISTORY'),
-                'url' => ['/admin/cart/history'],
+                'url' => ['/cart/history/index'],
                 'icon' => Html::icon('history'),
 
             ),

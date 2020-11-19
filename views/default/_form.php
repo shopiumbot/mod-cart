@@ -41,7 +41,7 @@ $form = ActiveForm::begin([
         ?>
 
         <?php
-        if ($model->deliveryMethod->system) {
+        if ($model->deliveryMethod) {
             echo '<div class="form-group row"><div class="offset-xl-4 col-sm-7 col-md-7 col-lg-8 col-xl-8">';
             if ($model->area_id && $model->area) {
                 echo $model->area . ' обл., ';
