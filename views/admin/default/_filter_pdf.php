@@ -6,7 +6,7 @@ use panix\engine\jui\DatePicker;
 ?>
 <div class="card">
     <div class="card-header">
-        <h5>Фильтры</h5>
+        <h5><?= Yii::t('cart/admin', 'FILTERS'); ?></h5>
     </div>
     <div class="card-body">
         <?= Html::beginForm(['/admin/cart/default/pdf-orders'], 'GET'); ?>
@@ -14,7 +14,7 @@ use panix\engine\jui\DatePicker;
         <div class="form-group mb-0">
             <div class="input-group">
                 <div class="input-group-append">
-                    <span class="input-group-text">с</span>
+                    <span class="input-group-text"><?= Yii::t('cart/admin','FROM'); ?></span>
                 </div>
                 <?php
                 echo DatePicker::widget([
@@ -26,7 +26,7 @@ use panix\engine\jui\DatePicker;
                 ]);
                 ?>
                 <div class="input-group-prepend">
-                    <span class="input-group-text">по</span>
+                    <span class="input-group-text"><?= Yii::t('cart/admin','TO'); ?></span>
                 </div>
                 <?php
                 echo DatePicker::widget([
@@ -39,7 +39,11 @@ use panix\engine\jui\DatePicker;
                 ?>
                 <?php
 
-                echo Html::dropDownList('render', 'delivery', ['delivery' => 'Распределить по доставке', 'manufacturer' => 'Распределить по производителю', 'supplier' => 'Распределить по поставщику'], ['class' => 'custom-select']);
+                echo Html::dropDownList('render', 'delivery', [
+                    'delivery' => Yii::t('cart/admin','RENDER_DELIVERY'),
+                    'manufacturer' => Yii::t('cart/admin','RENDER_MANUFACTURER'),
+                    'supplier' => Yii::t('cart/admin','RENDER_SUPPLIER')
+                ], ['class' => 'custom-select']);
                 ?>
                 <?php
                 echo Html::dropDownList('type', 1, [1 => 'PDF', 0 => 'Html'], ['class' => 'custom-select']);
@@ -50,12 +54,12 @@ use panix\engine\jui\DatePicker;
                         <span class="input-group-text">
                             <div class="custom-control custom-checkbox">
                         <?= Html::checkBox('image', true, ['id' => 'image', 'class' => 'custom-control-input']); ?>
-                        <?= Html::label('Картинки', 'image', ['class' => 'custom-control-label']); ?>
+                        <?= Html::label(Yii::t('cart/admin', 'IMAGES'), 'image', ['class' => 'custom-control-label']); ?>
                                 </div>
                             </span>
                 </div>
                 <div class="input-group-prepend">
-                    <?= Html::submitButton('Показать', ['class' => 'btn btn-success', 'name' => '']); ?>
+                    <?= Html::submitButton(Yii::t('cart/admin', 'SHOW'), ['class' => 'btn btn-success', 'name' => '']); ?>
                 </div>
             </div>
         </div>

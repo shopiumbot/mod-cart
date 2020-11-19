@@ -43,4 +43,12 @@ return [
     'ORDER_NOT_FOUND' => 'Order not found.',
     'STATUS_CHANGE_NOTIFY' => 'After the status change, the client will be notified of the status change.',
     'PRINT_PDF' => 'Print (pdf)',
+    'SHOW' => 'Show',
+    'IMAGES' => 'Pictures',
+    'FILTERS' => 'Filters',
+    'RENDER_DELIVERY' => 'Distribute by delivery',
+    'RENDER_MANUFACTURER' => 'Distribute by manufacturer',
+    'RENDER_SUPPLIER' => 'Distribute by vendor',
+    'FROM'=>'from',
+    'TO'=>'to',
 ];

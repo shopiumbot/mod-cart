@@ -23,7 +23,7 @@ return [
     'TABLE_PRODUCT' => 'Product',
     'PAYMENT' => 'Payment',
     'COST' => 'Cost',
-    'ORDERS_COUNTER' => '{0, plural, = 0 {no orders} = 1 {one order} one {# order} few {# orders} many {# orders} other {# order}}',
+    'ORDERS_COUNTER' => '{0, plural, =0{no orders} =1{one order} one{# order} few{# orders} many{# orders} other{# order}}',
     'ORDER_PRICE' => 'Order amount',
     'DELIVERY_PRICE' => 'Delivery price',
     'DELIVERY_PAYMENT' => 'Delivery and Payment',
