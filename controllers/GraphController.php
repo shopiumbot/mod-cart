@@ -30,7 +30,7 @@ class GraphController extends AdminController
             ]
         ];
 
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
 
         $data = [];

@@ -57,11 +57,11 @@ class PaymentController extends AdminController
                 'options' => ['class' => 'btn btn-success']
             ]
         ];
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => Yii::t('cart/default', 'MODULE_NAME'),
             'url' => ['/cart/default/index']
         ];
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         $searchModel = new PaymentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
@@ -78,15 +78,15 @@ class PaymentController extends AdminController
         $isNew = $model->isNewRecord;
         $this->pageName = Yii::t('cart/admin', 'PAYMENTS');
 
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => Yii::t('cart/admin', 'ORDERS'),
             'url' => ['/cart/default/index']
         ];
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => $this->pageName,
             'url' => ['index']
         ];
-        $this->breadcrumbs[] = Yii::t('app/default', ($isNew) ? 'CREATE' : 'UPDATE');
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', ($isNew) ? 'CREATE' : 'UPDATE');
         \shopium\mod\cart\CartPaymentAsset::register($this->view);
 
         $post = Yii::$app->request->post();

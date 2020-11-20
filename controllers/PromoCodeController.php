@@ -22,7 +22,7 @@ class PromoCodeController extends AdminController
             ]
         ];
 
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         $searchModel = new PromoCodeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
@@ -36,7 +36,7 @@ class PromoCodeController extends AdminController
     {
         $model = PromoCode::findModel($id);
         $this->pageName = Yii::t('cart/admin', 'PROMOCODE');
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             $this->pageName
         ];
         $this->buttons = [
