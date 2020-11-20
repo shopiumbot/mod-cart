@@ -43,4 +43,5 @@ return [
     'MAIL_TTN_SUBJECT' => 'Your TTN order number {0}',
     'NOTIFICATION_USER_TEXT' => 'User <b>{username}</b> placed an order.<br/> <b>{num, plural, =0{thickly} =1{One item} one{# product} few{# goods} many{# goods} other{# product}}</b> for the amount <b>{total} {currency}</b>',
     'NOTIFICATION_GUEST_TEXT' => 'Visitor <b>{username}</b> placed an order.<br/> <b>{num, plural, =0{thickly} =1{One item} one{# product} few{# goods} many{# goods} other{# product}}</b> for the amount <b>{total} {currency}</b>',
+    'ORDER_HISTORY' => 'Order history',
 ];

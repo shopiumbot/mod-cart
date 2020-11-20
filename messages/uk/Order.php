@@ -24,7 +24,7 @@ return [
     'ERROR_STATUS' => 'Помилка перевірки статусу.',
     'ERROR_PAYMENT' => 'Необхідно вибрати спосіб оплати.',
     'ERROR_DELIVERY' => 'Необхідно вибрати спосіб доставки.',
-    'NEW_ORDER_ID' => 'Номер замовлення №{id}',
+    'NEW_ORDER_ID' => '№{id}',
     'CREATE_ORDER' => 'Додати замовлення',
     'SELECT_PAYMENT' => '&mdash; Оплата &mdash;',
     'SELECT_DELIVERY' => '&mdash; Доставка &mdash;',

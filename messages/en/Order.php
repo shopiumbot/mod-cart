@@ -24,7 +24,7 @@ return [
     'ERROR_STATUS' => 'Error checking status.',
     'ERROR_PAYMENT' => 'You must select a payment method.',
     'ERROR_DELIVERY' => 'You must select a shipping method.',
-    'NEW_ORDER_ID' => 'Order number #{id}',
+    'NEW_ORDER_ID' => 'No. {id}',
     'CREATE_ORDER' => 'Add order',
     'SELECT_PAYMENT' => '&mdash; Payment &mdash;',
     'SELECT_DELIVERY' => '&mdash; Delivery &mdash;',

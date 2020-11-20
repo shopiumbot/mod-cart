@@ -43,4 +43,5 @@ return [
     'MAIL_TTN_SUBJECT' => 'Ваш ТТН замовлення №{0}',
     'NOTIFICATION_USER_TEXT' => 'Користувач <b>{username}</b> оформив замовлення.<br/> <b>{num, plural, =0{Туст} =1{Один товар} one{# товар} few{# товару} many{# товарів} other{# товар}}</b> на суму <b>{total} {currency}</b>',
     'NOTIFICATION_GUEST_TEXT' => 'Відвідувач <b>{username}</b> оформив замовлення.<br/> <b>{num, plural, =0{Туст} =1{Один товар} one{# товар} few{# товару} many{# товарів} other{# товар}}</b> на суму <b>{total} {currency}</b>',
+    'ORDER_HISTORY' => 'Історія замовлення',
 ];

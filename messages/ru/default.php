@@ -22,7 +22,7 @@ return [
     'TABLE_PRODUCT' => 'Товар',
     'PAYMENT' => 'Оплата',
     'COST' => 'Стоимость',
-    'ORDERS_COUNTER'=> '{0, plural, =0{нет заказов} =1{один заказ} one{# заказ} few{# заказа} many{# заказов} other{# заказ}}',
+    'ORDERS_COUNTER' => '{0, plural, =0{нет заказов} =1{один заказ} one{# заказ} few{# заказа} many{# заказов} other{# заказ}}',
     'ORDER_PRICE' => 'Сумма заказа',
     'DELIVERY_PRICE' => 'Цена доставки',
     'DELIVERY_PAYMENT' => 'Доставки и оплаты',
@@ -43,4 +43,5 @@ return [
     'MAIL_TTN_SUBJECT' => 'Ваш ТТН заказа №{0}',
     'NOTIFICATION_USER_TEXT' => 'Пользователь <b>{username}</b> оформил заказ.<br/> <b>{num, plural, =0{тусто} =1{Один товар} one{# товар} few{# товара} many{# товаров} other{# товар}}</b> на сумму <b>{total} {currency}</b>',
     'NOTIFICATION_GUEST_TEXT' => 'Посетитель <b>{username}</b> оформил заказ.<br/> <b>{num, plural, =0{тусто} =1{Один товар} one{# товар} few{# товара} many{# товаров} other{# товар}}</b> на сумму <b>{total} {currency}</b>',
+    'ORDER_HISTORY' => 'История заказа',
 ];
