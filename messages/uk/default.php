@@ -3,6 +3,7 @@ return [
     'COST_DELIVERY' => 'Вартість доставки',
     'MY_ORDERS' => 'Мої замовлення',
     'MODULE_NAME' => 'Кошик',
+    'YOUR_CART' => 'Ваш кошик',
     'CART_EMPTY' => 'Ваш кошик порожній',
     'CART_EMPTY_BTN' => 'Повернутися до покупок',
     'WP_COUNT' => 'Нових замовлень ({num})',

@@ -3,6 +3,7 @@ return [
     'COST_DELIVERY' => 'Стоимость доставки',
     'MY_ORDERS' => 'Мои заказы',
     'MODULE_NAME' => 'Корзина',
+    'YOUR_CART' => 'Ваша корзина',
     'CART_EMPTY' => 'Ваша корзина пуста',
     'CART_EMPTY_BTN' => 'Вернуться к покупкам',
     'WP_COUNT' => 'Новых заказов ({num})',

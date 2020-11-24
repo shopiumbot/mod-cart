@@ -42,7 +42,7 @@ function addProductToOrder(el, order_id) {
     var csrfToken = yii.getCsrfToken();
     console.log(csrfToken,csrfParam);
     $.ajax({
-        url: "/admin/cart/default/add-product",
+        url: common.baseUrl+"/cart/default/add-product",
         type: "POST",
         data: {
            // '"+csrfParam+"': csrfToken,
@@ -78,7 +78,7 @@ function addProductToOrder(el, order_id) {
 function deleteOrderedProduct(id, order_id) {
     if (confirm(deleteQuestion)) {
         $.ajax({
-            url: "/admin/cart/default/delete-product",
+            url: common.baseUrl+"/cart/default/delete-product",
             type: "POST",
             data: {
                 token: common.token,
@@ -97,7 +97,7 @@ function deleteOrderedProduct(id, order_id) {
  * Update products list
  */
 function reloadOrderedProducts(order_id) {
-    $('#orderedProducts').load('/admin/cart/default/render-ordered-products?order_id=' + order_id);
+    $('#orderedProducts').load(common.baseUrl+'/cart/default/render-ordered-products?order_id=' + order_id);
 }
 
 /**

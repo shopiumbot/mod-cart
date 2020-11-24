@@ -3,6 +3,7 @@ return [
     'COST_DELIVERY' => 'Shipping cost',
     'MY_ORDERS' => 'My Orders',
     'MODULE_NAME' => 'Cart',
+    'YOUR_CART' => 'Your cart',
     'CART_EMPTY' => 'Your cart is empty',
     'CART_EMPTY_BTN' => 'Return to shopping',
     'WP_COUNT' => 'New orders ({num})',
