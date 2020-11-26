@@ -42,7 +42,6 @@ use panix\engine\jui\DatePicker;
                 echo Html::dropDownList('render', 'delivery', [
                     'delivery' => Yii::t('cart/admin','RENDER_DELIVERY'),
                     'manufacturer' => Yii::t('cart/admin','RENDER_MANUFACTURER'),
-                    'supplier' => Yii::t('cart/admin','RENDER_SUPPLIER')
                 ], ['class' => 'custom-select']);
                 ?>
                 <?php

@@ -48,7 +48,6 @@ return [
     'FILTERS'=>'Фильтры',
     'RENDER_DELIVERY'=>'Распределить по доставке',
     'RENDER_MANUFACTURER'=>'Распределить по производителю',
-    'RENDER_SUPPLIER'=>'Распределить по поставщику',
     'FROM'=>'с',
     'TO'=>'по',
 ];

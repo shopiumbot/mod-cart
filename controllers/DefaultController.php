@@ -337,11 +337,6 @@ class DefaultController extends AdminController
                 $model->orderBy(['p.manufacturer_id' => SORT_DESC]);
 
             }
-            if (Yii::$app->request->get('render') == 'supplier') {
-                $view = 'pdf/supplier';
-                $model->andWhere(['not', ['p.supplier_id' => null]]);
-                $model->orderBy(['p.supplier_id' => SORT_DESC]);
-            }
 
             $mpdf->SetHTMLHeader($this->renderPartial('pdf/_header_products', [
                 'start_date' => CMS::date($dateStart, false),
