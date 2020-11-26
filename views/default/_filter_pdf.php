@@ -9,7 +9,7 @@ use panix\engine\jui\DatePicker;
         <h5><?= Yii::t('cart/admin', 'FILTERS'); ?></h5>
     </div>
     <div class="card-body">
-        <?= Html::beginForm(['/admin/cart/default/pdf-orders'], 'GET'); ?>
+        <?= Html::beginForm(['/cart/default/pdf-orders'], 'GET'); ?>
 
         <div class="form-group mb-0">
             <div class="input-group">

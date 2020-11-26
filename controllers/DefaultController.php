@@ -300,7 +300,7 @@ class DefaultController extends AdminController
 
             // $mpdf->SetProtection(['print','copy'], 'admin', '111');
             //$mpdf->SetTitle($title);
-            $mpdf->SetHTMLFooter($this->renderPartial('@cart/views/admin/default/pdf/_footer_delivery', ['currentDate' => 'dsadsa']));
+            $mpdf->SetHTMLFooter($this->renderPartial('pdf/_footer_delivery', ['currentDate' => 'dsadsa']));
 
             $mpdf->WriteHTML(file_get_contents(Yii::getAlias('@vendor/panix/engine/pdf/assets/mpdf-bootstrap.min.css')), 1);
             // $mpdf->WriteHTML($this->renderPartial('_pdf_order', ['model' => $model]), 2);
