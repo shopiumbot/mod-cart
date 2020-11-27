@@ -111,7 +111,7 @@ foreach ($array as $key => $items) {
                     if($row['model']->sku){
                         echo $row['item']->getAttributeLabel('sku').': <strong>'.$row['model']->sku.'</strong>; ';
                     }
-                    $query = \shopium\mod\shop\models\Attribute::find();
+                    $query = \core\modules\shop\models\Attribute::find();
                     $query->where(['IN', 'name', array_keys($row['model']->eavAttributes)]);
                     $query->displayOnPdf();
                     $query->sort();

@@ -4,11 +4,11 @@
         <thead>
 
             <tr>
-                <th width="5%" align="center" class="text-center">№</th>
-                <th width="20%" align="center" class="text-center">ФИО<br></th>
-                <th width="45%" align="center" class="text-center">Адрес доставки<br></th>
-                <th width="20%" align="center" class="text-center">Телефон<br></th>
-                <th width="10%" align="center" class="text-center">товаров<br></th>
+                <th width="5%" align="center" class="text-center"><?= Yii::t('cart/Order','ID');?></th>
+                <th width="20%" align="center" class="text-center"><?= Yii::t('cart/Order','USER_NAME');?><br></th>
+                <th width="45%" align="center" class="text-center"><?= Yii::t('cart/Order','USER_ADDRESS');?><br></th>
+                <th width="20%" align="center" class="text-center"><?= Yii::t('cart/Order','USER_PHONE');?><br></th>
+                <th width="10%" align="center" class="text-center"><?= Yii::t('cart/admin','PRODUCTS');?><br></th>
             </tr>
         </thead>
         <tbody>
@@ -38,8 +38,8 @@
                             <?= $row['user_name'] ?>
                             <p>Оплата: <?= $row['payment'] ?></p>
                         </td>
-                        <td align="center" style="vertical-align:middle"><?= $row['city'] ?><?= $row['user_address'] ?></td>
-                        <td align="center" style="vertical-align:middle"><?= \panix\engine\CMS::phone_number_format($row['user_phone']) ?></td>
+                        <td align="left" style="vertical-align:middle"><?= $row['city'] ?><?= $row['user_address'] ?></td>
+                        <td align="center" style="vertical-align:middle"><?= \panix\engine\CMS::phone_format($row['user_phone']) ?></td>
                         <td align="center" style="vertical-align:middle"><?= $row['productsCount'] ?></td>
                     </tr>
                     <?php

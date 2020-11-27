@@ -48,6 +48,7 @@ return [
     'FILTERS' => 'Фільтри',
     'RENDER_DELIVERY' => 'Розподілити по доставці',
     'RENDER_MANUFACTURER' => 'Розподілити по виробнику',
-    'FROM'=>'з',
-    'TO'=>'до',
+    'FROM' => 'з',
+    'TO' => 'до',
+    'PRODUCTS' => 'Товарів'
 ];

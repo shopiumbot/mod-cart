@@ -48,6 +48,7 @@ return [
     'FILTERS' => 'Filters',
     'RENDER_DELIVERY' => 'Distribute by delivery',
     'RENDER_MANUFACTURER' => 'Distribute by manufacturer',
-    'FROM'=>'from',
-    'TO'=>'to',
+    'FROM' => 'from',
+    'TO' => 'to',
+    'PRODUCTS' => 'Products'
 ];
