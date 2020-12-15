@@ -51,7 +51,7 @@ Pjax::begin([
             'class' => 'panix\engine\grid\columns\jui\DatepickerColumn',
         ],
         [
-            'class' => 'panix\engine\grid\columns\ActionColumn',
+            'class' => 'core\components\ActionColumn',
             'template' => '{update} {delete}',
         ]
     ]

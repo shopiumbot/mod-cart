@@ -21,7 +21,7 @@ echo GridView::widget([
         'name',
         'color',
         [
-            'class' => 'panix\engine\grid\columns\ActionColumn',
+            'class' => 'core\components\ActionColumn',
             'template' => '{update} {switch} {delete}',
         ]
     ]

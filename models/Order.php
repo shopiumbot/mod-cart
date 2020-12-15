@@ -772,7 +772,7 @@ class Order extends ActiveRecord
         ];
 
         $columns['DEFAULT_CONTROL'] = [
-            'class' => 'panix\engine\grid\columns\ActionColumn',
+            'class' => 'core\components\ActionColumn',
             'template' => '{print} {update} {delete}',
             'buttons' => [
                 'print' => function ($url, $model, $key) {

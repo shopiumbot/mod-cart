@@ -77,7 +77,7 @@ echo GridView::widget([
             }
         ],
         [
-            'class' => 'panix\engine\grid\columns\ActionColumn',
+            'class' => 'core\components\ActionColumn',
             'template' => '{add}',
             'buttons' => [
                 'add' => function ($url, $data, $key) {

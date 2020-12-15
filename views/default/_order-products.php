@@ -75,7 +75,7 @@ echo GridView::widget([
             }
         ],
         [
-            'class' => 'panix\engine\grid\columns\ActionColumn',
+            'class' => 'core\components\ActionColumn',
             'template' => '{delete}',
             'headerOptions'=>['class' => 'text-center'],
             'buttons' => [
