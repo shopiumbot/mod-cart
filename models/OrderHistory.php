@@ -3,6 +3,8 @@ namespace shopium\mod\cart\models;
 
 use Yii;
 use core\components\ActiveRecord;
+use yii\helpers\ArrayHelper;
+
 /**
  * This is the model class for table "OrderHistory".
  *
@@ -40,7 +42,7 @@ class OrderHistory extends ActiveRecord {
             'data_before' => 'Data Before',
             'data_after' => 'Data After',
         );
-        return CMap::mergeArray($this->_attrLabels, parent::attributeLabels());
+        return ArrayHelper::merge($this->_attrLabels, parent::attributeLabels());
     }
 
     /**

@@ -50,5 +50,7 @@ return [
     'RENDER_MANUFACTURER' => 'Distribute by manufacturer',
     'FROM' => 'from',
     'TO' => 'to',
-    'PRODUCTS' => 'Products'
+    'PRODUCTS' => 'Products',
+    'TTN' => 'After filling out the TTN, a notification will be sent to the client.',
+    'HINT_STATUS' => 'After completing the status, a notification will be sent to the client.'
 ];

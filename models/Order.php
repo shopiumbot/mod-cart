@@ -2,9 +2,13 @@
 
 namespace shopium\mod\cart\models;
 
+use shopium\mod\cart\components\events\EventOrderStatus;
+use shopium\mod\cart\components\HistoricalBehavior;
+use shopium\mod\cart\components\events\EventProduct;
 use shopium\mod\telegram\models\User;
 use Yii;
 use panix\engine\Html;
+use yii\base\ModelEvent;
 use yii\behaviors\TimestampBehavior;
 use core\components\ActiveRecord;
 use yii\web\NotFoundHttpException;
@@ -316,30 +320,17 @@ class Order extends ActiveRecord
             return $this->status->color;
     }
 
-    public function behaviors2()
+    public function behaviors()
     {
         $b = [];
-        if (isset($columns['created_at']) && isset($columns['updated_at'])) {
-            $b['timestamp'] = [
-                'class' => TimestampBehavior::class,
-            ];
-        }
+        $b['historical'] = [
+            'class' => HistoricalBehavior::class,
+        ];
 
         return $b;
     }
 
-    public function afterSave2($insert, $changedAttributes)
-    {
 
-
-        /*if (isset($this->behaviors['timestamp'])) {
-            $updatedAt = $this->behaviors['timestamp']->updatedAtAttribute;
-            if (isset($this->{$updatedAt})) {
-                $this->touch($updatedAt);
-            }
-        }*/
-        parent::afterSave($insert, $changedAttributes);
-    }
     /**
      * @param Order $order
      */
@@ -549,6 +540,16 @@ class Order extends ActiveRecord
             $ordered_product->quantity = $quantity;
             //   $ordered_product->sku = $product->sku;
             $ordered_product->price = $price;
+
+
+            // Raise event
+            $event = new EventProduct([
+                'product_model' => $product,
+                'ordered_product' => $ordered_product,
+                'quantity' => $quantity
+            ]);
+            $this->eventProductAdded($event);
+
             return $ordered_product->save();
         }
         return false;
@@ -566,6 +567,11 @@ class Order extends ActiveRecord
 
         if ($model) {
             $model->delete();
+
+            $event = new EventProduct([
+                'ordered_product' => $model
+            ]);
+            $this->eventProductDeleted($event);
         }
     }
 
@@ -578,7 +584,26 @@ class Order extends ActiveRecord
         return $products->search([$products->formName() => ['order_id' => $this->id]]);
     }
 
+    /**
+     * @param $event
+     */
+    public function eventProductAdded($event)
+    {
+        $this->trigger(HistoricalBehavior::EVENT_PRODUCT_ADDED, $event);
+    }
 
+    /**
+     * @param $event
+     */
+    public function eventProductQuantityChanged($event)
+    {
+        $this->trigger(HistoricalBehavior::EVENT_PRODUCT_QUANTITY_CHANGED, $event);
+    }
+
+    public function eventProductDeleted($event)
+    {
+        $this->trigger(HistoricalBehavior::EVENT_PRODUCT_DELETED, $event);
+    }
     /**
      * @param array $data
      */
@@ -587,6 +612,11 @@ class Order extends ActiveRecord
         foreach ($this->products as $product) {
             if (isset($data[$product->id])) {
                 if ((int)$product->quantity !== (int)$data[$product->id]) {
+                    $event = new ModelEvent($this, [
+                        'ordered_product' => $product,
+                        'new_quantity' => (int)$data[$product->id]
+                    ]);
+                    $this->eventProductQuantityChanged($event);
                 }
 
                 $product->quantity = (int)$data[$product->id];
