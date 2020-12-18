@@ -100,7 +100,7 @@ class OrderProduct extends ActiveRecord
     {
 
         if ($this->originalProduct) {
-            $result = \yii\helpers\Html::a($this->name, $this->originalProduct->getUrl(), ['target' => '_blank']);
+            $result = \yii\helpers\Html::a($this->name, ['/'], ['target' => '_blank']);
         } else {
             $result = $this->name;
         }

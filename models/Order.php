@@ -542,6 +542,9 @@ class Order extends ActiveRecord
             $ordered_product->price = $price;
 
 
+
+
+            $ordered_product->save();
             // Raise event
             $event = new EventProduct([
                 'product_model' => $product,
@@ -550,7 +553,7 @@ class Order extends ActiveRecord
             ]);
             $this->eventProductAdded($event);
 
-            return $ordered_product->save();
+            return $ordered_product;
         }
         return false;
     }
