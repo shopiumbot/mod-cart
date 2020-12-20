@@ -18,6 +18,7 @@ return [
     'ADMIN_COMMENT' => 'Коментар адміністратора',
     'INVOICE' => 'Номер накладної',
     'ORDER_ID' => 'Номер замовлення',
+    'ORDER_NUMBER' => 'Номер замовлення №{0}',
     'DISCOUNT' => 'Знижка',
     'SECRET_KEY' => 'Секретний ключ',
     'USER_AGENT' => 'User-агент',

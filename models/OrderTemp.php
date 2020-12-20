@@ -45,9 +45,14 @@ class OrderTemp extends \yii\db\ActiveRecord
              * @var OrderProduct $product
              * @var Product $originalProduct
              **/
-            $original=$product->originalProduct;
+            $original = $product->originalProduct;
             if ($original) {
-                $this->total_price += $original->price * $product->quantity;
+                //  if($original->currency_id){
+                //     $this->total_price += $original->price * $original->price * $product->quantity;
+                // }else{
+                $this->total_price += $original->getFrontPrice() * $product->quantity;
+                // }
+
             }
 
         }

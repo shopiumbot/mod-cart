@@ -26,9 +26,9 @@ class OrderStatus extends ActiveRecord
         ];
     }
 
-    public function countOrders()
+    public function getOrdersCount()
     {
-        return Order::find()->where(array('status_id' => $this->id))->count();
+        return $this->hasMany(Order::class, ['status_id' => 'id'])->count();
     }
 
 }

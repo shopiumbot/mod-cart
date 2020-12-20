@@ -259,7 +259,7 @@ class Order extends ActiveRecord
             // }
 
             if ($product->originalProduct) {
-                $this->total_price += $product->price * $product->quantity;
+                $this->total_price +=  Yii::$app->currency->convert($product->price * $product->quantity, $product->currency_id);
             }
 
         }
@@ -535,7 +535,7 @@ class Order extends ActiveRecord
             $ordered_product->product_id = $product->id;
             $ordered_product->image = $image;
             //$ordered_product->client_id = $this->client_id;
-            // $ordered_product->currency_id = $product->currency_id;
+            $ordered_product->currency_id = $product->currency_id;
             $ordered_product->name = $product->name;
             $ordered_product->quantity = $quantity;
             //   $ordered_product->sku = $product->sku;

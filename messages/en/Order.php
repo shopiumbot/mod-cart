@@ -18,6 +18,7 @@ return [
     'ADMIN_COMMENT' => 'Admin comment',
     'INVOICE' => 'Invoice number',
     'ORDER_ID' => 'Order number',
+    'ORDER_NUMBER' => 'Order number №{0}',
     'DISCOUNT' => 'Discount',
     'SECRET_KEY' => 'Secret Key',
     'USER_AGENT' => 'User-agent',
