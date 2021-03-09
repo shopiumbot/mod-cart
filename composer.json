@@ -15,6 +15,7 @@
         "panix/engine": "dev-master",
         "panix/wgt-colorpicker": "dev-master",
         "panix/wgt-highcharts": "dev-master",
+        "panix/wgt-telinput": "dev-master",
         "amocrm/amocrm-api-library": "dev-master",
         "dotzero/amocrm": "dev-master"
     },
