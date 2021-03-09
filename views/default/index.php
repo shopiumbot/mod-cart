@@ -10,9 +10,10 @@ use shopium\mod\cart\models\Order;
 <?php echo $this->render('_filter_pdf'); ?>
 <?php
 
-//Pjax::begin(['dataProvider'=>$dataProvider]);
+Pjax::begin(['id'=>'pjax-grid-orders']);
 
 echo GridView::widget([
+    'id'=>'grid-orders',
     'tableOptions' => ['class' => 'table table-striped'],
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
@@ -24,4 +25,4 @@ echo GridView::widget([
     'layoutOptions' => ['title' => $this->context->pageName],
 ]);
 ?>
-<?php //Pjax::end(); ?>
+<?php Pjax::end(); ?>
